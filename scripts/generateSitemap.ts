@@ -8,6 +8,23 @@ interface BlogPost {
   date: string;
 }
 
+function determineChangefreq(url: string): string {
+  const baseUrl = process.env.SITE_URL || 'https://investment.advenoh.pe.kr';
+
+  // 홈페이지
+  if (url === baseUrl) {
+    return 'daily';
+  }
+
+  // Weekly 카테고리
+  if (url.includes('/weekly/')) {
+    return 'weekly';
+  }
+
+  // 기타 모든 페이지
+  return 'monthly';
+}
+
 async function generateSitemap() {
   console.log('🗺️  Generating sitemap.xml...');
 
@@ -20,18 +37,19 @@ async function generateSitemap() {
   thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
   const staticPages = [
-    { url: baseUrl, changefreq: 'daily', priority: '1.0' },
-    { url: `${baseUrl}/series`, changefreq: 'weekly', priority: '0.7' },
+    { url: baseUrl, changefreq: determineChangefreq(baseUrl), priority: '1.0' },
+    { url: `${baseUrl}/series`, changefreq: determineChangefreq(`${baseUrl}/series`), priority: '0.7' },
   ];
 
   const postUrls = posts.map(post => {
     const postDate = new Date(post.date);
     const isRecent = postDate > thirtyDaysAgo;
     const category = post.categories[0] || 'etc';
+    const postUrl = `${baseUrl}/${category.toLowerCase()}/${post.slug}`;
 
     return {
-      url: `${baseUrl}/${category.toLowerCase()}/${post.slug}`,
-      changefreq: 'weekly',
+      url: postUrl,
+      changefreq: determineChangefreq(postUrl),
       priority: isRecent ? '0.9' : '0.8',
       lastmod: post.date
     };

@@ -16,6 +16,12 @@
 - [x] XML 포맷 유효성 검증
 
 ## Phase 3: 배포
-- [ ] Git 커밋 (Korean commit message 형식)
-- [ ] Git 푸시
+- [x] Git 커밋 (Korean commit message 형식)
+- [x] Git 푸시 (브랜치: `chore/sitemap-changefreq-optimization`)
 - [ ] 배포 후 실제 사이트 sitemap.xml 확인
+
+## 완료 상태
+- ✅ Phase 1: 코드 수정 완료
+- ✅ Phase 2: 빌드 및 테스트 완료
+- ✅ Phase 3: Git 커밋 및 푸시 완료
+- ⏳ 배포 후 검증 대기 중

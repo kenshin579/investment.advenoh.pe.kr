@@ -15,8 +15,6 @@ Updated 2025-11-01
 * [구글 Adsense에 필요한 거주자증명서 발급 신청하는 방법](https://investment.advenoh.pe.kr/google-adsense-residency-certificate-application/)
 * [인터넷으로 내용증명 작성하기](https://investment.advenoh.pe.kr/write-content-certification-online/)
 * [자산 운용사 약어 모음](https://investment.advenoh.pe.kr/asset-management-abbreviations/)
-* [투자 명언](https://investment.advenoh.pe.kr/investment-quotes/)
-* [투자 용어 (Investment Terms)](https://investment.advenoh.pe.kr/investment-terms/)
 
 ## Etf
 * [2024년 ETF 적립식 투자 연말 총정리](https://investment.advenoh.pe.kr/2024-etf-regular-investing-summary/)

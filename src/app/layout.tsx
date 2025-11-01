@@ -6,6 +6,7 @@ import { ThemeProvider } from '@/components/theme-provider'
 import ClientOnly from '@/components/ClientOnly'
 import React from 'react'
 import { Metadata } from 'next'
+import { generateWebSiteSchema } from '@/lib/json-ld-schema'
 
 // 폰트 최적화 설정
 const inter = Inter({
@@ -28,14 +29,24 @@ const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || 'htt
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
-  title: '투자 인사이트 - 주식, ETF, 채권, 펀드 전문 블로그',
+  title: {
+    default: "Frank's Investment Blog",
+    template: "%s | Frank's Investment Blog"
+  },
   description: '투자에 대한 깊이 있는 인사이트와 실전 경험을 공유하는 전문 금융 블로그입니다.',
   keywords: ['투자', '주식', 'ETF', '채권', '펀드', '금융', '재테크'],
   openGraph: {
     type: 'website',
     locale: 'ko_KR',
     url: baseUrl,
-    siteName: '투자 인사이트',
+    siteName: "Frank's Investment Blog",
+  },
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/icon.png', type: 'image/png', sizes: '192x192' }
+    ],
+    apple: { url: '/apple-touch-icon.png', sizes: '180x180' }
   },
   robots: {
     index: true,
@@ -54,6 +65,14 @@ export default function RootLayout({
         <meta name="naver-site-verification" content="531df30d4cd2fb3d7c5735bf081e668dca05794c" />
         <meta name="msvalidate.01" content="6B5D48FAB4AC7D1E78A51352B904624B" />
         <link rel="icon" href="/favicon.ico" />
+
+        {/* JSON-LD Schema - WebSite */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(generateWebSiteSchema())
+          }}
+        />
 
         {/* Google Analytics */}
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-DWDKCB9644"></script>

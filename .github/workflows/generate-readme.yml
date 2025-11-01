@@ -22,6 +22,9 @@ jobs:
             -e WORKSPACE_DIR=/workspace \
             -e CONTENT_DIR=contents \
             -e BLOG_URL=https://investment.advenoh.pe.kr \
+            -e PROJECT_TITLE="Investment Insights Blog" \
+            -e HITCOUNT_PATH=kenshin579/investment.advenoh.pe.kr \
+            -e NETLIFY_BADGE_ID=31900f77-681f-4ace-8b3b-906936f57a60 \
             kenshin579/readme-generator:latest
 
       - name: Create commits

@@ -1,11 +1,11 @@
-[![HitCount](http://hits.dwyl.io/kenshin579/advenohpekr.svg)](http://hits.dwyl.io/kenshin579/advenohpekr)
+[![HitCount](http://hits.dwyl.io/kenshin579/investment.advenoh.pe.kr.svg)](http://hits.dwyl.io/kenshin579/investment.advenoh.pe.kr)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/31900f77-681f-4ace-8b3b-906936f57a60/deploy-status)](https://app.netlify.com/sites/advenoh/deploys)
 
-# Frank's IT Blog - Table of Contents
+# Investment Insights Blog - Table of Contents
 
 Updated 2025-11-01
 
-현재 [블로그](https://blog.advenoh.pe.kr)에 작성된 내용입니다.
+현재 [블로그](https://investment.advenoh.pe.kr)에 작성된 내용입니다.
 
 ## Etc
 * [Gatsby 블로그 구글 검색에 더 많이 노출하는 방법](https://investment.advenoh.pe.kr/gatsby-blog-google-seo-tips/)

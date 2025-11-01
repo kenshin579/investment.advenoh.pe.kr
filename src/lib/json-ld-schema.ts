@@ -136,12 +136,13 @@ class JSONLDSchemaGenerator {
   }
 
   // 웹사이트용 WebSite 스키마 생성
-  generateWebSiteSchema(): WebSiteSchema {
+  generateWebSiteSchema(): WebSiteSchema & { alternateName?: string } {
     return {
       '@context': 'https://schema.org',
       '@type': 'WebSite',
-      name: this.organizationName,
-      description: this.organizationDescription,
+      name: "Frank's Investment Blog",
+      alternateName: "Frank's Investment Insights",
+      description: '투자에 대한 인사이트 - 주식, ETF, 재테크 정보 블로그',
       url: this.baseUrl,
       potentialAction: {
         '@type': 'SearchAction',
@@ -150,7 +151,7 @@ class JSONLDSchemaGenerator {
       },
       publisher: {
         '@type': 'Organization',
-        name: this.organizationName,
+        name: "Frank's Investment Blog",
         logo: {
           '@type': 'ImageObject',
           url: `${this.baseUrl}/logo.png`,

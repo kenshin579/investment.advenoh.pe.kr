@@ -1,328 +1,112 @@
-# 투자 인사이트 블로그 - Next.js 정적 사이트
+[![HitCount](http://hits.dwyl.io/kenshin579/advenohpekr.svg)](http://hits.dwyl.io/kenshin579/advenohpekr)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/31900f77-681f-4ace-8b3b-906936f57a60/deploy-status)](https://app.netlify.com/sites/advenoh/deploys)
+
+# Frank's IT Blog - Table of Contents
+
+Updated 2025-11-01
+
+현재 [블로그](https://blog.advenoh.pe.kr)에 작성된 내용입니다.
+
+## Etc
+* [Gatsby 블로그 구글 검색에 더 많이 노출하는 방법](https://investment.advenoh.pe.kr/gatsby-blog-google-seo-tips/)
+* [구글 Adsense 미국 세금 정보 입력하는 방법](https://investment.advenoh.pe.kr/google-adsense-us-tax-info-entry/)
+* [구글 Adsense 싱가포르 세금 정보 제출방법](https://investment.advenoh.pe.kr/google-adsense-singapore-tax-submission/)
+* [구글 Adsense 에 결제 추가하는 방법](https://investment.advenoh.pe.kr/google-adsense-add-payment-method/)
+* [구글 Adsense에 필요한 거주자증명서 발급 신청하는 방법](https://investment.advenoh.pe.kr/google-adsense-residency-certificate-application/)
+* [인터넷으로 내용증명 작성하기](https://investment.advenoh.pe.kr/write-content-certification-online/)
+* [자산 운용사 약어 모음](https://investment.advenoh.pe.kr/asset-management-abbreviations/)
+* [투자 명언](https://investment.advenoh.pe.kr/investment-quotes/)
+* [투자 용어 (Investment Terms)](https://investment.advenoh.pe.kr/investment-terms/)
+
+## Etf
+* [2024년 ETF 적립식 투자 연말 총정리](https://investment.advenoh.pe.kr/2024-etf-regular-investing-summary/)
+* [ETF 고르는 기준](https://investment.advenoh.pe.kr/etf-selection-criteria/)
+* [ETF 상장폐지가 되면 어떻게 되나?](https://investment.advenoh.pe.kr/etf-delisting-what-happens/)
+* [ETF 상품명 이해하기](https://investment.advenoh.pe.kr/understanding-etf-product-names/)
+* [ETF 세금 총정리](https://investment.advenoh.pe.kr/etf-tax-summary/)
+* [IRP에서 안전자산 ETF는 어떤 것들이 있나](https://investment.advenoh.pe.kr/irp-safe-asset-etf-list/)
+* [국내 미국다우존스 ETF중에서 어떤 것을 선택하면 좋을까?](https://investment.advenoh.pe.kr/best-korea-us-dowjones-etf/)
+* [금리인하시 환노출, 환헤지 어느 ETF 상품이 더 유리할까?](https://investment.advenoh.pe.kr/etf-currency-hedge-vs-unhedge/)
+* [나만의 ETF 적립식 투자](https://investment.advenoh.pe.kr/my-etf-regular-investing/)
+* [만기매칭형 ETF란](https://investment.advenoh.pe.kr/maturity-matching-etf/)
+* [주식/ETF 종목 매매 타이밍 전략 정리](https://investment.advenoh.pe.kr/stock-etf-trading-timing-strategy/)
+
+## Stock
+* [2024년 1분기 주요 일정](https://investment.advenoh.pe.kr/2024-q1-key-schedule/)
+* [2024년 2분기 빌 아크만 포트폴리오](https://investment.advenoh.pe.kr/2024-q2-bill-ackman-portfolio/)
+* [2024년 2분기 스탠리 드러켄밀러 포트폴리오](https://investment.advenoh.pe.kr/2024-q2-stanley-druckenmiller-portfolio/)
+* [2024년 2분기 워렌 버핏 포트폴리오](https://investment.advenoh.pe.kr/2024-q2-warren-buffett-portfolio/)
+* [2024년 2분기 주요 일정](https://investment.advenoh.pe.kr/2024-q2-key-schedule/)
+* [2024년 3분기 주요 일정](https://investment.advenoh.pe.kr/2024-q3-key-schedule/)
+* [2024년 4분기 주요 이벤트](https://investment.advenoh.pe.kr/2024-q4-key-schedule/)
+* [2024년 ETF 주식 계좌 vs 토스 소수점 주식 모으기 결과 공개](https://investment.advenoh.pe.kr/2024-etf-stock-account-vs-toss-fractional-stock-accumulation/)
+* [2024년 ISA 계좌 개편안 총 정리](https://investment.advenoh.pe.kr/2024-isa-account-reform-plan-summary/)
+* [2024년 글로벌 시장 전망 및 주요 일정](https://investment.advenoh.pe.kr/2024-global-market-outlook-and-key-schedule/)
+* [2024년 연말 국내 미국 배당금 정리](https://investment.advenoh.pe.kr/2024-year-end-domestic-us-dividend-summary/)
+* [2025 2분기 주식 대가 포트폴리오 변경사항](https://investment.advenoh.pe.kr/2025-q2-stock-masters-portfolio-changes/)
+* [25년 2월 MSCI 한국 지수서 주요 변경사항](https://investment.advenoh.pe.kr/2025-feb-msci-korea-index-major-changes/)
+* [3분기 국내 배당주 정리](https://investment.advenoh.pe.kr/q3-domestic-dividend-stocks-summary/)
+* [3분기 미국 관심 배당주 정리](https://investment.advenoh.pe.kr/q3-us-dividend-stocks-of-interest/)
+* [CMA의 종류](https://investment.advenoh.pe.kr/types-of-cma/)
+* [CPI와 PPI의 차이점](https://investment.advenoh.pe.kr/differences-between-cpi-and-ppi/)
+* [ISA 만기, 연장할까 해지할까? 꼭 알아야 할 선택 가이드](https://investment.advenoh.pe.kr/isa-maturity-extension-or-termination-guide/)
+* [SK텔레콤 주가 배당수익률로 방어선은 어디일까?](https://investment.advenoh.pe.kr/sk-telecom-dividend-yield-support/)
+* [TDF에 대해서 알아보자](https://investment.advenoh.pe.kr/about-target-date-funds/)
+* [Tradingview에서 꼭 써봐야 할 유용한 Indicator 추천 모음](https://investment.advenoh.pe.kr/must-try-tradingview-indicator-recommendations/)
+* [경기침체 징조는 어떻게 판단하나](https://investment.advenoh.pe.kr/how-to-identify-signs-of-economic-recession/)
+* [공매도란? 대차거래부터 개인투자자 영향까지 완벽 정리](https://investment.advenoh.pe.kr/short-selling-complete-guide/)
+* [금리, 환율, 채권, 주가 서로간의 상관관계](https://investment.advenoh.pe.kr/correlation-between-interest-rates-exchange-rates-bonds-and-stock-prices/)
+* [금리인하 수혜주 : 유망 종목과 투자 전략](https://investment.advenoh.pe.kr/interest-rate-cut-beneficiary-stocks-and-investment-strategies/)
+* [금융소득 종합과세 대상자 피하는 방법](https://investment.advenoh.pe.kr/how-to-avoid-comprehensive-taxation-on-financial-income/)
+* [금융투자소득세(금투세)에 대해서 알아보자](https://investment.advenoh.pe.kr/about-financial-investment-income-tax/)
+* [금투자에 대해서 알아보자](https://investment.advenoh.pe.kr/about-gold-investment/)
+* [기대수익률에 따른 투자](https://investment.advenoh.pe.kr/investment-based-on-expected-returns/)
+* [기업의 분할은 주식에 어떤 영향을 주나?](https://investment.advenoh.pe.kr/how-company-splits-affect-stocks/)
+* [달러 환전시 증권사 vs 은행권 어디가 좋을까요](https://investment.advenoh.pe.kr/where-is-better-for-dollar-exchange-securities-vs-banks/)
+* [드러캔밀러의 투자 조언](https://investment.advenoh.pe.kr/stanley-druckenmillers-investment-advice/)
+* [매매사실을 꼭 공시해야하는 투자자들은 누구인가](https://investment.advenoh.pe.kr/who-must-disclose-their-trading-activities/)
+* [무상증자는 주식에 어떤 영향을 미치나](https://investment.advenoh.pe.kr/how-bonus-issues-affect-stocks/)
+* [미국 3대 주가 지수](https://investment.advenoh.pe.kr/differences-between-us-three-major-indices/)
+* [미국 한국 주식시장 연속 상승과 하락은 몇 주까지 가능할까](https://investment.advenoh.pe.kr/us-kr-stock-market-streaks/)
+* [미래에셋에서 매매수익률 확인하는 방법](https://investment.advenoh.pe.kr/how-to-check-trading-profit-in-mirae-asset/)
+* [복수 거래소 시대 NXT 도입에 따른 변화](https://investment.advenoh.pe.kr/multi-exchange-era-changes-with-nxt-introduction/)
+* [서킷브레이커 vs 사이드카의 차이, 주가지수 폭락 시 작동하는 장치](https://investment.advenoh.pe.kr/circuit-breaker-vs-sidecar-difference-stock-index-crash-mechanisms/)
+* [성장주와 가치주의 차이점](https://investment.advenoh.pe.kr/growth-stocks-vs-value-stocks-differences/)
+* [액면분할이란](https://investment.advenoh.pe.kr/what-is-stock-split/)
+* [연금계좌 납입금액 확인하는 방법](https://investment.advenoh.pe.kr/how-to-check-pension-account-contribution-amount/)
+* [연금저축에서 MMF 단기 상품 매매하는 방법](https://investment.advenoh.pe.kr/how-to-trade-mmf-short-term-products-in-pension-savings/)
+* [연금저축이란?](https://investment.advenoh.pe.kr/what-is-pension-savings/)
+* [월별 투자 금액 확인하는 방법](https://investment.advenoh.pe.kr/how-to-check-monthly-investment-amount/)
+* [유상증자는 주식에 어떤 영향을 주나](https://investment.advenoh.pe.kr/how-does-rights-offering-affect-stocks/)
+* [자사주 매입이란](https://investment.advenoh.pe.kr/what-is-share-buyback/)
+* [주식 고수가 되는 HTS 활용법! 필수 화면 & 사용 패턴 정리](https://investment.advenoh.pe.kr/hts-usage-patterns-for-stock-masters/)
+* [주식 대가들의 포트폴리오 확인하는 방법](https://investment.advenoh.pe.kr/how-to-check-stock-masters-portfolio/)
+* [주식 세금 종류](https://investment.advenoh.pe.kr/types-of-stock-taxes/)
+* [주식 시장 개장시간 정리](https://investment.advenoh.pe.kr/stock-market-opening-hours-summary/)
+* [주식으로 2주마다 월세 받는 방법](https://investment.advenoh.pe.kr/how-to-get-monthly-rent-every-2-weeks-with-stocks/)
+* [증권 계좌 종류별로 투자 가능한 항목 정리](https://investment.advenoh.pe.kr/investment-options-by-account-type/)
+* [증권계좌별로 어떤 주식을 매매하면 좋을까?](https://investment.advenoh.pe.kr/which-stocks-to-trade-by-securities-account/)
+* [차트에서 매매내역 표시하는 방법](https://investment.advenoh.pe.kr/how-to-show-trade-history-on-chart/)
+* [침체, 인플레이션, 국가부채, 양적완화, 빈부격차 상관 관계](https://investment.advenoh.pe.kr/recession-inflation-national-debt-qe-inequality/)
+* [카카오뱅크 달러박스 달러 ATM에서 출금하기](https://investment.advenoh.pe.kr/withdraw-dollars-from-kakaobank-dollar-box-atm/)
+* [토스 증권에서 주식 모으기](https://investment.advenoh.pe.kr/collecting-stocks-with-toss-securities/)
+* [투자자가 꼭 알아야 할 기업 호재, 악재 사례 정리](https://investment.advenoh.pe.kr/essential-corporate-news-analysis-for-investors/)
+* [트럼프 vs 바이든 수혜주 찾기](https://investment.advenoh.pe.kr/finding-beneficiary-stocks-trump-vs-biden/)
+* [해외주식 양도소득세 신고 대행 서비스 신청 방법 완벽 정리!](https://investment.advenoh.pe.kr/foreign-stock-capital-gains-tax-filing-guide/)
+
+## Weekly
+* [2024년 6월 2주차 - 국내, 미국 주간 주도 섹터 정리](https://investment.advenoh.pe.kr/2024-june-week2-korea-us-weekly-leading-sector-summary/)
+* [25년 2월 2째주 주간 주식 정리 - 섹터 및 주식 트렌드](https://investment.advenoh.pe.kr/2025-feb-week2-weekly-stock-sector-trend/)
+* [25년 3월 1째주 주간 주식 정리 - 섹터 및 주식 트랜드](https://investment.advenoh.pe.kr/2025-mar-week1-weekly-stock-sector-trend/)
+* [25년 3월 2째주 주간 주식 정리 - 섹터 및 주식 트랜드](https://investment.advenoh.pe.kr/2025-mar-week2-weekly-stock-sector-trend/)
+* [25년 3월 3째주 주간 주식 정리 - 섹터 및 주식 트랜드](https://investment.advenoh.pe.kr/2025-mar-week3-weekly-stock-sector-trend/)
+* [25년 3월 4째주 주간 주식 정리 - 섹터 및 주식 트랜드](https://investment.advenoh.pe.kr/2025-mar-week4-weekly-stock-sector-trend/)
+* [25년 4월 1째주 주간 주식 정리 - 섹터 및 주식 트랜드](https://investment.advenoh.pe.kr/2025-apr-week1-weekly-stock-sector-trend/)
+* [25년 4월 2째주 주간 주식 정리 - 섹터 및 주식 트랜드](https://investment.advenoh.pe.kr/2025-apr-week2-weekly-stock-sector-trend/)
+* [25년 4월 3째주 주간 주식 정리 - 섹터 및 주식 트랜드](https://investment.advenoh.pe.kr/2025-apr-week3-weekly-stock-sector-trend/)
+* [25년 5월 1째주 주간 주식 정리 - 섹터 및 주식 트랜드](https://investment.advenoh.pe.kr/2025-may-week1-weekly-stock-sector-trend/)
+* [25년 5월 2째주 주간 주식 정리 - 섹터 및 주식 트랜드](https://investment.advenoh.pe.kr/2025-may-week2-weekly-stock-sector-trend/)
+* [25년 5월 5째주 주간 주식 정리 - 섹터 및 주식 트랜드](https://investment.advenoh.pe.kr/2025-may-week5-weekly-stock-sector-trend/)
+* [25년 8월 1째주 주간 주식 정리 - 섹터 및 주식 트랜드](https://investment.advenoh.pe.kr/2025-aug-week1-weekly-stock-summary-sector-and-stock-trends/)
+* [25년 8월 2째주 주간 주식 정리 - 섹터 및 주식 트랜드](https://investment.advenoh.pe.kr/2025-aug-week2-weekly-stock-summary-sector-and-stock-trends/)
 
-## 🚀 프로젝트 개요
-
-이 프로젝트는 투자 인사이트를 공유하는 한국어 금융 블로그입니다. Next.js 15 App Router 기반의 완전한 정적 사이트로, 모든 콘텐츠가 빌드 타임에 생성되어 CDN을 통해 제공됩니다.
-
-## 🏗️ 시스템 아키텍처
-
-### 정적 사이트 생성 (Static Site Generation)
-- **Framework**: Next.js 15 with App Router (Static Export)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS + shadcn/ui
-- **Content**: Markdown (gray-matter, remark)
-- **SEO**: 메타데이터, 구조화된 데이터, 사이트맵
-- **Deployment**: 정적 파일 호스팅 (Netlify)
-- **Build Process**: 마크다운 → JSON 변환 → 정적 HTML 생성
-
-## 📁 프로젝트 구조
-
-```
-/
-├── src/                    # Next.js 소스 코드
-│   ├── app/               # App Router
-│   │   ├── [category]/   # 동적 카테고리 페이지
-│   │   ├── series/       # 시리즈 페이지
-│   │   └── layout.tsx    # 루트 레이아웃
-│   ├── components/        # React 컴포넌트
-│   │   └── ui/           # shadcn/ui 컴포넌트
-│   ├── hooks/            # 커스텀 훅
-│   ├── lib/              # 유틸리티 함수
-│   └── types/            # TypeScript 타입 정의
-├── scripts/               # 빌드 스크립트
-│   ├── generateStaticData.ts  # 마크다운 → JSON 변환
-│   ├── generateSitemap.ts     # 사이트맵 생성
-│   ├── generateRssFeed.ts     # RSS 피드 생성
-│   └── generateRobots.ts      # robots.txt 생성
-├── contents/              # 마크다운 콘텐츠
-│   ├── etc/              # 기타 카테고리
-│   ├── etf/              # ETF 카테고리
-│   ├── stock/            # 주식 카테고리
-│   └── weekly/           # 주간 리뷰
-├── public/                # 정적 자산
-│   ├── contents/         # 이미지 파일
-│   └── data/             # 생성된 JSON 파일
-└── out/                   # 빌드 출력 (정적 HTML)
-```
-
-## 🛠️ 기술 스택
-
-### Frontend
-- **Next.js 15** (App Router with Static Export)
-- **React 19.1.0**
-- **TypeScript**
-- **Tailwind CSS**
-- **Radix UI + shadcn/ui**
-
-### Content & Build
-- **gray-matter** (Frontmatter 파싱)
-- **remark & rehype** (마크다운 처리)
-- **Node.js Scripts** (정적 데이터 생성)
-
-### Development & Quality
-- **ESLint**
-- **TypeScript Compiler**
-- **Lighthouse CI** (성능 테스트)
-
-### Deployment
-- **Netlify** (정적 호스팅)
-- **CDN** (전역 콘텐츠 배포)
-
-## 🚀 시작하기
-
-### 필수 요구사항
-
-- Node.js 18.17.0 이상
-- npm, yarn, pnpm, 또는 bun
-
-### 설치 및 실행
-
-1. **의존성 설치**
-   ```bash
-   npm install
-   ```
-
-2. **환경 변수 설정 (선택사항)**
-   ```bash
-   # .env.local 파일 생성
-   SITE_URL=https://investment.advenoh.pe.kr  # SEO/사이트맵용 (기본값: localhost)
-   ```
-
-3. **개발 서버 실행**
-   ```bash
-   npm run dev
-   # 마크다운 → JSON 변환 후 Next.js 개발 서버 시작
-   ```
-
-4. **브라우저에서 확인**
-   ```
-   http://localhost:3000
-   ```
-
-### 빌드 및 배포
-
-1. **프로덕션 빌드**
-   ```bash
-   npm run build
-   # 1. 마크다운 → JSON 변환
-   # 2. Next.js 정적 사이트 빌드
-   # 3. 사이트맵/RSS/robots.txt 생성
-   ```
-
-2. **로컬에서 빌드 확인**
-   ```bash
-   npm run start
-   # out/ 폴더의 정적 파일을 로컬 서버로 제공 (http://localhost:3000)
-   ```
-
-3. **배포**
-   - `out/` 폴더의 정적 파일을 호스팅 서비스에 배포
-   - Netlify, Vercel, GitHub Pages 등 정적 호스팅 지원
-
-## 📊 주요 기능
-
-### 블로그 기능
-- **정적 사이트 생성**: Next.js Static Export 기반 (완전한 정적 HTML)
-- **빌드 타임 데이터 생성**: 마크다운 → JSON 변환 자동화
-- **마크다운 지원**: gray-matter, remark를 통한 콘텐츠 처리
-- **카테고리 필터링**: 주식, ETF, 주간 리뷰 등 (클라이언트 사이드)
-- **검색 기능**: 제목, 내용, 태그 기반 검색 (클라이언트 사이드)
-- **시리즈 기능**: 연관 포스트 그룹화
-- **이미지 최적화**: Next.js Image 컴포넌트, lazy loading
-
-### SEO 최적화
-- **메타데이터**: 동적 메타 태그 생성
-- **구조화된 데이터**: JSON-LD 스키마
-- **사이트맵**: 자동 생성
-- **RSS 피드**: 블로그 구독 지원
-- **Open Graph**: 소셜 미디어 공유 최적화
-
-### 성능 최적화
-- **Core Web Vitals**: LCP, FID, CLS 최적화
-- **번들 최적화**: Tree shaking, 코드 분할
-- **캐싱**: CDN을 통한 정적 자산 캐싱 (1년)
-- **이미지 최적화**: Next.js Image 컴포넌트
-- **완전한 정적 사이트**: 서버 없이 CDN에서 직접 제공
-- **빠른 로딩**: 모든 페이지 사전 렌더링
-
-## 🔧 개발 가이드
-
-### 컴포넌트 작성 규칙
-
-1. **타입 정의**: 모든 props에 TypeScript 인터페이스 정의
-2. **주석**: 복잡한 로직에 JSDoc 주석 추가
-3. **에러 처리**: ErrorBoundary 사용
-4. **접근성**: ARIA 라벨, 키보드 네비게이션 지원
-
-### 빌드 스크립트 작성법
-
-빌드 타임에 실행되는 스크립트 (`scripts/` 디렉토리):
-
-```typescript
-// scripts/generateStaticData.ts 예시
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
-
-// 마크다운 파일 읽기 및 파싱
-const contentDir = path.join(process.cwd(), 'contents');
-const posts = []; // 포스트 데이터 수집
-
-// JSON 파일로 저장
-fs.writeFileSync(
-  path.join(process.cwd(), 'public/data/posts.json'),
-  JSON.stringify(posts, null, 2)
-);
-```
-
-빌드 스크립트는 `npm run dev` 또는 `npm run build` 시 자동으로 실행됩니다.
-
-### 블로그 포스트 작성법
-
-1. **마크다운 파일 생성**: `contents/category/slug/index.md`
-2. **Frontmatter 작성**:
-   ```yaml
-   ---
-   title: "포스트 제목"
-   date: "2024-12-01"
-   author: "작성자"
-   categories: ["stock", "etf"]
-   tags: ["투자", "분석"]
-   excerpt: "포스트 요약"
-   featuredImage: "image.jpg"
-   ---
-   ```
-3. **콘텐츠 작성**: 마크다운 형식으로 작성
-
-## 🧪 테스트
-
-### 성능 테스트
-
-```bash
-# Lighthouse CI 실행
-npm run test:performance
-
-# 번들 크기 분석
-npm run build
-```
-
-### 기능 테스트
-
-```bash
-# 개발 서버에서 수동 테스트
-npm run dev
-
-# 빌드 테스트
-npm run build
-```
-
-## 📈 모니터링
-
-### 성능 모니터링
-
-- **Core Web Vitals**: 실시간 측정
-- **Google Analytics**: 페이지뷰, 사용자 행동 추적
-  - 실시간 사용자 모니터링
-  - 인기 콘텐츠 분석
-  - 트래픽 소스 추적
-- **에러 추적**: 자동 에러 로깅
-
-### 로그 확인
-
-```bash
-# 개발 서버 로그
-npm run dev
-
-# 프로덕션 로그
-npm run start
-```
-
-## 🔄 배포
-
-### Netlify 배포 (정적 호스팅)
-
-1. **자동 배포**: Git push 시 자동 빌드 및 배포
-   - 빌드 명령: `npm run build`
-   - 배포 디렉토리: `out/`
-
-2. **환경 변수 설정** (Netlify 대시보드):
-   - `SITE_URL`: 배포된 사이트 URL (예: `https://investment.advenoh.pe.kr`)
-
-3. **빌드 프로세스**:
-   - 마크다운 → JSON 변환
-   - Next.js 정적 사이트 빌드
-   - 사이트맵/RSS/robots.txt 생성
-   - CDN으로 배포
-
-### 배포 확인 체크리스트
-
-- [ ] 사이트 접근 가능 (https://investment.advenoh.pe.kr)
-- [ ] 모든 페이지 정상 로드 (카테고리, 시리즈, 블로그 포스트)
-- [ ] 이미지 및 정적 자산 로드
-- [ ] 검색 및 필터링 기능 작동
-- [ ] SEO 메타데이터 확인 (og:image, description 등)
-- [ ] Google Analytics 작동 확인 (G-DWDKCB9644)
-- [ ] 성능 지표 측정 (Lighthouse)
-- [ ] 한글 인코딩 정상 표시 (UTF-8)
-
-## 🐛 문제 해결
-
-### 일반적인 문제
-
-1. **빌드 실패**
-   ```bash
-   # 캐시 클리어
-   rm -rf .next
-   rm -rf node_modules/.cache
-   npm run build
-   ```
-
-2. **하이드레이션 에러**
-   - 클라이언트 컴포넌트에 'use client' 지시어 추가
-   - 서버와 클라이언트 간 상태 불일치 확인
-
-3. **이미지 최적화 문제**
-   - next.config.ts에서 이미지 도메인 설정 확인
-   - 이미지 파일 경로 및 형식 확인
-
-### 지원
-
-문제가 발생하면 다음을 확인하세요:
-
-1. **로그 확인**: 개발자 도구 콘솔
-2. **네트워크 탭**: API 요청/응답 확인
-3. **성능 탭**: Core Web Vitals 측정
-
-## 📝 라이선스
-
-이 프로젝트는 MIT 라이선스 하에 배포됩니다.
-
-## 🤝 기여하기
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
----
-
-**개발자**: 투자 인사이트 블로그 팀
-**최종 업데이트**: 2025년 10월
-**아키텍처**: Next.js 15 정적 사이트 (Static Export)
-
-## 📝 최근 변경 사항
-
-### 2025년 10월
-- **도메인 통일**: 모든 URL을 `investment.advenoh.pe.kr`로 통일
-  - `invest.advenoh.pe.kr` → `investment.advenoh.pe.kr`
-  - `stock.advenoh.pe.kr` → `investment.advenoh.pe.kr`
-  - Contents 폴더 내 모든 내부 링크 업데이트 (14개 파일, 18개 URL)
-- **SEO 최적화**:
-  - Google Analytics 태그 업데이트 (`G-9LNH27K1YS` → `G-DWDKCB9644`)
-  - Naver 사이트 인증 코드 갱신
-- **빌드 프로세스 개선**:
-  - sitemap.xml, rss.xml, robots.txt 생성 타이밍 최적화
-  - `postbuild` → `prebuild`로 이동하여 Static Export에 포함되도록 수정
-- **GitHub Actions 추가**:
-  - PR Assignee 자동 지정 워크플로우 추가 

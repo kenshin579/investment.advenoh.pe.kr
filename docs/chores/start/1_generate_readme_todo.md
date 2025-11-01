@@ -3,7 +3,7 @@
 ## Phase 1: 로컬 테스트
 
 ### Docker 이미지 호환성 검증
-- [ ] Docker 이미지 로컬 실행
+- [x] Docker 이미지 로컬 실행
   ```bash
   docker run --rm \
     -v $(pwd):/workspace \
@@ -12,22 +12,22 @@
     -e BLOG_URL=https://investment.advenoh.pe.kr \
     kenshin579/readme-generator:latest
   ```
-- [ ] 생성된 README.md 확인
+- [x] 생성된 README.md 확인
   ```bash
   git diff README.md
   ```
-- [ ] 카테고리별 콘텐츠 인식 확인 (etc, etf, stock, weekly)
-- [ ] 한글 콘텐츠 UTF-8 인코딩 처리 확인
-- [ ] TOC(목차) 생성 결과 확인
-- [ ] 블로그 포스트 링크 URL 확인 (https://investment.advenoh.pe.kr)
+- [x] 카테고리별 콘텐츠 인식 확인 (etc, etf, stock, weekly)
+- [x] 한글 콘텐츠 UTF-8 인코딩 처리 확인
+- [x] TOC(목차) 생성 결과 확인
+- [x] 블로그 포스트 링크 URL 확인 (https://investment.advenoh.pe.kr)
 
 ## Phase 2: 워크플로우 구현
 
 ### GitHub Action 파일 생성
-- [ ] `.github/workflows/` 디렉토리 생성 (없는 경우)
-- [ ] `generate-readme.yml` 파일 생성
-- [ ] 브랜치 이름 `main` 확인
-- [ ] BLOG_URL 환경변수 설정 확인
+- [x] `.github/workflows/` 디렉토리 생성 (없는 경우)
+- [x] `generate-readme.yml` 파일 생성
+- [x] 브랜치 이름 `main` 확인
+- [x] BLOG_URL 환경변수 설정 확인
 
 ## Phase 3: GitHub Action 테스트
 

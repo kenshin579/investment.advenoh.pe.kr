@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Search, Menu, X, ChartLine, Sun, Moon, BookOpen } from "lucide-react";
+import { Search, Menu, X, ChartLine, Sun, Moon, BookOpen, Hash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useTheme } from "@/components/theme-provider";
@@ -56,9 +56,21 @@ export function Header() {
             })}
           </div>
 
-          {/* Search, Series & Dark Mode Toggle */}
+          {/* Search, Tags, Series & Dark Mode Toggle */}
           <div className="flex items-center space-x-4">
             {/* Search component removed for now */}
+
+            {/* Tags Button */}
+            <Link href="/tags">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="relative w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors flex items-center justify-center"
+              >
+                <span className="sr-only">태그</span>
+                <Hash className="w-5 h-5 text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors" />
+              </Button>
+            </Link>
 
             {/* Series Button */}
             <Link href="/series">

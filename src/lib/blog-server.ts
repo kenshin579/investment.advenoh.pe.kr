@@ -42,3 +42,18 @@ export async function getAllSeriesServer() {
   const seriesData = fs.readFileSync(seriesPath, 'utf-8')
   return JSON.parse(seriesData)
 }
+
+// Get all tags data
+export async function getAllTagsServer(): Promise<Array<{ tag: string; count: number }>> {
+  const tagsPath = path.join(process.cwd(), 'public/data/tags.json')
+  const tagsData = fs.readFileSync(tagsPath, 'utf-8')
+  const tags: Array<{ tag: string; count: number }> = JSON.parse(tagsData)
+
+  return tags.sort((a, b) => b.count - a.count)
+}
+
+// Get posts by tag
+export async function getPostsByTagServer(tagName: string): Promise<BlogPost[]> {
+  const posts = await getAllBlogPostsServer()
+  return posts.filter(post => post.tags && post.tags.includes(tagName))
+}

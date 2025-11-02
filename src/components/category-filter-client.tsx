@@ -8,6 +8,12 @@ interface Category {
   count: number;
 }
 
+interface CategoryOption {
+  id: string;
+  label: string;
+  count: number;
+}
+
 interface CategoryFilterClientProps {
   categories: Category[];
   selectedCategory?: string;
@@ -23,11 +29,17 @@ export function CategoryFilterClient({
 }: CategoryFilterClientProps) {
   const router = useRouter()
 
-  const allCategories = [
-    { id: "all", label: "전체" },
-    ...(Array.isArray(categories) ? categories.map(({ category }) => ({
+  // Calculate total count for "전체" category
+  const totalCount = Array.isArray(categories)
+    ? categories.reduce((sum, cat) => sum + cat.count, 0)
+    : 0
+
+  const allCategories: CategoryOption[] = [
+    { id: "all", label: "전체", count: totalCount },
+    ...(Array.isArray(categories) ? categories.map(({ category, count }) => ({
       id: category,
-      label: category
+      label: category,
+      count: count
     })) : [])
   ]
 
@@ -58,13 +70,14 @@ export function CategoryFilterClient({
               key={category.id}
               variant={selectedCategory === category.id ? "default" : "outline"}
               className={`category-filter px-6 py-2 rounded-full font-medium ${
-                selectedCategory === category.id 
-                  ? "active bg-primary text-primary-foreground shadow-md" 
+                selectedCategory === category.id
+                  ? "active bg-primary text-primary-foreground shadow-md"
                   : "hover:bg-muted"
               }`}
               onClick={() => handleCategoryChange(category.id)}
+              aria-label={`${category.label} 카테고리, 게시물 ${category.count}개`}
             >
-              {category.label}
+              {category.label} <span className="text-muted-foreground">{category.count}</span>
             </Button>
           ))}
         </div>

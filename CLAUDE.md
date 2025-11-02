@@ -36,6 +36,24 @@ npm run lint
 npm run test:performance
 ```
 
+### README Generation
+```bash
+# Generate README.md file locally using Docker
+make generate-readme
+
+# View available Makefile commands
+make help
+```
+
+**Requirements**:
+- Docker must be installed and running
+- Uses the same Docker image as GitHub Actions (`kenshin579/readme-generator:latest`)
+- Generates README.md based on blog post content in `contents/` directory
+
+**Error Scenarios**:
+- **Docker not installed**: Install Docker Desktop for Mac/Windows or Docker Engine for Linux
+- **Docker daemon not running**: Start Docker Desktop or run `sudo systemctl start docker`
+
 ### Local Testing with Playwright
 After running `npm run start`, use MCP Playwright to verify the build:
 

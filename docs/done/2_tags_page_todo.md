@@ -1,37 +1,37 @@
 # 태그 페이지 구현 TODO
 
-## Phase 1: 헤더 수정 (15분)
-- [ ] `src/components/header.tsx` 파일 열기
-- [ ] Import에 `Hash` 추가 (6번째 줄)
-- [ ] Tags 버튼 추가 (Series 버튼 앞, 64번째 줄)
-- [ ] 로컬 확인: `npm run dev` → http://localhost:3000 접속
-- [ ] 헤더에 # 아이콘 표시 확인
+## Phase 1: 헤더 수정 (15분) ✅
+- [x] `src/components/header.tsx` 파일 열기
+- [x] Import에 `Hash` 추가 (6번째 줄)
+- [x] Tags 버튼 추가 (Series 버튼 앞, 64번째 줄)
+- [x] 로컬 확인: `npm run dev` → http://localhost:3000 접속
+- [x] 헤더에 # 아이콘 표시 확인
 
-## Phase 2: 서버 함수 추가 (20분)
-- [ ] `src/lib/blog-server.ts` 파일 열기
-- [ ] `getAllTagsServer()` 함수 추가 (파일 끝)
-- [ ] `getPostsByTagServer()` 함수 추가
-- [ ] TypeScript 타입 체크: `npm run check`
+## Phase 2: 서버 함수 추가 (20분) ✅
+- [x] `src/lib/blog-server.ts` 파일 열기
+- [x] `getAllTagsServer()` 함수 추가 (파일 끝)
+- [x] `getPostsByTagServer()` 함수 추가
+- [x] TypeScript 타입 체크: `npm run check`
 
-## Phase 3: 태그 페이지 생성 (30분)
-- [ ] `src/app/tags` 디렉토리 생성
-- [ ] `src/app/tags/page.tsx` 파일 생성
-- [ ] 메타데이터 및 서버 컴포넌트 코드 작성
-- [ ] 브라우저에서 `/tags` 경로 접속 확인
+## Phase 3: 태그 페이지 생성 (30분) ✅
+- [x] `src/app/tags` 디렉토리 생성
+- [x] `src/app/tags/page.tsx` 파일 생성
+- [x] 메타데이터 및 서버 컴포넌트 코드 작성
+- [x] 브라우저에서 `/tags` 경로 접속 확인
 
-## Phase 4: 태그 클라우드 컴포넌트 (1시간)
-- [ ] `src/components/tag-cloud.tsx` 파일 생성
-- [ ] TagCloud 컴포넌트 작성
-- [ ] 크기별 스타일 함수 작성 (`getSize`, `getColor`)
-- [ ] 상위 100개 태그만 표시 로직 확인
-- [ ] 다크모드 색상 대응 확인
+## Phase 4: 태그 클라우드 컴포넌트 (1시간) ✅
+- [x] `src/components/tags-page-client.tsx` 파일 생성 (통합 구현)
+- [x] TagCloud 컴포넌트 작성
+- [x] 크기별 스타일 함수 작성 (`getSize`, `getColor`)
+- [x] 상위 100개 태그만 표시 로직 확인
+- [x] 다크모드 색상 대응 확인
 
-## Phase 5: 클라이언트 인터랙션 (1시간)
-- [ ] `src/components/tags-page-client.tsx` 파일 생성
-- [ ] 태그 클릭 핸들러 구현
-- [ ] 포스트 필터링 로직 구현
-- [ ] BlogPostCard 컴포넌트 재사용
-- [ ] 선택된 태그 상태 관리
+## Phase 5: 클라이언트 인터랙션 (1시간) ✅
+- [x] `src/components/tags-page-client.tsx` 파일 생성
+- [x] 태그 클릭 핸들러 구현
+- [x] 포스트 필터링 로직 구현
+- [x] BlogPostCard 컴포넌트 재사용
+- [x] 선택된 태그 상태 관리
 
 ## Phase 6: 스타일링 및 테스트 (30분)
 - [ ] 모바일 레이아웃 확인 (< 768px)
@@ -72,18 +72,18 @@
   - 콘솔 에러 확인 (`get_console_logs`)
   - 접근성 자동 체크 (ARIA 레이블, 키보드 네비게이션)
 
-## Git 작업
-- [ ] 변경사항 스테이징: `git add .`
-- [ ] 커밋 메시지 작성:
+## Git 작업 ✅
+- [x] 변경사항 스테이징: `git add .`
+- [x] 커밋 메시지 작성:
   ```
-  [#이슈번호] feat: 태그 페이지 구현
+  [#31] feat: 태그 페이지 구현
 
   * 헤더에 태그 아이콘 추가
   * 태그 클라우드로 시각화
   * 태그 클릭 시 포스트 필터링 기능
   * 반응형 디자인 및 다크모드 지원
   ```
-- [ ] 커밋: `git commit`
+- [x] 커밋: `git commit` (커밋 ID: d0bac3e)
 - [ ] PR 생성 (필요시)
 
 ---

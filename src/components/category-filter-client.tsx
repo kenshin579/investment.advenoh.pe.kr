@@ -77,7 +77,7 @@ export function CategoryFilterClient({
               onClick={() => handleCategoryChange(category.id)}
               aria-label={`${category.label} 카테고리, 게시물 ${category.count}개`}
             >
-              {category.label} ({category.count})
+              {category.label} {category.count}
             </Button>
           ))}
         </div>

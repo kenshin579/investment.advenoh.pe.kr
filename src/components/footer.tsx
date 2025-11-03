@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ChartLine, Twitter, Linkedin, Youtube, Instagram, ExternalLink } from "lucide-react";
 import { useState, useEffect } from "react";
+import { getAllCategoriesClient } from "@/lib/blog-client";
 
 interface Category {
   category: string;
@@ -16,31 +17,7 @@ export function Footer() {
   console.log('Footer render - categories:', categories, 'type:', typeof categories, 'isArray:', Array.isArray(categories));
 
   useEffect(() => {
-    // Fetch categories on client side
-    const fetchCategories = async () => {
-      try {
-        const response = await fetch('/api/categories');
-        if (response.ok) {
-          const data = await response.json();
-          console.log('API response data:', data, 'type:', typeof data, 'isArray:', Array.isArray(data));
-          // Ensure data is an array before setting it
-          if (Array.isArray(data)) {
-            setCategories(data);
-          } else {
-            console.error('Categories API returned non-array data:', data);
-            setCategories([]);
-          }
-        } else {
-          console.error('Failed to fetch categories:', response.status);
-          setCategories([]);
-        }
-      } catch (error) {
-        console.error('Failed to fetch categories:', error);
-        setCategories([]);
-      }
-    };
-
-    fetchCategories();
+    getAllCategoriesClient().then(setCategories);
   }, []);
   return (
     <footer className="bg-gray-900 text-white py-12">

@@ -15,9 +15,9 @@ interface Category {
 export function CategoryFilter({ selectedCategory, onCategoryChange }: CategoryFilterProps) {
   // Fetch categories from API
   const { data: apiCategories } = useQuery<Category[]>({
-    queryKey: ['/api/categories'],
+    queryKey: ['/data/categories'],
     queryFn: async () => {
-      const response = await fetch('/api/categories');
+      const response = await fetch('/data/categories.json');
       if (!response.ok) {
         throw new Error('Failed to fetch categories');
       }

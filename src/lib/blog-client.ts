@@ -18,7 +18,7 @@ export async function getAllBlogPostsClient(): Promise<BlogPost[]> {
 // Client-side function to get categories via API
 export async function getAllCategoriesClient(): Promise<Array<{ category: string; count: number }>> {
   try {
-    const response = await fetch('/api/categories')
+    const response = await fetch('/data/categories.json')
     if (!response.ok) {
       throw new Error('Failed to fetch categories')
     }

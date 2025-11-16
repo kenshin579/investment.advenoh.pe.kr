@@ -9,6 +9,7 @@ import { Breadcrumb } from '@/components/breadcrumb'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Calendar, ArrowLeft } from 'lucide-react'
+import { GoogleAdSense } from '@/components/google-adsense'
 
 interface CategorySlugPageProps {
   params: Promise<{
@@ -272,8 +273,16 @@ export default async function CategorySlugPage({ params }: CategorySlugPageProps
             </div>
 
             <footer className="mt-12 border-t border-border pt-8">
+              {/* BlogArticleBottomAd - AdSense 광고 */}
+              <div className="mb-8">
+                <GoogleAdSense
+                  adSlot="5560009326"
+                  adFormat="auto"
+                />
+              </div>
+
               <RelatedPosts posts={relatedPosts} currentPost={post} />
-              
+
               {/* Author bio */}
               <div className="mt-8 p-6 bg-muted rounded-lg">
                 <div className="flex items-start space-x-4">
@@ -284,8 +293,8 @@ export default async function CategorySlugPage({ params }: CategorySlugPageProps
                   <div>
                     <h3 className="font-semibold text-lg mb-2">Frank Oh</h3>
                     <p className="text-muted-foreground text-sm leading-relaxed">
-                      투자 분석가로서 국내외 주식, ETF, 채권, 펀드에 대한 깊이 있는 분석과 
-                      실전 투자 경험을 바탕으로 한 인사이트를 공유합니다. 
+                      투자 분석가로서 국내외 주식, ETF, 채권, 펀드에 대한 깊이 있는 분석과
+                      실전 투자 경험을 바탕으로 한 인사이트를 공유합니다.
                       데이터 기반의 객관적 분석을 통해 투자자들에게 도움이 되는 정보를 전달하고자 합니다.
                     </p>
                   </div>

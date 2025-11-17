@@ -24,33 +24,35 @@
 
 ---
 
-## Phase 3: Git 커밋 및 푸시 ⏳
+## Phase 3: Git 커밋 및 푸시 ✅
 
-- [ ] Git 변경사항 확인
+- [x] Git 변경사항 확인
   ```bash
   git status
   ```
 
-- [ ] 변경 파일 스테이징
+- [x] 변경 파일 스테이징
   ```bash
   git add src/app/layout.tsx
   git add src/app/\[category\]/\[slug\]/page.tsx
   git add src/components/google-adsense.tsx  # 삭제된 파일
+  git add docs/start/  # 문서 추가
   ```
 
-- [ ] 커밋 (Korean commit message format)
+- [x] 커밋 (Korean commit message format)
   ```bash
-  git commit -m "[#광고개선] AdSense Auto Ads 방식으로 전환
+  git commit -m "[#49] AdSense Auto Ads 방식으로 전환
 
   * Next.js Script 컴포넌트 적용 (afterInteractive 전략)
   * 명시적 광고 단위 제거하고 Auto Ads로 전환
   * GoogleAdSense 컴포넌트 삭제
-  * blog-v2 방식과 동일하게 구현"
+  * blog-v2 방식과 동일하게 구현
+  * AdSense 수정 관련 문서 추가 (PRD, 구현내역, Todo)"
   ```
 
-- [ ] 푸시
+- [x] 푸시
   ```bash
-  git push origin main
+  git push -u origin feature/issue-49-adsense-auto-ads
   ```
 
 ---
@@ -210,7 +212,7 @@
 |-------|------|--------|
 | Phase 1: 코드 구현 | ✅ 완료 | 2025-11-17 |
 | Phase 2: 빌드 검증 | ✅ 완료 | 2025-11-17 |
-| Phase 3: Git 커밋 및 푸시 | ⏳ 대기 | - |
+| Phase 3: Git 커밋 및 푸시 | ✅ 완료 | 2025-11-17 |
 | Phase 4: 배포 확인 | ⏳ 대기 | - |
 | Phase 5: AdSense 설정 | ⏳ 대기 | - |
 | Phase 6: 배포 후 검증 | ⏳ 대기 | - |

@@ -10,7 +10,6 @@ Allow: /
 Disallow: /admin/
 Disallow: /api/
 Disallow: /_next/
-Crawl-delay: 1
 
 Sitemap: ${baseUrl}/sitemap.xml
 

@@ -1,4 +1,5 @@
 import { Inter, Noto_Sans_KR } from 'next/font/google'
+import Script from 'next/script'
 import './globals.css'
 import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
@@ -88,10 +89,11 @@ export default function RootLayout({
         />
 
         {/* Google AdSense */}
-        <script
+        <Script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8868959494983515"
           crossOrigin="anonymous"
+          strategy="afterInteractive"
         />
       </head>
       <body className={`${inter.className} ${notoSansKR.className} font-sans antialiased`}>

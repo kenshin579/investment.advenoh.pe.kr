@@ -9,7 +9,6 @@ import { Breadcrumb } from '@/components/breadcrumb'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Calendar, ArrowLeft } from 'lucide-react'
-import { GoogleAdSense } from '@/components/google-adsense'
 
 interface CategorySlugPageProps {
   params: Promise<{
@@ -273,13 +272,7 @@ export default async function CategorySlugPage({ params }: CategorySlugPageProps
             </div>
 
             <footer className="mt-12 border-t border-border pt-8">
-              {/* BlogArticleBottomAd - AdSense 광고 */}
-              <div className="mb-8">
-                <GoogleAdSense
-                  adSlot="5560009326"
-                  adFormat="auto"
-                />
-              </div>
+              {/* AdSense Auto Ads will automatically insert ads here */}
 
               <RelatedPosts posts={relatedPosts} currentPost={post} />
 

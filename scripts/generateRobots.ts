@@ -13,9 +13,6 @@ Disallow: /_next/
 
 Sitemap: ${baseUrl}/sitemap.xml
 
-# Host
-Host: ${baseUrl}
-
 # Investment Insights Blog
 # Professional financial blog about stocks, ETFs, bonds, and funds`;
 

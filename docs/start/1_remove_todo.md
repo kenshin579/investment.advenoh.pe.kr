@@ -144,10 +144,14 @@
 - [x] 광고 정상 작동 확인
 
 ### Step 3.3: 배포
-- [ ] main 브랜치에 푸시
+- [x] Feature 브랜치 푸시
   ```bash
-  git push origin main
+  git push -u origin feature/issue-52-adsense-cleanup
   ```
+- [x] Pull Request 생성
+  - PR #53: https://github.com/kenshin579/investment.advenoh.pe.kr/pull/53
+- [ ] PR 리뷰 및 승인 대기
+- [ ] main 브랜치에 머지
 - [ ] GitHub Actions CI/CD 성공 확인
 - [ ] Netlify 배포 성공 확인
 - [ ] 프로덕션 사이트에서 광고 표시 확인

@@ -272,8 +272,6 @@ export default async function CategorySlugPage({ params }: CategorySlugPageProps
             </div>
 
             <footer className="mt-12 border-t border-border pt-8">
-              {/* AdSense Auto Ads will automatically insert ads here */}
-
               <RelatedPosts posts={relatedPosts} currentPost={post} />
 
               {/* Author bio */}

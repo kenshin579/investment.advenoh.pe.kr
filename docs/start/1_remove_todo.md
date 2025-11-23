@@ -55,13 +55,13 @@
 - [ ] AdSense 스크립트 로드 확인 (Network 탭)
 
 ### Step 1.5: Git 커밋
-- [ ] 변경사항 스테이징
+- [x] 변경사항 스테이징
   ```bash
   git add src/app/[category]/[slug]/page.tsx
   ```
-- [ ] 커밋 생성
+- [x] 커밋 생성
   ```bash
-  git commit -m "[#XX] AdSense Auto Ads 관련 불필요한 주석 제거
+  git commit -m "[#52] AdSense Auto Ads 관련 불필요한 주석 제거
 
   * src/app/[category]/[slug]/page.tsx:275 주석 제거
   * Auto Ads는 자동으로 광고 배치하므로 주석 불필요"
@@ -72,35 +72,35 @@
 ## Phase 2: AdSense 최종 구현 상태 문서화
 
 ### Step 2.1: 문서 디렉토리 확인
-- [ ] `docs/done/` 디렉토리 존재 확인
+- [x] `docs/done/` 디렉토리 존재 확인
   ```bash
   ls -la docs/done/
   ```
-- [ ] 디렉토리 없으면 생성
+- [x] 디렉토리 없으면 생성
   ```bash
   mkdir -p docs/done
   ```
 
 ### Step 2.2: 최종 구현 문서 작성
-- [ ] `docs/done/adsense_auto_ads_final.md` 파일 생성
-- [ ] 구현 방식 작성
+- [x] `docs/done/adsense_auto_ads_final.md` 파일 생성
+- [x] 구현 방식 작성
   - Auto Ads 전환 일자
   - Publisher ID
   - 구현 위치 (파일, 라인)
   - 로딩 전략
-- [ ] 구현 코드 스니펫 포함
-- [ ] 변경 이력 작성
+- [x] 구현 코드 스니펫 포함
+- [x] 변경 이력 작성
   - 2025-11-17: Auto Ads 전환
   - 2025-11-23: 문서 정리
-- [ ] 특징 및 참고사항 작성
+- [x] 특징 및 참고사항 작성
 
 ### Step 2.3: 문서 검토
-- [ ] UTF-8 인코딩 확인
+- [x] UTF-8 인코딩 확인
   ```bash
   file -I docs/done/adsense_auto_ads_final.md
   ```
-- [ ] Markdown 문법 확인
-- [ ] 링크 유효성 확인
+- [x] Markdown 문법 확인
+- [x] 링크 유효성 확인
 
 ### Step 2.4: Git 커밋
 - [ ] 변경사항 스테이징

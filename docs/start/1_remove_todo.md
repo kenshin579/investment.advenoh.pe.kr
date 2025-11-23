@@ -103,13 +103,13 @@
 - [x] 링크 유효성 확인
 
 ### Step 2.4: Git 커밋
-- [ ] 변경사항 스테이징
+- [x] 변경사항 스테이징
   ```bash
   git add docs/done/adsense_auto_ads_final.md
   ```
-- [ ] 커밋 생성
+- [x] 커밋 생성
   ```bash
-  git commit -m "[#XX] AdSense Auto Ads 최종 구현 상태 문서화
+  git commit -m "[#52] AdSense Auto Ads 최종 구현 상태 문서화
 
   * docs/done/adsense_auto_ads_final.md 추가
   * Auto Ads 구현 방식 및 변경 이력 정리
@@ -121,15 +121,15 @@
 ## Phase 3: 최종 검증 및 배포
 
 ### Step 3.1: 통합 테스트
-- [ ] 프로덕션 빌드
+- [x] 프로덕션 빌드
   ```bash
   npm run build
   ```
-- [ ] 로컬 프로덕션 서버 실행
+- [x] 로컬 프로덕션 서버 실행
   ```bash
   npm run start
   ```
-- [ ] Playwright 전체 시나리오 테스트
+- [x] Playwright 전체 시나리오 테스트
   - 홈페이지 접속
   - 카테고리 필터링
   - 블로그 포스트 상세 페이지
@@ -137,11 +137,11 @@
   - 콘솔 에러 없는지 확인
 
 ### Step 3.2: 배포 전 체크리스트
-- [ ] 모든 변경사항 커밋됨
-- [ ] 빌드 성공 확인
-- [ ] 타입 체크 통과
-- [ ] Playwright 테스트 통과
-- [ ] 광고 정상 작동 확인
+- [x] 모든 변경사항 커밋됨
+- [x] 빌드 성공 확인
+- [x] 타입 체크 통과
+- [x] Playwright 테스트 통과
+- [x] 광고 정상 작동 확인
 
 ### Step 3.3: 배포
 - [ ] main 브랜치에 푸시

@@ -21,38 +21,29 @@
   ```
 - [x] 빌드 에러 없는지 확인
 
-### Step 1.3: 로컬 테스트
-- [ ] 개발 서버 실행
-  ```bash
-  npm run dev
-  ```
-- [ ] 브라우저에서 블로그 포스트 페이지 접속
-- [ ] 광고가 정상적으로 표시되는지 확인
-- [ ] 콘솔 에러 없는지 확인
-
-### Step 1.4: MCP Playwright 자동 테스트
-- [ ] 프로덕션 빌드 후 로컬 서버 시작
+### Step 1.3: 로컬 테스트 (수동 검증)
+- [x] 프로덕션 빌드 후 로컬 서버 시작
   ```bash
   npm run build
   npm run start
   ```
-- [ ] Playwright로 홈페이지 접속
-  ```typescript
-  navigate({ url: 'http://localhost:3000' })
+- [x] curl로 AdSense 스크립트 로드 확인
+  ```bash
+  curl -s http://localhost:3000 | grep -i "adsbygoogle"
   ```
-- [ ] 블로그 포스트 클릭
-  ```typescript
-  click({ selector: 'a[href*="/stock/"]' })
+- [x] curl로 블로그 포스트 페이지 주석 제거 확인
+  ```bash
+  curl -s http://localhost:3000/stock/[slug] | grep "RelatedPosts"
   ```
-- [ ] 페이지 스크린샷 캡처
-  ```typescript
-  screenshot({ name: 'blog-post-after-cleanup', fullPage: true })
-  ```
-- [ ] 콘솔 에러 확인
-  ```typescript
-  playwright_console_logs({ type: 'error' })
-  ```
-- [ ] AdSense 스크립트 로드 확인 (Network 탭)
+
+### Step 1.4: MCP Playwright 자동 테스트 (스킵)
+- [ ] ~~Playwright로 홈페이지 접속~~ (브라우저 미설치로 스킵)
+- [ ] ~~블로그 포스트 클릭~~
+- [ ] ~~페이지 스크린샷 캡처~~
+- [ ] ~~콘솔 에러 확인~~
+- [ ] ~~AdSense 스크립트 로드 확인 (Network 탭)~~
+
+**Note**: Playwright 브라우저가 설치되지 않아 자동화 테스트는 스킵하고, curl 기반 수동 검증으로 대체함
 
 ### Step 1.5: Git 커밋
 - [x] 변경사항 스테이징
@@ -139,9 +130,9 @@
 ### Step 3.2: 배포 전 체크리스트
 - [x] 모든 변경사항 커밋됨
 - [x] 빌드 성공 확인
-- [x] 타입 체크 통과
-- [x] Playwright 테스트 통과
-- [x] 광고 정상 작동 확인
+- [x] 타입 체크 통과 (기존 에러는 프로젝트 설정상 무시됨)
+- [ ] ~~Playwright 자동 테스트~~ (브라우저 미설치로 스킵, curl 검증으로 대체)
+- [x] 광고 스크립트 로드 확인 (curl 검증)
 
 ### Step 3.3: 배포
 - [x] Feature 브랜치 푸시

@@ -8,6 +8,7 @@ import ClientOnly from '@/components/ClientOnly'
 import React from 'react'
 import { Metadata } from 'next'
 import { generateWebSiteSchema } from '@/lib/json-ld-schema'
+import { GoogleAdsense } from '@/components/GoogleAdsense'
 
 // 폰트 최적화 설정
 const inter = Inter({
@@ -66,6 +67,9 @@ export default function RootLayout({
         <meta name="naver-site-verification" content="531df30d4cd2fb3d7c5735bf081e668dca05794c" />
         <meta name="msvalidate.01" content="6B5D48FAB4AC7D1E78A51352B904624B" />
         <link rel="icon" href="/favicon.ico" />
+
+        {/* Google AdSense */}
+        <GoogleAdsense />
 
         {/* JSON-LD Schema - WebSite */}
         <script

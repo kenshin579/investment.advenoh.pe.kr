@@ -1,6 +1,4 @@
 import type { NextConfig } from "next";
-import path from "path";
-import fs from "fs";
 
 const nextConfig: NextConfig = {
   // Static Export 모드 활성화
@@ -9,12 +7,17 @@ const nextConfig: NextConfig = {
   trailingSlash: true,
   images: {
     unoptimized: true,
-    domains: ['investment.advenoh.pe.kr'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'investment.advenoh.pe.kr',
+      },
+    ],
     formats: ['image/webp', 'image/avif'],
   },
   experimental: {
     optimizePackageImports: [
-      '@radix-ui/react-icons', 
+      '@radix-ui/react-icons',
       'lucide-react',
       'react-icons',
       '@radix-ui/react-slot',
@@ -24,11 +27,9 @@ const nextConfig: NextConfig = {
       '@radix-ui/react-tabs',
       '@radix-ui/react-toast',
     ],
-
   },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
+  // Turbopack 설정 (Next.js 16 기본)
+  turbopack: {},
   typescript: {
     ignoreBuildErrors: true,
   },
@@ -36,67 +37,10 @@ const nextConfig: NextConfig = {
   compress: true,
   poweredByHeader: false,
   generateEtags: false,
-  
-  // 번들 크기 최적화 (Next.js 기본 설정 사용)
-  webpack: (config, { isServer, dev }) => {
-    // 클라이언트 사이드에서 Node.js 모듈 제외
-    if (!isServer) {
-      config.resolve.fallback = {
-        ...config.resolve.fallback,
-        fs: false,
-        net: false,
-        tls: false,
-        crypto: false,
-      };
-    }
-    
-    // SVG 로더 설정
-    config.module.rules.push({
-      test: /\.svg$/,
-      use: ['@svgr/webpack'],
-    });
-    
-    return config;
-  },
-  
-  // 캐싱 설정
-  headers: async () => [
-    {
-      source: '/(.*)',
-      headers: [
-        {
-          key: 'X-Content-Type-Options',
-          value: 'nosniff',
-        },
-        {
-          key: 'X-Frame-Options',
-          value: 'DENY',
-        },
-        {
-          key: 'X-XSS-Protection',
-          value: '1; mode=block',
-        },
-      ],
-    },
-    {
-      source: '/contents/(.*)',
-      headers: [
-        {
-          key: 'Cache-Control',
-          value: 'public, max-age=31536000, immutable',
-        },
-      ],
-    },
-    {
-      source: '/_next/static/(.*)',
-      headers: [
-        {
-          key: 'Cache-Control',
-          value: 'public, max-age=31536000, immutable',
-        },
-      ],
-    },
-  ],
+
+  // NOTE: headers는 static export (output: 'export')에서 적용되지 않음
+  // 보안 헤더 및 캐싱은 호스팅 서비스 (Netlify 등)에서 설정해야 함
+  // Netlify의 경우 netlify.toml 또는 _headers 파일에서 설정
 };
 
 export default nextConfig;

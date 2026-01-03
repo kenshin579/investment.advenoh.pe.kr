@@ -11,6 +11,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
 
     steps:
       - uses: actions/checkout@v4
@@ -27,24 +30,15 @@ jobs:
             -e NETLIFY_BADGE_ID=359125d0-4402-402d-9168-5b48f60d6a6c \
             kenshin579/readme-generator:latest
 
-      - name: Create commits
-        run: |
-          echo "username: ${{github.actor}}"
-
-          git config user.name ${{github.actor}}
-          git config user.email 'kenshin579@hotmail.com'
-          git add README.md
-          git commit -am "update README file"
-
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v3
+        uses: peter-evans/create-pull-request@v7
         with:
-          commit-message: Update README file
+          commit-message: "chore: README 파일 자동 업데이트"
           branch: readme-patches
           delete-branch: true
-          title: '[AUTO] Update README file'
+          title: '[AUTO] README 파일 업데이트'
           body: |
-            Update README file
+            README 파일이 자동으로 업데이트되었습니다.
           labels: |
             automated pr
           assignees: kenshin579

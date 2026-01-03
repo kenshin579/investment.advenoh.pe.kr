@@ -1,9 +1,9 @@
 [![HitCount](http://hits.dwyl.io/kenshin579/investment.advenoh.pe.kr.svg)](http://hits.dwyl.io/kenshin579/investment.advenoh.pe.kr)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/31900f77-681f-4ace-8b3b-906936f57a60/deploy-status)](https://app.netlify.com/sites/advenoh/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/359125d0-4402-402d-9168-5b48f60d6a6c/deploy-status)](https://app.netlify.com/sites/advenoh/deploys)
 
-# Investment Insights Blog - Table of Contents
+# Frank's Investment Insights Blog - Table of Contents
 
-Updated 2025-11-01
+Updated 2026-01-03
 
 현재 [블로그](https://investment.advenoh.pe.kr)에 작성된 내용입니다.
 
@@ -15,6 +15,8 @@ Updated 2025-11-01
 * [구글 Adsense에 필요한 거주자증명서 발급 신청하는 방법](https://investment.advenoh.pe.kr/google-adsense-residency-certificate-application/)
 * [인터넷으로 내용증명 작성하기](https://investment.advenoh.pe.kr/write-content-certification-online/)
 * [자산 운용사 약어 모음](https://investment.advenoh.pe.kr/asset-management-abbreviations/)
+* [투자 명언](https://investment.advenoh.pe.kr/investment-quotes/)
+* [투자 용어 (Investment Terms)](https://investment.advenoh.pe.kr/investment-terms/)
 
 ## Etf
 * [2024년 ETF 적립식 투자 연말 총정리](https://investment.advenoh.pe.kr/2024-etf-regular-investing-summary/)

@@ -1,0 +1,113 @@
+name: 스펠링 체크 및 자동 수정
+
+on:
+  # 매주 월요일 오전 9시 (KST) 실행
+  schedule:
+    - cron: "0 0 * * 1" # UTC 00:00 = KST 09:00
+  # 수동 트리거
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+  id-token: write
+
+jobs:
+  spell-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run Claude Spell Check
+        id: spell-check
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          prompt: |
+            ## 작업: contents/ 폴더의 모든 마크다운 파일 스펠링 체크 및 자동 수정
+
+            다음 작업을 수행해주세요:
+
+            ### 1. 스펠링 확인
+            - `contents/` 폴더의 모든 `.md` 파일에서 한글 맞춤법 오류 찾기
+            - 영어 단어 스펠링 오류 찾기
+            - 띄어쓰기 오류 찾기
+
+            ### 2. 오류 유형
+            - 띄어쓰기 오류 (예: "주식가격" → "주식 가격")
+            - 맞춤법 오류
+            - 영문 스펠링 (예: "markt" → "market")
+            - 오타 수정
+
+            ### 3. 수정 규칙 (중요!)
+            - 원본 의도를 변경하지 않기
+            - 마크다운 포맷 유지하기
+            - **Frontmatter (---, title, date, tags 등) 절대 건드리지 않기**
+            - **코드 블록 (```) 내용 변경하지 않기**
+            - **URL, 파일 경로 변경하지 않기**
+
+            ### 4. 작업 순서
+            1. contents/ 폴더의 모든 .md 파일 검사
+            2. 오류 발견 시 파일 직접 수정
+            3. 수정 완료 후 요약 출력
+
+            ### 5. 완료 후
+            - 수정된 파일 목록 출력
+            - 수정된 파일 수와 총 오류 개수 보고
+
+          claude_args: "--max-turns 20"
+
+      - name: Check for changes
+        id: check-changes
+        run: |
+          if git diff --quiet; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+            echo "변경사항이 없습니다."
+          else
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+            echo "변경사항이 발견되었습니다:"
+            git diff --stat
+          fi
+
+      - name: Create branch and commit
+        if: steps.check-changes.outputs.has_changes == 'true'
+        id: commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          BRANCH_NAME="fix/spell-check-$(date +%Y%m%d-%H%M%S)"
+          git checkout -b $BRANCH_NAME
+          git add contents/
+          git commit -m "[#spell-check] docs: contents/ 폴더 스펠링 자동 수정
+
+          * Claude를 통한 자동 스펠링 체크 및 수정
+          * 마크다운 포맷 및 Frontmatter 보존"
+          git push origin $BRANCH_NAME
+          echo "branch_name=$BRANCH_NAME" >> $GITHUB_OUTPUT
+
+      - name: Create Pull Request
+        if: steps.check-changes.outputs.has_changes == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr create \
+            --title "[자동화] 스펠링 체크 및 맞춤법 수정" \
+            --body "## 자동 스펠링 체크 워크플로우
+
+          ### 작업 완료
+          - contents/ 폴더의 모든 마크다운 파일 스펠링 체크 완료
+          - 발견된 오류 자동 수정 완료
+
+          ### 검토 항목
+          - [ ] 한글 맞춤법 수정 검토
+          - [ ] 영문 스펠링 수정 검토
+          - [ ] 원본 의도 변경 없음 확인
+          - [ ] Frontmatter/코드블록 정상 여부 확인
+
+          ---
+          🤖 이 PR은 자동 생성되었습니다. 병합 전 검토 부탁드립니다." \
+            --reviewer kenshin579

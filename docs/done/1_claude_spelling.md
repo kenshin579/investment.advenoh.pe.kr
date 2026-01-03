@@ -169,9 +169,12 @@ jobs:
 name: 스펠링 체크 및 자동 수정
 
 on:
-  # 매주 월요일 오전 9시 (KST) 실행
-  schedule:
-    - cron: "0 0 * * 1" # UTC 00:00 = KST 09:00
+  # PR이 main 브랜치에 merge될 때 실행
+  push:
+    branches:
+      - main
+    paths:
+      - "contents/**/*.md"
   # 수동 트리거
   workflow_dispatch:
 

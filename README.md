@@ -1,4 +1,3 @@
-[![HitCount](http://hits.dwyl.io/kenshin579/investment.advenoh.pe.kr.svg)](http://hits.dwyl.io/kenshin579/investment.advenoh.pe.kr)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/359125d0-4402-402d-9168-5b48f60d6a6c/deploy-status)](https://app.netlify.com/sites/advenoh/deploys)
 
 # Frank's Investment Insights Blog - Table of Contents

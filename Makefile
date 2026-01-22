@@ -9,7 +9,6 @@ generate-readme:
 		-e CONTENT_DIR=contents \
 		-e BLOG_URL=https://investment.advenoh.pe.kr \
 		-e PROJECT_TITLE="Frank's Investment Insights Blog" \
-		-e HITCOUNT_PATH=kenshin579/investment.advenoh.pe.kr \
 		-e NETLIFY_BADGE_ID=359125d0-4402-402d-9168-5b48f60d6a6c \
 		kenshin579/readme-generator:latest
 	@echo "README.md generated successfully!"

@@ -1,13 +1,15 @@
+[![HitCount](http://hits.dwyl.io/kenshin579/advenohpekr.svg)](http://hits.dwyl.io/kenshin579/advenohpekr)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/359125d0-4402-402d-9168-5b48f60d6a6c/deploy-status)](https://app.netlify.com/sites/advenoh/deploys)
 
 # Frank's Investment Insights Blog - Table of Contents
 
-Updated 2026-01-03
+Updated 2026-01-23
 
 현재 [블로그](https://investment.advenoh.pe.kr)에 작성된 내용입니다.
 
 ## Etc
 * [Gatsby 블로그 구글 검색에 더 많이 노출하는 방법](https://investment.advenoh.pe.kr/gatsby-blog-google-seo-tips/)
+* [Mermaid 다이어그램 샘플](https://investment.advenoh.pe.kr/mermaid-diagram-sample/)
 * [구글 Adsense 미국 세금 정보 입력하는 방법](https://investment.advenoh.pe.kr/google-adsense-us-tax-info-entry/)
 * [구글 Adsense 싱가포르 세금 정보 제출방법](https://investment.advenoh.pe.kr/google-adsense-singapore-tax-submission/)
 * [구글 Adsense 에 결제 추가하는 방법](https://investment.advenoh.pe.kr/google-adsense-add-payment-method/)

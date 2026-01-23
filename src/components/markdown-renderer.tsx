@@ -4,6 +4,7 @@ import rehypeRaw from "rehype-raw";
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { tomorrow } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { MarkdownImage } from './markdown-image';
+import { MermaidDiagram } from './mermaid-diagram';
 
 interface MarkdownRendererProps {
   content: string;
@@ -125,7 +126,11 @@ export function MarkdownRenderer({ content, className = "", slug, category }: Ma
             const { inline, children, className, ...rest } = props;
             const match = /language-(\w+)/.exec(className || '');
             const language = match ? match[1] : '';
-            
+
+            if (!inline && language === 'mermaid') {
+              return <MermaidDiagram chart={String(children).replace(/\n$/, '')} />;
+            }
+
             return !inline && match ? (
               <SyntaxHighlighter
                 style={tomorrow}

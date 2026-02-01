@@ -54,7 +54,7 @@ ETF를 매매하려고 하면 ETF 종목에 여러 이름에 약자나 익숙하
     - ex. `TIGER MSCI Korea TR`
     - ETF의 수익률을 집계하는 방식을 나타낸다. Total Refund의 약자로 ETF 펀드 자금으로 기초 지수에 투자하고 일부 남은 현금은 국채 등에 투자했을 때, 여기에서 나오는 배당금과 이자 수익을 모두 지수 수익률에 반영하는 방식이다
 
-# 참고
+# 1. 참고
 
 - https://eekkka.tistory.com/74
 - https://mogument.tistory.com/66

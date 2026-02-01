@@ -17,13 +17,13 @@ series: "2024년 글로벌 시장 전망 및 주요 일정"
 
 >  4분기 주요 일정은 [구글 캘린더](https://calendar.google.com/calendar/u/0?cid=OGNjOTU3OWMwYmUyMDA0ODZjMWViZGQ4ODAxODcyMDc3OTRiMDdjMWU3NmRjMGIzNjYxOWZlMzA5ZjdjNTM4M0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t)에서 확인할 수 있습니다.
 
-## 4분기 키워드
+# 4분기 키워드
 
 - 게임, 뷰티, 식품, 미국 대선, 금리 인하
 - Windows 12 출시 (TBD)
 - 산타랠리
 
-## 10월
+# 10월
 
 
 - 10월 UN 총회
@@ -39,7 +39,7 @@ series: "2024년 글로벌 시장 전망 및 주요 일정"
 - 10/19 ~ 23 SIAL Paris
 - 10/28 ~ 30 뷰티월드 미들이스트 (UAE)
 
-## 11월
+# 11월
 
 - 11/5 미국 대통령 선거
 - 11/5 ~ 7 인코스매틱 아시아 (태국)
@@ -52,13 +52,13 @@ series: "2024년 글로벌 시장 전망 및 주요 일정"
 - 11/28 FOMC 회의
 - 11/29 미국 블랙프라이데이
 
-## 12월
+# 12월
 
 - 산타 랠리
 - 12/18 ECB 통화정책회의 (경제 전망)
 - 12/26  FOMC 회의
 - 12/18 ~ 11 홀리데이 시즌
 
-## 참고
+# 참고
 
 - [캘린더로 한분에 보는 2024년 글로벌 이벤트](https://ohbrown.co.kr/webzine/global/2024-글로벌-이벤트-캘린더/)

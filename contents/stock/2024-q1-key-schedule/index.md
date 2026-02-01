@@ -17,7 +17,7 @@ series: "2024년 글로벌 시장 전망 및 주요 일정"
 
 > 1분기 주요 일정은 [구글 캘린더](https://calendar.google.com/calendar/u/0?cid=OGNjOTU3OWMwYmUyMDA0ODZjMWViZGQ4ODAxODcyMDc3OTRiMDdjMWU3NmRjMGIzNjYxOWZlMzA5ZjdjNTM4M0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t)에서 확인할 수 있습니다.
 
-## 1월
+# 1월
 
 - 1/8 ~ 1/11 JP 모건 컨퍼런스
   - 헬스케어 컨퍼런스
@@ -41,7 +41,7 @@ series: "2024년 글로벌 시장 전망 및 주요 일정"
 - 1/30 알파벳 실적 발표
 - 1/30 ~ 31 FOMC 회의
 
-## 2월
+# 2월
 
 - 2/1 애플 실적 발표
 - 2/1 아마존 실적 발표
@@ -60,7 +60,7 @@ series: "2024년 글로벌 시장 전망 및 주요 일정"
   - 네이버 주식이 오른다
   - 아프리카 TV도 오를 듯함
 
-## 3월
+# 3월
 
 - 3/4 ~ 6 ASEAN 정상회담
 - 3/9 ~ 15 ECB 통화정책회의 (경제전망)
@@ -79,6 +79,6 @@ series: "2024년 글로벌 시장 전망 및 주요 일정"
     - 나이트크로우 글로벌 버전
     - 판타스틱4
 
-## 참고
+# 참고
 
 - [2024년에 예정된 일들…글로벌 주요 이벤트 타임스케줄 알아두기](https://www.g-enews.com/article/Global-Biz/2024/01/20240102081650457837926aa152_1)

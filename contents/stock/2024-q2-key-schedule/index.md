@@ -20,7 +20,7 @@ series: "2024년 글로벌 시장 전망 및 주요 일정"
 > 2분기 주요 일정은 [구글 캘린더](https://calendar.google.com/calendar/u/0?cid=OGNjOTU3OWMwYmUyMDA0ODZjMWViZGQ4ODAxODcyMDc3OTRiMDdjMWU3NmRjMGIzNjYxOWZlMzA5ZjdjNTM4M0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t)에서 확인할 수 있습니다.
   
 
-## 4월
+# 4월
 
 - 4/5 ~ 10 AACR 미국암학회
 - 4/10 한국 22대 국회의원 총선
@@ -30,14 +30,14 @@ series: "2024년 글로벌 시장 전망 및 주요 일정"
 - 4/25 ~ 27 상하이 오토쇼 2024
 - 4/30 ~ 1 FOMC 회의
 
-## 5월
+# 5월
 
 - 5/4 버크셔해서웨이 주주총회
 - 5/31 - 4 ASCO 미국종향학회
 - 5월 IEEE ICC 2024 (6G 기술, 모빌리티 등)
 - 5월 구글 I/O
 
-## 6월
+# 6월
 
 - 6/6 ECB 통화정책회의 (경제전망)
 - 6/6 ~ 9 EU 의회 선거

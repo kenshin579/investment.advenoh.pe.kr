@@ -240,6 +240,29 @@ TypeScript path resolution:
 [#3001] fix: 주식 정보 조회 시 발생하는 NullPointerException 수정
 ```
 
+## Content Writing Rules
+
+### Diagram Format
+
+**IMPORTANT**: 블로그 콘텐츠(`contents/` 내 `index.md`)에 다이어그램을 작성할 때 ASCII art를 절대 사용하지 않는다. 항상 Mermaid 코드 블록을 사용한다.
+
+**예시**:
+````markdown
+```mermaid
+graph TD
+    A[시작] --> B[처리]
+    B --> C[끝]
+```
+````
+
+**지원 다이어그램 유형**:
+- `graph TD/LR` - 플로우차트
+- `sequenceDiagram` - 시퀀스 다이어그램
+- `classDiagram` - 클래스 다이어그램
+- `stateDiagram-v2` - 상태 다이어그램
+- `pie` - 파이 차트
+- `gantt` - 간트 차트
+
 ## Important Considerations
 
 ### TypeScript Configuration

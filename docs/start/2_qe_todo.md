@@ -27,5 +27,5 @@
 
 ## 4단계: PR 생성
 
-- [ ] feature 브랜치에 커밋
-- [ ] PR 생성 (reviewer: kenshin579)
+- [x] feature 브랜치에 커밋
+- [x] PR 생성 (reviewer: kenshin579) — #78

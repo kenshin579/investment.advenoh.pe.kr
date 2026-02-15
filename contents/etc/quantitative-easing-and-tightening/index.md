@@ -571,11 +571,34 @@ QT가 진행 중이라도 TGA나 역레포가 줄면 순유동성은 오히려 �
 
 ## 15.5 금리 전망 확인
 
-| 지표 | 사이트 | 용도 |
-|------|--------|------|
-| CME FedWatch Tool | [CME Group](https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html) | 시장의 금리 인상/인하 확률 실시간 확인 |
-| 연준 점도표 (Dot Plot) | [Federal Reserve](https://www.federalreserve.gov/monetarypolicy/fomcprojtabl20241218.htm) | FOMC 위원들의 향후 금리 전망 |
-| 미국 10년물 국채 금리 | [FRED - DGS10](https://fred.stlouisfed.org/series/DGS10) | 장기금리 방향 (QE/QT 영향 확인) |
+### CME FedWatch Tool
+
+다음 FOMC 회의에서 금리가 어떻게 변할지, 시장 참여자들의 예측 확률을 실시간으로 보여준다.
+
+![CME FedWatch Tool - 금리 변동 확률](cme-fedwatch-tool.png)
+
+- **확인**: [CME FedWatch Tool](https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html)
+- **읽는 법**: 각 막대가 목표 금리 구간별 확률을 나타낸다. "No Change" 확률이 높으면 동결, "Ease" 확률이 높아지면 금리 인하(비둘기파 전환) 신호
+
+### 미국 10년물 국채 금리 (DGS10)
+
+장기금리의 방향을 보여주는 핵심 지표다. QE 시 하락, QT 시 상승하는 경향이 뚜렷하다.
+
+![미국 10년물 국채 금리 추이](fred-10yr-treasury-yield.png)
+
+- **확인**: [FRED - DGS10](https://fred.stlouisfed.org/series/DGS10)
+- **업데이트**: 일간
+- **읽는 법**: 2020년 QE 시기 1% 이하까지 하락 → 2022년 QT+금리 인상 시기 5% 근접까지 급등. 장기금리가 급등하면 성장주에 불리하고, 하락하면 유리하다
+
+### 연준 점도표 (Dot Plot)
+
+FOMC 위원 18명이 향후 금리 경로를 어떻게 전망하는지 보여주는 차트다.
+
+![연준 점도표 (Dot Plot)](cme-dot-plot.png)
+
+- **확인**: [CME FedWatch Tool - Dot Plot](https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html) (Dot Plot > Chart 클릭)
+- **업데이트**: 분기별 (3, 6, 9, 12월 FOMC 회의 후)
+- **읽는 법**: 각 점(dot)이 개별 FOMC 위원의 금리 전망이다. 검은 점은 최신 회의 전망, 하늘색 점은 이전 회의 전망을 나타낸다. 점들의 중간값(median)이 하락 추세면 금리 인하 방향, 상승 추세면 금리 인상 방향을 의미한다
 
 # 16. 자주 헷갈리는 개념 정리
 

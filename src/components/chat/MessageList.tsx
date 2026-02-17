@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { Bot } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { Bot, ThumbsUp, ThumbsDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { SourceLinks } from "./SourceLinks";
+import { sendFeedback } from "@/lib/chat-api";
 import type { SourceDocument } from "@/lib/chat-api";
 
 export interface Message {
@@ -12,7 +13,11 @@ export interface Message {
   role: "user" | "assistant";
   content: string;
   sources?: SourceDocument[];
+  message_id?: string;
+  question?: string;
 }
+
+type FeedbackStatus = "idle" | "sending" | "done";
 
 interface MessageListProps {
   messages: Message[];
@@ -21,10 +26,43 @@ interface MessageListProps {
 
 export function MessageList({ messages, isLoading }: MessageListProps) {
   const bottomRef = useRef<HTMLDivElement>(null);
+  const [feedbackMap, setFeedbackMap] = useState<
+    Record<string, { status: FeedbackStatus; rating?: "up" | "down" }>
+  >({});
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isLoading]);
+
+  const handleFeedback = useCallback(
+    async (msg: Message, rating: "up" | "down") => {
+      if (!msg.message_id) return;
+
+      setFeedbackMap((prev) => ({
+        ...prev,
+        [msg.id]: { status: "sending", rating },
+      }));
+
+      try {
+        await sendFeedback({
+          message_id: msg.message_id,
+          blog_id: "investment",
+          question: msg.question || "",
+          rating,
+        });
+        setFeedbackMap((prev) => ({
+          ...prev,
+          [msg.id]: { status: "done", rating },
+        }));
+      } catch {
+        setFeedbackMap((prev) => ({
+          ...prev,
+          [msg.id]: { status: "idle" },
+        }));
+      }
+    },
+    []
+  );
 
   return (
     <ScrollArea className="flex-1 px-4">
@@ -37,29 +75,66 @@ export function MessageList({ messages, isLoading }: MessageListProps) {
           </div>
         )}
 
-        {messages.map((msg) => (
-          <div
-            key={msg.id}
-            className={cn(
-              "flex",
-              msg.role === "user" ? "justify-end" : "justify-start"
-            )}
-          >
+        {messages.map((msg) => {
+          const feedback = feedbackMap[msg.id];
+          const feedbackStatus = feedback?.status ?? "idle";
+
+          return (
             <div
+              key={msg.id}
               className={cn(
-                "max-w-[85%] rounded-lg px-3 py-2 text-sm",
-                msg.role === "user"
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-muted text-foreground"
+                "flex",
+                msg.role === "user" ? "justify-end" : "justify-start"
               )}
             >
-              <p className="whitespace-pre-wrap">{msg.content}</p>
-              {msg.role === "assistant" && msg.sources && (
-                <SourceLinks sources={msg.sources} />
-              )}
+              <div
+                className={cn(
+                  "max-w-[85%] rounded-lg px-3 py-2 text-sm",
+                  msg.role === "user"
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-muted text-foreground"
+                )}
+              >
+                <p className="whitespace-pre-wrap">{msg.content}</p>
+                {msg.role === "assistant" && msg.sources && (
+                  <SourceLinks sources={msg.sources} />
+                )}
+                {msg.role === "assistant" && msg.message_id && (
+                  <div className="mt-2 flex items-center gap-1 border-t border-border/40 pt-2 text-xs text-muted-foreground">
+                    {feedbackStatus === "done" ? (
+                      <span>
+                        피드백 감사합니다{" "}
+                        {feedback?.rating === "up" ? "👍" : "👎"}
+                      </span>
+                    ) : feedbackStatus === "sending" ? (
+                      <span>전송 중...</span>
+                    ) : (
+                      <>
+                        <span>도움이 됐나요?</span>
+                        <button
+                          type="button"
+                          onClick={() => handleFeedback(msg, "up")}
+                          className="ml-1 rounded p-1 hover:bg-background/60"
+                          aria-label="도움이 됐어요"
+                        >
+                          <ThumbsUp className="h-3.5 w-3.5" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleFeedback(msg, "down")}
+                          className="rounded p-1 hover:bg-background/60"
+                          aria-label="도움이 안 됐어요"
+                        >
+                          <ThumbsDown className="h-3.5 w-3.5" />
+                        </button>
+                      </>
+                    )}
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
 
         {isLoading && (
           <div className="flex justify-start">

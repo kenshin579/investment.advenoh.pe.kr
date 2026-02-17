@@ -9,6 +9,7 @@ import React from 'react'
 import { Metadata } from 'next'
 import { generateWebSiteSchema } from '@/lib/json-ld-schema'
 import { GoogleAdsense } from '@/components/GoogleAdsense'
+import { ChatButton } from '@/components/chat/ChatButton'
 
 // 폰트 최적화 설정
 const inter = Inter({
@@ -103,6 +104,7 @@ export default function RootLayout({
               <Footer />
             </div>
           </ClientOnly>
+          <ChatButton />
         </ThemeProvider>
       </body>
     </html>

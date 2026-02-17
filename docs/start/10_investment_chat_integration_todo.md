@@ -3,7 +3,7 @@
 ## 선행 조건
 
 - [x] `7_blog_chat_integration` (blog-v2 ChatWindow) 구현 완료
-- [ ] `ai-chatbot.advenoh.pe.kr` API 서버 정상 동작 확인
+- [x] `ai-chatbot.advenoh.pe.kr` API 서버 정상 동작 확인
 
 ---
 
@@ -16,13 +16,13 @@
 
 ### M2: investment Collection 인덱싱
 
-- [ ] `ai-chatbot.advenoh.pe.kr`에 investment Collection 생성
-- [ ] `contents/` 디렉토리 (약 95개 포스트) 인덱싱
-- [ ] 인덱싱 결과 확인 (검색 테스트)
+- [x] `ai-chatbot.advenoh.pe.kr`에 investment Collection 생성
+- [x] `contents/` 디렉토리 (약 95개 포스트) 인덱싱
+- [x] 인덱싱 결과 확인 (검색 테스트)
 
 ### M3: API 서버 CORS 설정
 
-- [ ] `ai-chatbot.advenoh.pe.kr`에 `investment.advenoh.pe.kr` 도메인 CORS 허용 추가
+- [x] `ai-chatbot.advenoh.pe.kr`에 `investment.advenoh.pe.kr` 도메인 CORS 허용 추가 (이미 `allow_origins=["*"]`로 전체 허용)
 
 ### M4: ChatWindow 컴포넌트 구현
 
@@ -49,20 +49,20 @@
 
 #### UI/UX 확인
 
-- [ ] 다크/라이트 모드 테마 연동 확인
-- [ ] 모바일 반응형 확인
-- [ ] 메시지 자동 스크롤 동작 확인
-- [ ] 로딩 상태 확인
-- [ ] 에러 처리 확인
+- [x] 다크/라이트 모드 테마 연동 확인
+- [x] 모바일 반응형 확인
+- [x] 메시지 자동 스크롤 동작 확인
+- [x] 로딩 상태 확인
+- [x] 에러 처리 확인
 
 ### M5: 배포 및 E2E 테스트
 
 - [x] `npm run build` 빌드 성공 확인
-- [ ] `npm run check` 타입 체크 통과 확인
-- [ ] **MCP Playwright 테스트**:
-  - [ ] 플로팅 버튼 클릭 → ChatWindow 오픈 확인
-  - [ ] 질문 입력 → 답변 수신 확인
-  - [ ] 소스 인용 링크 표시 확인
-  - [ ] 멀티턴 대화 동작 확인
-  - [ ] 모바일 반응형 확인
+- [ ] `npm run check` 타입 체크 통과 확인 (기존 코드 타입 에러 존재, chat 컴포넌트는 에러 없음)
+- [x] **MCP Playwright 테스트**:
+  - [x] 플로팅 버튼 클릭 → ChatWindow 오픈 확인
+  - [x] 질문 입력 → 답변 수신 확인
+  - [x] 소스 인용 링크 표시 확인
+  - [x] 멀티턴 대화 동작 확인
+  - [x] 모바일 반응형 확인
 - [ ] PR 생성 및 배포

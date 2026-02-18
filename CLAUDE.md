@@ -382,8 +382,10 @@ SITE_URL=https://investment.advenoh.pe.kr # Used for SEO/sitemap generation (def
 
 ## Development Workflow
 
-1. **Adding Blog Posts**:
-   - Create `contents/{category}/{slug}/index.md` with frontmatter
+1. **Adding Blog Posts** (3단계 프로세스):
+   - **Step 1: PRD 작성** — `docs/start/`에 PRD(기획 문서)를 작성하여 목차, 논의사항 등을 정리
+   - **Step 2: 초안 작성** — PRD 기반으로 `docs/start/`에 블로그 초안(index.md)을 작성. 이 단계에서는 `contents/`에 직접 넣지 않는다
+   - **Step 3: 최종 반영** — 사용자가 리뷰 완료 후 `contents/{category}/{slug}/index.md`로 이동. 완료된 PRD는 `docs/done/`으로 이동
    - Restart `npm run dev` or run build to regenerate JSON data
 
 2. **Adding Components**:

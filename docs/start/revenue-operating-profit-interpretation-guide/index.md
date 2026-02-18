@@ -599,5 +599,11 @@ graph TD
 
 # 8. 참고
 
-- `docs/start/7_sheet_research.md` 리서치 내용 기반
-- 각 기업 사례는 공개된 실적 자료 및 뉴스 기반 정리
+- [기업의 매출과 이익을 해석하는 5가지 관점 — 똑똑한 투자전략](https://screener.co.kr/blog/revenue)
+- [영업이익 뜻, 계산방법, 당기순이익 차이점, 주식투자 활용법 — 알파스퀘어](https://alphasquare.co.kr/home/insight/posts/0ec4f761-4843-41f2-bfea-83bd6ac47ab9)
+- [영업이익, 순이익, 영업활동으로인한현금흐름 해석 — 브런치](https://brunch.co.kr/@jongsiksong/5)
+- [매출·이익만 보면 하수…재무제표에서 꼭 체크할 지표는? — 사이다경제](https://cidermics.com/contents/detail/1252)
+- [매출 줄고 영업익 늘고… 1분기 대기업 불황형 흑자 — 한국경제](https://www.hankyung.com/economy/article/2022052223777)
+- [매출 증가했지만 영업이익은 뚝… '호황형 적자' 대기업 늘어나 — 스트레이트뉴스](https://www.straightnews.co.kr/news/articleView.html?idxno=226655)
+- [매출과 영업이익이 감소하는 이유와 해결방법 — Finex](https://www.finex.ceo/en/article/why-profit-decline)
+- [재무제표 보는 법 — 초보 투자자를 위한 해설 — KB Think](https://kbthink.com/investment/101/financial-statements.html)

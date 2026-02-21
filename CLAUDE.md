@@ -263,6 +263,18 @@ graph TD
 - `pie` - 파이 차트
 - `gantt` - 간트 차트
 
+### 마지막 섹션 제목
+
+블로그 글의 마지막 본문 섹션(참고 자료 직전)은 "정리"가 아닌 **"마무리"**로 작성한다.
+
+### 이모지 사용 금지
+
+**중요**: 블로그 콘텐츠(`contents/`, `docs/`)에 이모지(😰, 😊, 🎉, ✅ 등)를 사용하지 않는다. AI가 생성한 느낌을 주어 신뢰도가 떨어지므로, 텍스트만으로 표현한다.
+
+- Mermaid 다이어그램 노드 라벨에 이모지 금지
+- 테이블 셀에 이모지 금지
+- 본문 텍스트에 이모지 금지
+
 ## 주요 참고사항
 
 ### TypeScript 설정
@@ -368,7 +380,8 @@ SITE_URL=https://investment.advenoh.pe.kr # SEO/사이트맵 생성에 사용 (�
 │   ├── stock/
 │   └── weekly/
 ├── docs/                 # 기획 및 작업 문서
-│   ├── start/           # 작업 중인 PRD/초안
+│   ├── start/           # 작업 중인 PRD/초안 (draft)
+│   ├── merge_ready/     # 리뷰 완료, contents 이동 대기
 │   └── done/            # 완료된 문서
 ├── public/               # 정적 에셋
 │   ├── contents/        # 블로그 글 이미지
@@ -385,10 +398,11 @@ SITE_URL=https://investment.advenoh.pe.kr # SEO/사이트맵 생성에 사용 (�
 
 ## 개발 워크플로우
 
-1. **블로그 글 추가** (3단계 프로세스):
+1. **블로그 글 추가** (4단계 프로세스):
    - **Step 1: PRD 작성** — `docs/start/`에 PRD(기획 문서)를 작성하여 목차, 논의사항 등을 정리
-   - **Step 2: 초안 작성** — PRD 기반으로 `docs/start/`에 블로그 초안(index.md)을 작성. 이 단계에서는 `contents/`에 직접 넣지 않는다
-   - **Step 3: 최종 반영** — 사용자가 리뷰 완료 후 `contents/{category}/{slug}/index.md`로 이동. 완료된 PRD는 `docs/done/`으로 이동
+   - **Step 2: 초안 작성** — PRD 기반으로 `docs/start/{slug}/index.md` 형태로 블로그 초안을 작성. 이 단계에서는 `contents/`에 직접 넣지 않는다
+   - **Step 3: 리뷰 완료** — 사용자가 리뷰 완료 후 `docs/merge_ready/{slug}/index.md`로 이동. `docs/start/`에는 아직 작업 중인 초안만 남긴다
+   - **Step 4: 최종 반영** — `docs/merge_ready/`에서 `contents/{category}/{slug}/index.md`로 이동. 완료된 PRD는 `docs/done/`으로 이동
    - `npm run dev` 재시작 또는 빌드를 실행하여 JSON 데이터 재생성
 
 2. **컴포넌트 추가**:

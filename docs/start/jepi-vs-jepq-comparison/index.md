@@ -92,8 +92,8 @@ JEPI와 JEPQ는 일반 커버드콜 ETF와 달리 ELN(주가연계증권)을 활
 
 ```mermaid
 graph TD
-    A[JEPI / JEPQ ETF] --> B[주식 포트폴리오<br/>80~85%]
-    A --> C[ELN 주가연계증권<br/>15~20%]
+    A["JEPI / JEPQ ETF"] --> B["주식 포트폴리오 (80-85%)"]
+    A --> C["ELN 주가연계증권 (15-20%)"]
     C --> D[JP모건 트레이딩 데스크]
     D --> E[지수 콜옵션 매도]
     E --> F[옵션 프리미엄 수취]

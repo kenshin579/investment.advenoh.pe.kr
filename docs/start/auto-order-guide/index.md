@@ -1,8 +1,8 @@
 ---
 title: "미래에셋증권 서버자동주문 완벽 가이드 — MTS, HTS에서 자동 매수/매도 설정하기"
 description: "미래에셋증권 서버자동주문의 개념부터 MTS와 HTS에서 Stoploss, Trailing Stop 설정 방법, 해외주식 자동주문까지. 장 시간에 모니터링 없이 자동 매매하는 방법을 정리합니다."
-date: 2026-XX-XX
-update: 2026-XX-XX
+date: 2026-03-10
+update: 2026-03-10
 category: Stock
 tags:
   - 서버자동주문

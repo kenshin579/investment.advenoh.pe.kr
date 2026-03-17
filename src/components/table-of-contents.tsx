@@ -121,6 +121,8 @@ export function TableOfContents({ content, className = "" }: TableOfContentsProp
                   remarkPlugins={[remarkGfm]}
                   components={{
                     p: ({ children }) => <span>{children}</span>,
+                    ol: ({ children }) => <span>{children}</span>,
+                    li: ({ children }) => <span>{children}</span>,
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     code: (props: any) => {
                       const { inline, children, className, ...rest } = props;
@@ -134,8 +136,7 @@ export function TableOfContents({ content, className = "" }: TableOfContentsProp
                     a: ({ children }) => <span>{children}</span>,
                   }}
                 >
-                  {item.text}
-                </ReactMarkdown>
+                  {item.text.replace(/^(\d+)\.\s/, '$1\\. ')}
               </button>
             ))}
           </nav>

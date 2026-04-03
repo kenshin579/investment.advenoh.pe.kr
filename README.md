@@ -1,8 +1,9 @@
+[![HitCount](http://hits.dwyl.io/kenshin579/advenohpekr.svg)](http://hits.dwyl.io/kenshin579/advenohpekr)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/359125d0-4402-402d-9168-5b48f60d6a6c/deploy-status)](https://app.netlify.com/sites/advenoh/deploys)
 
 # Frank's Investment Insights Blog - Table of Contents
 
-Updated 2026-01-03
+Updated 2026-03-17
 
 현재 [블로그](https://investment.advenoh.pe.kr)에 작성된 내용입니다.
 
@@ -12,6 +13,9 @@ Updated 2026-01-03
 * [구글 Adsense 싱가포르 세금 정보 제출방법](https://investment.advenoh.pe.kr/google-adsense-singapore-tax-submission/)
 * [구글 Adsense 에 결제 추가하는 방법](https://investment.advenoh.pe.kr/google-adsense-add-payment-method/)
 * [구글 Adsense에 필요한 거주자증명서 발급 신청하는 방법](https://investment.advenoh.pe.kr/google-adsense-residency-certificate-application/)
+* [양적완화(QE)와 양적긴축(QT) 완벽 정리 — 통화정책 사이클과 투자 전략](https://investment.advenoh.pe.kr/quantitative-easing-and-tightening/)
+* [연금저축, 넣을 때보다 꺼낼 때가 더 중요하다 — 납입부터 인출까지 절세 전략 총정리](https://investment.advenoh.pe.kr/pension-savings-withdrawal-strategy/)
+* [연말정산 잘 준비하기 — 직장인 절세 실전 가이드](https://investment.advenoh.pe.kr/year-end-tax-settlement-preparation-guide/)
 * [인터넷으로 내용증명 작성하기](https://investment.advenoh.pe.kr/write-content-certification-online/)
 * [자산 운용사 약어 모음](https://investment.advenoh.pe.kr/asset-management-abbreviations/)
 * [투자 명언](https://investment.advenoh.pe.kr/investment-quotes/)

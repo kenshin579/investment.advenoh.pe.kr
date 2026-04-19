@@ -137,6 +137,7 @@ export function TableOfContents({ content, className = "" }: TableOfContentsProp
                   }}
                 >
                   {item.text.replace(/^(\d+)\.\s/, '$1\\. ')}
+                </ReactMarkdown>
               </button>
             ))}
           </nav>

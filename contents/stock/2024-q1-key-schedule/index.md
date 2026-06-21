@@ -13,7 +13,7 @@ tags:
 series: "2024년 글로벌 시장 전망 및 주요 일정"
 ---
 
-2024년 1분기 주요 일정 정리한 내용 공유합니다. 1월에 비트코인 현물 ETF가 승인될지가 강권일 듯하고 IT 관련 회사 실적 발표가 1월, 2월에 예정이 되어 있어서 이것도 주목해야 한다.
+2024년 1분기 주요 일정을 정리해 공유합니다. 1월에는 비트코인 현물 ETF 승인 여부가 관건이고, IT 기업 실적 발표도 1월과 2월에 몰려 있어 같이 챙겨볼 만합니다.
 
 > 1분기 주요 일정은 [구글 캘린더](https://calendar.google.com/calendar/u/0?cid=OGNjOTU3OWMwYmUyMDA0ODZjMWViZGQ4ODAxODcyMDc3OTRiMDdjMWU3NmRjMGIzNjYxOWZlMzA5ZjdjNTM4M0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t)에서 확인할 수 있습니다.
 

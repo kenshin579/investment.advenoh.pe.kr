@@ -3,11 +3,12 @@
 
 # Frank's Investment Insights Blog - Table of Contents
 
-Updated 2026-04-19
+Updated 2026-07-26
 
 현재 [블로그](https://investment.advenoh.pe.kr)에 작성된 내용입니다.
 
 ## Etc
+* [Claude Code로 투자 리서치하기 - 금융 스킬 설치부터 검증까지](https://investment.advenoh.pe.kr/claude-code-finance-skills-guide/)
 * [Gatsby 블로그 구글 검색에 더 많이 노출하는 방법](https://investment.advenoh.pe.kr/gatsby-blog-google-seo-tips/)
 * [ISA 계좌, 이것만 알면 된다 — 비과세·손익 통산·분리과세 총정리](https://investment.advenoh.pe.kr/isa-basics/)
 * [구글 Adsense 미국 세금 정보 입력하는 방법](https://investment.advenoh.pe.kr/google-adsense-us-tax-info-entry/)
@@ -53,12 +54,14 @@ Updated 2026-04-19
 * [3분기 미국 관심 배당주 정리](https://investment.advenoh.pe.kr/q3-us-dividend-stocks-of-interest/)
 * [CMA의 종류](https://investment.advenoh.pe.kr/types-of-cma/)
 * [CPI와 PPI의 차이점](https://investment.advenoh.pe.kr/differences-between-cpi-and-ppi/)
+* [Claude로 반도체 섹터 리포트를 뽑고 수치 62개를 검증해봤다](https://investment.advenoh.pe.kr/us-semiconductor-sector-overview/)
 * [ISA 만기, 연장할까 해지할까? 꼭 알아야 할 선택 가이드](https://investment.advenoh.pe.kr/isa-maturity-extension-or-termination-guide/)
 * [SK텔레콤 주가 배당수익률로 방어선은 어디일까?](https://investment.advenoh.pe.kr/sk-telecom-dividend-yield-support/)
 * [TDF에 대해서 알아보자](https://investment.advenoh.pe.kr/about-target-date-funds/)
 * [Tradingview에서 꼭 써봐야 할 유용한 Indicator 추천 모음](https://investment.advenoh.pe.kr/must-try-tradingview-indicator-recommendations/)
 * [경기침체 징조는 어떻게 판단하나](https://investment.advenoh.pe.kr/how-to-identify-signs-of-economic-recession/)
 * [공매도란? 대차거래부터 개인투자자 영향까지 완벽 정리](https://investment.advenoh.pe.kr/short-selling-complete-guide/)
+* [구글은 지금 싼가 - Claude comps 스킬로 빅테크 피어 비교](https://investment.advenoh.pe.kr/alphabet-comps-analysis/)
 * [금리, 환율, 채권, 주가 서로간의 상관관계](https://investment.advenoh.pe.kr/correlation-between-interest-rates-exchange-rates-bonds-and-stock-prices/)
 * [금리인하 수혜주 : 유망 종목과 투자 전략](https://investment.advenoh.pe.kr/interest-rate-cut-beneficiary-stocks-and-investment-strategies/)
 * [금융소득 종합과세 대상자 피하는 방법](https://investment.advenoh.pe.kr/how-to-avoid-comprehensive-taxation-on-financial-income/)

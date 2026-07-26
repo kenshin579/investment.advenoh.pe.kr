@@ -17,23 +17,27 @@
 
 "항목"은 아래 검증표의 1행을 뜻한다. 한 행이 여러 개의 개별 수치를 묶는 경우가 있으므로 행 수와 개별 숫자 개수는 다르다. 각 행에 몇 개를 묶었는지는 비고에 적었다.
 
+**판정 뒤에 붙은 괄호는 부가 설명이며, 집계는 괄호를 뺀 선두 단어(일치 / 근사 / 불일치 / 출처확인불가) 기준이다.** 예: `불일치(누락)`은 불일치 1건으로 센다.
+
+출처 컬럼의 URL은 문서 말미 부록에 전부 모아두었다. 표 안에서는 매체명으로 줄여 적고, **URL을 확보하지 못한 경우 "URL 미기록"이라고 명시했다.**
+
 ---
 
 ## 1. 검증 결과 — 시장 규모·성장률 (§2.1, §2.2)
 
 | # | 항목 | 스킬이 제시한 값 | 확인된 값 | 출처 | 판정 |
 |---|---|---|---|---|---|
-| 1 | 2024 글로벌 반도체 매출 | $630.5B | $630.5B | SIA 2026-02 릴리스 (semiconductors.org, 검색 결과 본문) | 일치 |
-| 2 | 2025 글로벌 반도체 매출 | $791.7B (+25.6%) | $791.7B, +25.6% | 동상 | 일치 |
-| 3 | Q4 2025 매출 | $236.6B (+37.1% YoY, +13.6% QoQ) | $236.6B, +37.1% YoY, +13.6% QoQ | 동상 | 일치 |
-| 4 | Q1 2026 매출 | +25% QoQ | +25% QoQ (SIA 릴리스 제목에 명시) | semiconductors.org/global-semiconductor-sales-increase-25-from-q4-2025-to-q1-2026/ | 일치 |
-| 5 | WSTS Spring 2026 전망 | $1.51T (+90%) | USD 1.51조, "grow 90 percent in 2026" | wsts.org/76/103/ 원문 페치 | 일치 |
-| 6 | WSTS 2027 전망 | ~$1.9T (+27%) | "approximately USD 1.9 trillion", 27% | 동상 | 일치 |
-| 7 | WSTS Autumn 2025 전망 | $975B (+>25%) | 미확인 (PDF 원문 미검증) | — | 출처확인불가 |
-| 8 | SIA 2026 전망 | "약 $1조" | "global sales in 2026 are projected to reach roughly $1 trillion" | SIA 릴리스 본문 | 일치 |
-| 9 | IDC 2026 전망 | $1.29T (+52.8%) | 미확인 | — | 출처확인불가 |
-| 10 | WSTS 2026 세그먼트 성장률 6종 | 메모리 +250%(>$800B), 로직 +37%, MPU +20%, 아날로그 +10%, 디스크리트 +8%, 센서·광전자 +3% | 전부 동일 | wsts.org/76/103/ 원문 페치 | 일치 (6개 수치) |
-| 11 | WSTS 2026 지역별 성장률 4종 | 미주 +112%, 아태 +87%, 유럽 +58%, 일본 +28% | 전부 동일 | 동상 | 일치 (4개 수치) |
+| 1 | 2024 글로벌 반도체 매출 | $630.5B | $630.5B | [SIA 2025년 연간 릴리스][s1] (원문 403, 검색 결과에 인용된 본문으로 대조) | 일치 |
+| 2 | 2025 글로벌 반도체 매출 | $791.7B (+25.6%) | $791.7B, +25.6% | [SIA 2025년 연간 릴리스][s1] | 일치 |
+| 3 | Q4 2025 매출 | $236.6B (+37.1% YoY, +13.6% QoQ) | $236.6B, +37.1% YoY, +13.6% QoQ | [SIA 2025년 연간 릴리스][s1] | 일치 |
+| 4 | Q1 2026 매출 | +25% QoQ | +25% QoQ (릴리스 제목에 명시) | [SIA Q1 2026 릴리스][s2] | 일치 |
+| 5 | WSTS Spring 2026 전망 | $1.51T (+90%) | USD 1.51조, "grow 90 percent in 2026" | [WSTS Spring 2026][w1] 원문 페치 | 일치 |
+| 6 | WSTS 2027 전망 | ~$1.9T (+27%) | "approximately USD 1.9 trillion", 27% | [WSTS Spring 2026][w1] | 일치 |
+| 7 | WSTS Autumn 2025 전망 | $975B (+>25%) | 미확인 | URL 미기록 (`raw.md` 인용 WSTS PDF 미조회) | 출처확인불가 |
+| 8 | SIA 2026 전망 | "약 $1조" | "global sales in 2026 are projected to reach roughly $1 trillion" | [SIA 2025년 연간 릴리스][s1] | 일치 |
+| 9 | IDC 2026 전망 | $1.29T (+52.8%) | 미확인 | URL 미기록 (`raw.md` 인용 IDC 블로그 미조회) | 출처확인불가 |
+| 10 | WSTS 2026 세그먼트 성장률 6종 | 메모리 +250%(>$800B), 로직 +37%, MPU +20%, 아날로그 +10%, 디스크리트 +8%, 센서·광전자 +3% | 전부 동일 | [WSTS Spring 2026][w1] 원문 페치 | 일치 (6개 수치) |
+| 11 | WSTS 2026 지역별 성장률 4종 | 미주 +112%, 아태 +87%, 유럽 +58%, 일본 +28% | 전부 동일 | [WSTS Spring 2026][w1] | 일치 (4개 수치) |
 
 **소결.** §2.1~§2.2는 이번 검증에서 가장 상태가 좋은 구간이다. WSTS Spring 2026 원문 페이지를 직접 페치해 11개 수치가 전부 일치했다. SIA 원문은 HTTP 403이라 검색 결과 본문에 실린 인용으로 대조했고, 4개 수치가 전부 맞았다.
 
@@ -43,16 +47,16 @@
 
 | # | 항목 | 스킬이 제시한 값 | 확인된 값 | 출처 | 판정 |
 |---|---|---|---|---|---|
-| 12 | 파운드리 Q1 2026 상위 10사 점유율 | TSMC 72.3%, 삼성 6.5%, SMIC 5.1%, UMC 3.9%, GF 3.3%, 화홍 2.5%, Tower·Nexchip·VIS·PSMC 각 0.8% | 전부 동일 | TrendForce Q1 2026 (Semiecosystem / TelecomLead / EE Times Asia 재인용) | 일치 (10개 수치) |
-| 13 | 상위 10 파운드리 Q1 2026 매출 | $47.95B (+3.7% QoQ) | US$47.95B, +3.7% QoQ | 동상 | 일치 |
-| 14 | TSMC Q1 2026 파운드리 매출 | $35.86B | "nearly $35.86 billion" | Semiecosystem (TrendForce 인용) | 일치 |
-| 15 | TSMC 파운드리 점유율 QoQ | 70.4% → 72.3% | 70.4% → 72.3% | 동상 | 일치 |
-| 16 | **"TSMC 점유율 67.6% vs 72.3% 출처 충돌"** (`raw.md:89`) | 두 값 모두 TrendForce 인용, 차이는 "상위10사 기준 vs 전체 시장 기준"으로 추정 | **출처 충돌이 아니라 연도 오류.** 67.6%는 **Q1 2025** 수치 (TSMC 매출 $25.52B, 직전 분기 67.1%) | gulfnews.com 기사 원문 페치 | 불일치 |
-| 17 | DRAM Q1 2026 매출·점유율 | 삼성 38.5%/$37.32B, SK하이닉스 28.8%/$27.98B, 마이크론 22.4%/$21.75B | 전부 동일 | TrendForce 20260601-13070 원문 페치 | 일치 (6개 수치) |
-| 18 | DRAM 산업 Q1 2026 규모·성장 | +81% QoQ, 총 $97B "(+81% YoY)" | $97B, **+81% QoQ**. YoY 아님 | 동상 | 근사 (값 일치, QoQ/YoY 라벨 오류) |
-| 19 | **SK하이닉스 DRAM 점유율 QoQ** | 32.9% → 28.8% (−4.1pt) | **32.1% → 28.8% (−3.3pt).** Q4 2025 SK하이닉스 $17.22B, 32.1% | TrendForce 20260226-12937 원문 페치 | 불일치 |
-| 20 | 삼성 DRAM 점유율 QoQ | 36.5% → 38.5% (+2.0pt) | **36.0% → 38.5% (+2.5pt).** Q4 2025 삼성 $19.30B, 36% | 동상 | 불일치 |
-| 21 | CXMT DRAM 점유율 3% → 8% | Counterpoint 인용 (X 게시물) | 미확인 | — | 출처확인불가 |
+| 12 | 파운드리 Q1 2026 상위 10사 점유율 | TSMC 72.3%, 삼성 6.5%, SMIC 5.1%, UMC 3.9%, GF 3.3%, 화홍 2.5%, Tower·Nexchip·VIS·PSMC 각 0.8% | 전부 동일 | TrendForce Q1 2026 데이터, [Semiecosystem][f1] · [TelecomLead][f2] · [EE Times Asia][f3] 재인용 | 일치 (10개 수치) |
+| 13 | 상위 10 파운드리 Q1 2026 매출 | $47.95B (+3.7% QoQ) | US$47.95B, +3.7% QoQ | [Semiecosystem][f1] · [EE Times Asia][f3] | 일치 |
+| 14 | TSMC Q1 2026 파운드리 매출 | $35.86B | "nearly $35.86 billion" | [Semiecosystem][f1] (TrendForce 인용) | 일치 |
+| 15 | TSMC 파운드리 점유율 QoQ | 70.4% → 72.3% | 70.4% → 72.3% | [Semiecosystem][f1] | 일치 |
+| 16 | **"TSMC 점유율 67.6% vs 72.3% 출처 충돌"** (`raw.md:89`) | 두 값 모두 TrendForce 인용, 차이는 "상위10사 기준 vs 전체 시장 기준"으로 추정 | **출처 충돌이 아니라 연도 오류.** 67.6%는 **Q1 2025** 수치 (TSMC 매출 $25.52B, 직전 분기 67.1%) | [gulfnews][f4] 기사 원문 페치 | 불일치 |
+| 17 | DRAM Q1 2026 매출·점유율 | 삼성 38.5%/$37.32B, SK하이닉스 28.8%/$27.98B, 마이크론 22.4%/$21.75B | 전부 동일 | [TrendForce DRAM Q1 2026][t1] 원문 페치 | 일치 (6개 수치) |
+| 18 | DRAM 산업 Q1 2026 규모·성장 | +81% QoQ, 총 $97B "(+81% YoY)" | $97B, **+81% QoQ**. YoY 아님 | [TrendForce DRAM Q1 2026][t1] | 근사 (값 일치, QoQ/YoY 라벨 오류) |
+| 19 | **SK하이닉스 DRAM 점유율 QoQ** | 32.9% → 28.8% (−4.1pt) | **32.1% → 28.8% (−3.3pt).** Q4 2025 SK하이닉스 $17.22B, 32.1% | [TrendForce DRAM Q4 2025][t2] 원문 페치 | 불일치 |
+| 20 | 삼성 DRAM 점유율 QoQ | 36.5% → 38.5% (+2.0pt) | **36.0% → 38.5% (+2.5pt).** Q4 2025 삼성 $19.30B, 36% | [TrendForce DRAM Q4 2025][t2] | 불일치 |
+| 21 | CXMT DRAM 점유율 3% → 8% | Counterpoint 인용 (X 게시물) | 미확인 | [raw.md 인용 X 게시물][x1] (내용 미검증) | 출처확인불가 |
 
 ### 16번 상세 — 이번 검증의 두 번째 핵심 발견
 
@@ -90,16 +94,16 @@ TrendForce가 공개한 Q1 2026 QoQ 성장률로 역산해도 같은 답이 나�
 
 | # | 항목 | 스킬이 제시한 값 | 확인된 값 | 출처 | 판정 |
 |---|---|---|---|---|---|
-| 22 | **2026 하이퍼스케일러 capex** | **약 $600B (+70% YoY)**, 출처 Sourceability | **인용 출처에 해당 수치가 존재하지 않음.** 타 출처는 $630B~$725B(+77%) | 아래 상세 | **불일치** |
-| 23 | 하이퍼스케일 분기 capex $100B 최초 돌파(Q3 2025) | 출처 Sourceability | 인용 출처에 없음. 별도 확인 시 Synergy Research는 Q3 2025 하이퍼스케일 capex **$142B**(+약 180% YoY) 보고 | DataCenterDynamics / TechAfrica(Synergy 인용) | 근사 |
-| 24 | IDC 2026 데이터센터 반도체 매출 $477.1B | — | 미확인 | — | 출처확인불가 |
-| 25 | TrendForce Q2 2026 DRAM 계약가 +58~63%, NAND +70~75% | — | 미확인 | — | 출처확인불가 |
-| 26 | 2026 HBM 출하 300억 Gb 초과 | — | 미확인 | — | 출처확인불가 |
-| 27 | Broadcom FY26 AI 반도체 $56B / FY27 $100B 초과 | — | $56B(전년비 약 +180%), Hock Tan "in excess of $100 billion" | Broadcom Q2 FY26 어닝콜 (Benzinga·TechTimes 등 복수 보도) | 일치 |
-| 28 | TI Q2 2026 아날로그 $4.37B(+26%), 임베디드 $788M(+16%), GM +340bp QoQ | — | 미확인 | — | 출처확인불가 |
-| 29 | SEMI 총 장비 매출 2026 $139B / 2027 $156B | — | SEMI 릴리스 제목에 $139B(2026), $156B(2027) 명시 | semi.org 릴리스 2건 (제목 확인, 본문은 403) | 일치 |
-| 30 | **SEMI WFE 2026 +9.0% → $135.2B** | — | **총 장비 $139B와 정합 불가.** WFE는 총 장비의 부분집합인데 $135.2B는 $139B의 97%다. 나머지(조립·테스트)에 $3.8B밖에 남지 않는다 | 검색 결과 본문 대조 | 불일치 |
-| 31 | SEMI 300mm 팹 장비 2026 +18% → $133B | — | 미확인 | — | 출처확인불가 |
+| 22 | **2026 하이퍼스케일러 capex** | **약 $600B (+70% YoY)**, 출처 Sourceability | **인용 출처에 해당 수치가 존재하지 않음.** 타 출처는 $630B~$900B | [Sourceability][h0](수치 부재 확인 대상) · [Tom's Hardware][h1] · [valueaddvc][h2] · [datacenterrichness][h3] · [CNBC][h4] · [CreditSights][h5] | **불일치** |
+| 23 | 하이퍼스케일 분기 capex $100B 최초 돌파(Q3 2025) | 출처 Sourceability | 인용 출처에 없음. 별도 확인 시 Synergy Research는 Q3 2025 하이퍼스케일 capex **$142B**(+약 180% YoY) 보고 | [DataCenterDynamics][h6] · [TechAfrica][h7] (둘 다 Synergy Research 인용) | 근사 |
+| 24 | IDC 2026 데이터센터 반도체 매출 | $477.1B | 미확인 | URL 미기록 (`raw.md` 인용 IDC 블로그 미조회) | 출처확인불가 |
+| 25 | TrendForce Q2 2026 DRAM·NAND 계약가 전망 | DRAM +58~63% QoQ, NAND +70~75% QoQ | 미확인. 페치한 [TrendForce DRAM Q1 2026][t1] 본문에서는 해당 수치를 찾지 못함 (다른 릴리스에 있을 가능성 배제 못 함) | URL 미기록 | 출처확인불가 |
+| 26 | 2026 HBM 출하량 | 300억 Gb 초과 | 미확인 | URL 미기록 (`raw.md` 인용 TrendForce 20260602-13074 미조회) | 출처확인불가 |
+| 27 | Broadcom FY26 AI 반도체 $56B / FY27 $100B 초과 | — | $56B(전년비 약 +180%), Hock Tan "in excess of $100 billion" | Broadcom Q2 FY26 어닝콜, [Benzinga][b1] · [TechTimes][b2] 보도 | 일치 |
+| 28 | TI Q2 2026 세그먼트 상세 | 아날로그 $4.37B(+26%), 임베디드 $788M(+16%), GM +340bp QoQ | 미확인 (TI 총매출·이익률은 39~40행에서 EDGAR로 확인됨) | URL 미기록 (`raw.md` 인용 Futurum·DigiTimes 미조회) | 출처확인불가 |
+| 29 | SEMI 총 장비 매출 **2026 $139B** / 2027 $156B | — | **2027 $156B는 일치. 2026 $139B는 폐기된 구판 전망이다.** $139B는 SEMI의 **2024-12-08** 릴리스 수치이고, **2025-12-16** 연말 전망이 2026년을 **$145B**로 상향했다 | [SEMI 2024-12 릴리스][e1] · [SEMI 2025-12 릴리스][e2] · [PR Newswire 2025-12-16][e3] | 불일치 |
+| 30 | **SEMI WFE 2026 +9.0% → $135.2B** | — | **연도 혼동.** $135.2B는 **2027년** WFE 수치이고 **2026년 WFE는 $126.1B**다. SEMI 원문은 "expand 9.0% in 2026 and 7.3% in 2027, reaching $135.2 billion" — 2026 성장률과 2027 금액을 하나로 붙여 읽은 것이다 | [PR Newswire 2025-12-16][e3] · [Semiecosystem 장비 전망][e4] | 불일치 |
+| 31 | SEMI 300mm 팹 장비 2026 +18% → $133B | — | 미확인 (`raw.md` 인용 SEMI 300mm 릴리스 미검증) | URL 미기록 | 출처확인불가 |
 
 ### 22번 상세 — 이번 검증의 최대 발견
 
@@ -132,6 +136,31 @@ TrendForce가 공개한 Q1 2026 QoQ 성장률로 역산해도 같은 답이 나�
 
 **블로그 인용 확률이 가장 높은 헤드라인 수치가, 출처를 열어보니 그 출처에 없었다.** 이것이 이번 프로젝트에서 가장 중요한 사례다.
 
+### 29·30번 상세 — SEMI 장비 전망 (초판 판정 정정)
+
+**이 문서 초판에서 내가 30번의 판정 근거를 잘못 적었다.** 초판은 "총 장비 $139B 안에 WFE $135.2B가 들어갈 수 없다"는 산술 모순을 근거로 들었다. 판정(불일치)은 맞았지만 **이유가 틀렸다.** 인용 URL을 확보하는 과정에서 SEMI 원문을 확인해 정정한다.
+
+SEMI **연말 총 반도체 장비 전망**(2025-12-16 발표) 실제 수치는 이렇다.
+
+| 구분 | 2025 | 2026 | 2027 |
+|---|---|---|---|
+| 총 장비 매출 | $133B (+13.7%) | **$145B** | $156B |
+| WFE | $115.7B (+11.0%) | **$126.1B (+9.0%)** | **$135.2B (+7.3%)** |
+| 테스트 장비 성장률 | — | +12.0% | +7.1% |
+| 조립·패키징 장비 성장률 | — | +9.2% | +6.9% |
+
+여기서 두 가지가 드러난다.
+
+**첫째, $135.2B는 2027년 WFE 수치다.** SEMI 원문 문장은 "WFE segment sales are projected to expand **9.0% in 2026 and 7.3% in 2027, reaching $135.2 billion**"이다. 2026년 성장률(+9.0%)과 2027년 금액($135.2B)이 한 문장에 있고, `raw.md`는 이 둘을 붙여 "2026년 WFE가 +9.0% 성장해 $135.2B"로 읽었다. 2026년 WFE는 **$126.1B**다. 산술 모순은 애초에 없었고, 연도를 잘못 읽은 것이다.
+
+**둘째, $139B는 폐기된 구판 전망이다.** 이 수치는 SEMI가 **2024년 12월 8일** SEMICON Japan에서 발표한 릴리스("$113 billion in 2024 ... $121 billion in 2025 ... and $139 billion in 2026")에서 나온다. 1년 뒤인 2025년 12월 16일 연말 전망이 2026년을 **$145B**로 상향했다. `raw.md`는 2027년 $156B는 신판(2025-12)에서, 2026년 $139B는 구판(2024-12)에서 가져와 **서로 다른 빈티지의 전망을 같은 문단에 나란히 놓았다.**
+
+이 때문에 29번 판정을 초판의 `일치`에서 **`불일치`로 바꿨다.** 판단 기준은 16번(gulfnews Q1 2025 기사)과 동일하다 — 출처 문서에 그 값이 실려 있더라도, **현행 값이 따로 있는 낡은 판을 현재 전망으로 제시하면 불일치로 본다.** 두 건을 다르게 처리하면 일관성이 없다.
+
+부수적으로, `raw.md:99`가 스스로 지적한 "총 장비 $139B vs 300mm 팹 장비 $133B" 모순도 이걸로 상당 부분 설명된다. 신판 기준 2026년 총 장비는 $145B이고 2025년 총 장비가 $133B다. 다만 `raw.md`가 인용한 300mm 릴리스(2026년 4월)는 이번에 검증하지 못했으므로(31번) 단정하지 않는다.
+
+**블로그 판정: SEMI 장비 수치는 $145B(2026 총 장비) / $156B(2027 총 장비) / $126.1B(2026 WFE)로 교체해 쓴다. $139B와 $135.2B는 쓰지 않는다.**
+
 ---
 
 ## 4. 검증 결과 — 기업 재무 §3.1 (SEC EDGAR 1차 대조)
@@ -160,11 +189,11 @@ CIK: NVDA 0001045810 / AVGO 0001730168 / MU 0000723125 / INTC 0000050863 / AMD 0
 | 38 | **NXP Q1 2026 영업이익률 47.3%** | 47.3% | **GAAP상 정확하나 일회성 이익 포함.** 경상 기준 **27.8%** | 아래 상세 | 일치 (단, 비교 불가) |
 | 39 | **INTC 영업이익 +$1,796M / 순손실 −$11,033M** | 그대로 | **정확. 원인은 미 정부 Escrowed Shares 파생부채 평가손 $12,529M** | 아래 상세 | 일치 |
 | 40 | **QCOM 순이익 $7,370M > 영업이익 $2,309M** | "대규모 영업외 이익 추정" | **정확. 원인은 영업외 이익이 아니라 이연법인세 평가충당금 환입 $5.7B** | 아래 상세 | 일치 (원인 진단은 오류) |
-| 41 | AVGO 순이익 "not retrieved" | 미기재 | **$9,310M — 회수 가능했음.** XBRL `ProfitLoss` 태그, 8-K 보도자료 첫 줄에도 명시 | AVGO 8-K accn 0001730168-26-000051 EX-99.1 | 불일치(누락) |
+| 41 | AVGO 순이익 "not retrieved" | 미기재 | **$9,310M — 회수 가능했음.** XBRL `ProfitLoss` 태그, 8-K 보도자료 첫 줄에도 명시 | AVGO 8-K accn 0001730168-26-000051 EX-99.1 (부록 접수번호 표) | 불일치(누락) |
 | 42 | QCOM 매출총이익률 "not retrieved" | 미기재 | **53.8% — 계산 가능.** `CostOfRevenue` $4,900M 존재 | QCOM 10-Q accn 0000804328-26-000061 | 불일치(누락) |
 | 43 | KLAC 매출총이익률·영업이익률 "not retrieved" | 미기재 | **매출총이익률 61.1% 계산 가능** (`CostOfRevenue` $1,327.672M 존재) | KLAC 10-Q accn 0000319201-26-000016 | 불일치(누락) |
 | 44 | Broadcom Q2 FY26 AI 매출 $10.8B "custom AI (XPU)" | XPU 매출로 표기 | **$10.8B는 "semiconductor revenue from AI" 전체**(커스텀 가속기 + AI 네트워킹). XPU 단독 아님 | AVGO 8-K EX-99.1 | 불일치(라벨 오류) |
-| 45 | NVIDIA 데이터센터 $75B(+92%), Hyperscale $38B / ACIE $37B | 그대로 | 데이터센터 **$75.2B(+92%)**, Hyperscale **$37.9B**, ACIE **$37.4B** | NVIDIA Q1 FY27 IR 릴리스 | 근사 |
+| 45 | NVIDIA 데이터센터 $75B(+92%), Hyperscale $38B / ACIE $37B | 그대로 | 데이터센터 **$75.2B(+92%)**, Hyperscale **$37.9B**, ACIE **$37.4B** | [NVIDIA Q1 FY27 IR 릴리스][n1] | 근사 |
 | 46 | Micron FQ3 FY26 매출총이익률 84.6% / 영업이익률 80.4% | 그대로 | GrossProfit 35,056 ÷ 41,456 = 84.56%, OperatingIncome 33,318 ÷ 41,456 = 80.37% | MU 10-Q accn 0000723125-26-000015 | 일치 |
 
 ### 38번 상세 — NXP 영업이익률 47.3%
@@ -274,15 +303,15 @@ FY2025 4분기에 OBBB(One Big Beautiful Bill Act) 때문에 설정했던 $5.7B 
 
 XBRL 팩트는 확인해보니 실제로 2024-12-31까지만 태깅돼 있어(연간 20-F만) 스킬의 진단대로다. 그러나 6-K 첨부문서는 완전한 실적 발표문이다.
 
-| # | 항목 | 스킬이 제시한 값 | 확인된 값 (EDGAR 6-K 1차) | 판정 |
-|---|---|---|---|---|
-| 47 | Q2 2026 매출 (NT$) | ~NT$1.27T | **NT$1,270,381M** | 일치 |
-| 48 | Q2 2026 매출 (US$) | **~$39.62B** | **$40.20B** ("In US dollars, second quarter revenue was $40.20 billion") | 불일치 |
-| 49 | Q2 2026 매출 YoY | +36% | **+36.0%** (US$ 기준으로는 +33.7%) | 일치 |
-| 50 | Q2 2026 순이익 | NT$706.56B | **NT$706,562M** | 일치 |
-| 51 | Q2 2026 순이익 YoY | +77.4% | **+77.4%** | 일치 |
-| 52 | 매출총이익률 "not retrieved" | 미기재 | **67.7% — 발표문에 명시** | 불일치(누락) |
-| 53 | 영업이익률 "not retrieved" | 미기재 | **60.3% — 발표문에 명시** | 불일치(누락) |
+| # | 항목 | 스킬이 제시한 값 | 확인된 값 | 출처 | 판정 |
+|---|---|---|---|---|---|
+| 47 | Q2 2026 매출 (NT$) | ~NT$1.27T | **NT$1,270,381M** | [TSMC 6-K EX-99.1][tsm1] (accn 0001046179-26-000451) | 일치 |
+| 48 | Q2 2026 매출 (US$) | **~$39.62B** | **$40.20B** ("In US dollars, second quarter revenue was $40.20 billion") | [TSMC 6-K EX-99.1][tsm1] | 불일치 |
+| 49 | Q2 2026 매출 YoY | +36% | **+36.0%** (US$ 기준으로는 +33.7%) | [TSMC 6-K EX-99.1][tsm1] | 일치 |
+| 50 | Q2 2026 순이익 | NT$706.56B | **NT$706,562M** | [TSMC 6-K EX-99.1][tsm1] | 일치 |
+| 51 | Q2 2026 순이익 YoY | +77.4% | **+77.4%** | [TSMC 6-K EX-99.1][tsm1] | 일치 |
+| 52 | 매출총이익률 "not retrieved" | 미기재 | **67.7% — 발표문에 명시** | [TSMC 6-K EX-99.1][tsm1] | 불일치(누락) |
+| 53 | 영업이익률 "not retrieved" | 미기재 | **60.3% — 발표문에 명시** | [TSMC 6-K EX-99.1][tsm1] | 불일치(누락) |
 
 발표문 원문 손익 표(단위 NT$ 백만):
 
@@ -303,12 +332,12 @@ EPS (NT$)          27.25      15.36    77.4       22.08    23.4
 
 ## 6. 검증 결과 — 밸류에이션 (§4)
 
-| # | 항목 | 스킬이 제시한 값 | 확인된 값 | 판정 |
-|---|---|---|---|---|
-| 54 | NVDA 행 8개 값 | $206.84 / $5.01T / $4.97T / 31.68 / 20.76 / 30.02 / 19.60 | **전부 동일**, 2026-07-24 기준 명시 | 일치 (8개 수치) |
-| 55 | MU 행 8개 값 | $920.95 / $1.04T / $1.02T / 20.78 / 6.42 / 14.89 / 11.26 | **전부 동일** | 일치 (8개 수치) |
-| 56 | 나머지 15개사 행 | — | 미검증 (동일 출처·동일 방식이므로 전사(轉寫)는 정확할 것으로 추정되나 확인하지 않음) | 출처확인불가 |
-| 57 | SOX 지수 11,818.89 (2026-07-24, −4.25%) | — | 미확인 | 출처확인불가 |
+| # | 항목 | 스킬이 제시한 값 | 확인된 값 | 출처 | 판정 |
+|---|---|---|---|---|---|
+| 54 | NVDA 행 8개 값 | $206.84 / $5.01T / $4.97T / 31.68 / 20.76 / 30.02 / 19.60 | **전부 동일**, 2026-07-24 기준 명시 | [stockanalysis.com NVDA][v1] | 일치 (8개 수치) |
+| 55 | MU 행 8개 값 | $920.95 / $1.04T / $1.02T / 20.78 / 6.42 / 14.89 / 11.26 | **전부 동일** | [stockanalysis.com MU][v2] | 일치 (8개 수치) |
+| 56 | 나머지 15개사 행 | 표 참조 | 미검증 (동일 출처·동일 방식이므로 전사(轉寫)는 정확할 것으로 추정되나 확인하지 않음) | 미조회 (`stockanalysis.com/stocks/{ticker}/statistics/`) | 출처확인불가 |
+| 57 | SOX 지수 11,818.89 (2026-07-24, −4.25%) | 11,818.89 | 미확인 | URL 미기록 (Nasdaq OMX 지수 페이지 미조회) | 출처확인불가 |
 
 스킬이 stockanalysis.com에서 옮겨 적은 작업 자체는 정확하다. 표본 2개사 16개 값이 전부 일치했다.
 
@@ -318,13 +347,13 @@ EPS (NT$)          27.25      15.36    77.4       22.08    23.4
 
 ## 7. 검증 결과 — 정책·M&A (§2.6, §2.7)
 
-| # | 항목 | 확인된 값 | 판정 |
-|---|---|---|---|
-| 58 | Intel 미 정부 약 9.9% 무의결권 지분 | **확인.** 2025-08-22 합의, $8.9B, 4억 3,330만 주 @ $20.47, 9.9%. Intel 10-Q 주석 4에서도 U.S. Government Agreement 존재 확인 | 일치 |
-| 59 | BIS 2026-01-13 대중 라이선스 심사정책 변경, 2026-01-14 H200 승인 + 25% 관세 | 미확인 | 출처확인불가 |
-| 60 | AI OVERWATCH Act 2026-01-22 하원 외교위 통과 | 미확인 | 출처확인불가 |
-| 61 | TSMC 애리조나 $100B 추가 → 누적 $265B | 미확인 | 출처확인불가 |
-| 62 | M&A 5건 (TI/Silicon Labs $7.5B, SMIC RMB 40.601B, IonQ/SkyWater $1.8B, GF/Synopsys ARC, YTD >$17B) | 미확인 (단일 2차 출처 Embedded Computing Design) | 출처확인불가 |
+| # | 항목 | 스킬이 제시한 값 | 확인된 값 | 출처 | 판정 |
+|---|---|---|---|---|---|
+| 58 | Intel 미 정부 지분 | 약 9.9% 무의결권 | **확인.** 2025-08-22 합의, $8.9B, 4억 3,330만 주 @ $20.47, 9.9% | [Axios][p1] · [GovConWire][p2], Intel 10-Q 주석 4 (accn 0000050863-26-000157) | 일치 |
+| 59 | BIS 대중 수출통제 완화 | 2026-01-13 심사정책 변경, 2026-01-14 H200 승인 + 25% 관세 | 미확인 | URL 미기록 (`raw.md` 인용 BIS·East Asia Forum 미조회) | 출처확인불가 |
+| 60 | AI OVERWATCH Act | 2026-01-22 하원 외교위 통과 | 미확인 | URL 미기록 | 출처확인불가 |
+| 61 | TSMC 애리조나 투자 | $100B 추가 → 누적 $265B | 미확인 | URL 미기록 (`raw.md` 인용 TechTimes 미조회) | 출처확인불가 |
+| 62 | M&A 5건 거래액 | TI/Silicon Labs $7.5B, SMIC RMB 40.601B, IonQ/SkyWater $1.8B, GF/Synopsys ARC, YTD >$17B | 미확인 | URL 미기록 (`raw.md` 인용 Embedded Computing Design 단일 2차 출처 미조회) | 출처확인불가 |
 
 ---
 
@@ -348,17 +377,19 @@ EPS (NT$)          27.25      15.36    77.4       22.08    23.4
 
 ## 9. 검증 결과 요약
 
-**검증표 전체 62개 항목 중 일치 32개, 근사 4개, 불일치 12개, 출처확인불가 14개.**
+**검증표 전체 62개 항목 중 일치 31개, 근사 4개, 불일치 13개, 출처확인불가 14개.**
 
 | 판정 | 항목 수 | 비중 |
 |---|---|---|
-| 일치 | 32 | 52% |
+| 일치 | 31 | 50% |
 | 근사 | 4 | 6% |
-| 불일치 | 12 | 19% |
+| 불일치 | 13 | 21% |
 | 출처확인불가 | 14 | 23% |
 | **합계** | **62** | **100%** |
 
-여기에 스킬이 스스로 표기한 `UNSOURCED` 11건을 더하면 **제외 대상은 총 37건**이다(불일치 12 + 출처확인불가 14 + UNSOURCED 11).
+여기에 스킬이 스스로 표기한 `UNSOURCED` 11건을 더하면 **제외 대상은 총 38건**이다(불일치 13 + 출처확인불가 14 + UNSOURCED 11).
+
+> **초판 대비 정정.** 이 문서 초판은 32/4/12/14로 집계했다. 인용 URL을 확보하는 과정에서 SEMI 원문을 확인해 **29번(총 장비 2026 $139B)을 `일치` → `불일치`로 바꿨다**(폐기된 2024-12 구판 전망, 현행은 $145B). 30번의 판정 근거도 정정했다(산술 모순이 아니라 연도 혼동). 자세한 내용은 §3의 "29·30번 상세"에 적었다.
 
 ### 개별 숫자 기준으로 보면
 
@@ -366,15 +397,15 @@ EPS (NT$)          27.25      15.36    77.4       22.08    23.4
 
 **즉 "대부분의 숫자는 맞다. 그런데 틀린 것이 하필 헤드라인 수치다."** 이것이 이번 검증의 핵심 구도다.
 
-### 불일치 12건의 성격 분류
+### 불일치 13건의 성격 분류
 
 | 성격 | 건수 | 해당 항목 |
 |---|---|---|
 | 인용 출처에 수치가 없음 | 1 | 22 (하이퍼스케일러 capex $600B) |
-| 출처를 잘못 읽음 (연도 오독) | 1 | 16 (TSMC 67.6%) |
+| 낡은 판·다른 연도를 현재 값으로 제시 | 3 | 16 (TSMC 67.6%는 Q1 2025), 29 (총 장비 $139B는 2024-12 구판), 30 ($135.2B는 2027년 WFE) |
 | 근거 없는 직전 분기 값 | 2 | 19, 20 (SK하이닉스·삼성 DRAM 점유율 QoQ) |
 | 회수 가능한 값을 누락 | 5 | 41 (AVGO 순이익), 42 (QCOM 매출총이익률), 43 (KLAC 이익률), 52·53 (TSMC 매출총이익률·영업이익률) |
-| 라벨·정의 오류 | 2 | 44 (AI 매출을 XPU로 표기), 30 (SEMI WFE 정합 불가) |
+| 라벨·정의 오류 | 1 | 44 (AI 매출을 XPU로 표기) |
 | 단위 환산 오류 | 1 | 48 (TSMC US$ 매출) |
 
 ---
@@ -392,7 +423,7 @@ Task 3은 아래 목록을 그대로 배제한다.
 | **SK하이닉스 DRAM 점유율 32.9% → 28.8% (−4.1pt)** | `raw.md:194`, `:199`, `:318` | Q4 2025 실제 점유율은 **32.1%**, 하락폭은 **3.3pt**. 32.9%의 출처를 찾지 못했다 |
 | **삼성 DRAM 점유율 36.5% → 38.5% (+2.0pt)** | `raw.md:194` | Q4 2025 실제 점유율은 **36.0%**, 상승폭은 **2.5pt** |
 
-### 10.2 값을 교체하면 쓸 수 있는 것 (5건)
+### 10.2 값을 교체하면 쓸 수 있는 것 (8건)
 
 | 잘못된 값 | 올바른 값 | 위치 |
 |---|---|---|
@@ -401,6 +432,9 @@ Task 3은 아래 목록을 그대로 배제한다.
 | SK하이닉스 −4.1pt | **−3.3pt** | `raw.md:194`, `:199` |
 | 삼성 DRAM +2.0pt | **+2.5pt** | `raw.md:194` |
 | Broadcom "custom AI (XPU) revenue $10.8B" | **"AI 반도체 매출 $10.8B"** (커스텀 가속기 + AI 네트워킹 합계) | `raw.md:177`, `:195` |
+| SEMI 총 장비 2026 $139B | **$145B** (SEMI 2025-12-16 연말 전망) | `raw.md:97`, `:185` |
+| SEMI WFE 2026 $135.2B | **$126.1B** ($135.2B는 2027년 WFE 수치) | `raw.md:97` |
+| NVIDIA 데이터센터 Hyperscale $38B / ACIE $37B | **$37.9B / $37.4B** (반올림 차이, 그대로 써도 무방) | `raw.md:175` |
 
 ### 10.3 반드시 설명을 붙여야 하는 것 (3건)
 
@@ -412,9 +446,11 @@ Task 3은 아래 목록을 그대로 배제한다.
 
 ### 10.4 확인하지 못해 보류 (14건)
 
-WSTS Autumn 2025 $975B / IDC 2026 $1.29T / IDC 데이터센터 반도체 $477.1B / TrendForce Q2 DRAM·NAND 계약가 전망 / HBM 2026 출하량 / TI Q2 세그먼트 상세 / SEMI 300mm $133B / SEMI WFE $135.2B / CXMT 3%→8% / SOX 지수 레벨 / BIS 수출통제 일자 / AI OVERWATCH Act 일자 / TSMC 애리조나 $265B / M&A 5건 거래액 / 밸류에이션 표 나머지 15개사.
+검증표에서 `출처확인불가`로 판정한 14개 항목이다. 행번호를 함께 적는다.
 
-이 중 **SEMI WFE $135.2B는 총 장비 $139B와 산술적으로 양립할 수 없으므로**(WFE는 총 장비의 부분집합) 보류가 아니라 배제 대상에 가깝다. `raw.md:99`는 $139B vs 300mm $133B 충돌만 지적했는데, 같은 문장 안의 $139B vs WFE $135.2B가 더 명백한 모순이다.
+WSTS Autumn 2025 $975B(7) / IDC 2026 $1.29T(9) / CXMT 3%→8%(21) / IDC 데이터센터 반도체 $477.1B(24) / TrendForce Q2 DRAM·NAND 계약가 전망(25) / HBM 2026 출하량(26) / TI Q2 세그먼트 상세(28) / SEMI 300mm $133B(31) / 밸류에이션 표 나머지 15개사(56) / SOX 지수 레벨(57) / BIS 수출통제 일자(59) / AI OVERWATCH Act 일자(60) / TSMC 애리조나 $265B(61) / M&A 5건 거래액(62).
+
+**SEMI WFE $135.2B(행 30)와 SEMI 총 장비 $139B(행 29)는 이 목록에 없다.** 둘 다 `불일치`로 확정돼 §10.2의 값 교체 대상으로 옮겼다. 초판에서는 이 둘을 보류 목록에 함께 적어 건수가 어긋났는데, SEMI 원문을 확인해 정정했다.
 
 ### 10.5 스킬 자신이 `UNSOURCED`로 표기한 11건
 
@@ -499,29 +535,81 @@ curl -s -H "User-Agent: kenshin579@gmail.com" \
 | ON Semiconductor | 10-Q | 0001097864-26-000014 | Q1 2026 (~2026-04-03) |
 | TSMC | 6-K (EX-99.1) | 0001046179-26-000451 | Q2 2026 |
 
-웹 출처:
+웹 출처. 표 안의 `[라벨][키]` 참조가 여기에 대응한다. **`URL 미기록`으로 표시한 항목은 이번 검증에서 URL을 확보하지 못한 것이며, 임의로 채우지 않았다.**
 
-| 항목 | URL |
-|---|---|
-| WSTS Spring 2026 | https://www.wsts.org/76/103/Global-Semiconductor-Market-Surges-Beyond-15T-2026 |
-| TrendForce DRAM Q1 2026 | https://www.trendforce.com/presscenter/news/20260601-13070.html |
-| TrendForce DRAM Q4 2025 | https://www.trendforce.com/presscenter/news/20260226-12937.html |
-| TrendForce 파운드리 Q1 2026 (재인용) | https://marklapedus.substack.com/p/tsmc-gains-foundry-share-in-q1-26 |
-| gulfnews (실제로는 Q1 2025 기사) | https://gulfnews.com/technology/tsmc-market-share-rises-to-67-6-in-q1-extending-global-foundry-lead-1.500164069 |
-| Sourceability (capex 수치 부재 확인 대상) | https://sourceability.com/post/semiconductor-industry-outlook-for-2026-shows-rebound-amid-mergers |
-| 하이퍼스케일러 capex $725B | https://www.tomshardware.com/tech-industry/big-tech/big-techs-ai-spending-plans-reach-725-billion |
-| Synergy Q3 2025 하이퍼스케일 capex $142B | https://www.datacenterdynamics.com/en/news/hyperscale-capex-and-capacity-hits-peak-in-q3-2025-synergy/ |
-| NVIDIA Q1 FY27 IR | https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Announces-Financial-Results-for-First-Quarter-Fiscal-2027/default.aspx |
-| stockanalysis.com NVDA | https://stockanalysis.com/stocks/nvda/statistics/ |
-| stockanalysis.com MU | https://stockanalysis.com/stocks/mu/statistics/ |
+| 키 | 매체 / 문서 | URL |
+|---|---|---|
+| `s1` | SIA 2025년 연간 매출 릴리스 (원문 403, 검색 결과 인용 본문으로 대조) | https://www.semiconductors.org/global-annual-semiconductor-sales-increase-25-6-to-791-7-billion-in-2025/ |
+| `s2` | SIA Q1 2026 릴리스 | https://www.semiconductors.org/global-semiconductor-sales-increase-25-from-q4-2025-to-q1-2026/ |
+| `w1` | WSTS Spring 2026 전망 (원문 페치 성공) | https://www.wsts.org/76/103/Global-Semiconductor-Market-Surges-Beyond-15T-2026 |
+| `t1` | TrendForce DRAM Q1 2026 (원문 페치 성공) | https://www.trendforce.com/presscenter/news/20260601-13070.html |
+| `t2` | TrendForce DRAM Q4 2025 (원문 페치 성공) | https://www.trendforce.com/presscenter/news/20260226-12937.html |
+| `f1` | Semiecosystem — TrendForce 파운드리 Q1 2026 (원문 페치 성공) | https://marklapedus.substack.com/p/tsmc-gains-foundry-share-in-q1-26 |
+| `f2` | TelecomLead — 파운드리 Q1 2026 | https://telecomlead.com/semiconductor/global-foundry-market-hits-record-47-95-bn-in-q1-2026-as-ai-chip-demand-drives-growth-tsmc-expands-share-to-72-126247 |
+| `f3` | EE Times Asia — TrendForce 상위 10 파운드리 Q1 2026 | https://www.eetasia.com/trendforce-top-10-foundries-register-3-7-qoq-revenue-growth-in-1q-2026/ |
+| `f4` | gulfnews — **실제로는 Q1 2025 기사** (원문 페치 성공) | https://gulfnews.com/technology/tsmc-market-share-rises-to-67-6-in-q1-extending-global-foundry-lead-1.500164069 |
+| `x1` | `raw.md:120`이 CXMT 근거로 인용한 X 게시물 (이번 검증에서 내용 미확인) | https://x.com/MojoTricks/status/2075169846514659744 |
+| `h0` | Sourceability — **capex 수치 부재 확인 대상** (curl 직접 확인) | https://sourceability.com/post/semiconductor-industry-outlook-for-2026-shows-rebound-amid-mergers |
+| `h1` | Tom's Hardware — 빅4 2026 capex $725B (+77%) | https://www.tomshardware.com/tech-industry/big-tech/big-techs-ai-spending-plans-reach-725-billion |
+| `h2` | valueaddvc — 기업별 capex 분해 | https://valueaddvc.com/blog/ai-hyperscaler-capex-compared-why-microsoft-google-meta-and-amazon-are-all-spending-at-once |
+| `h3` | datacenterrichness — 하이퍼스케일러 $630B | https://datacenterrichness.substack.com/p/hyperscalers-plan-630-billion-in |
+| `h4` | CNBC — "approaches $700 billion" (HTTP 403, 검색 결과 제목·요약만 확인) | https://www.cnbc.com/2026/02/06/google-microsoft-meta-amazon-ai-cash.html |
+| `h5` | CreditSights — 하이퍼스케일러 2026 capex 추정 (검색 결과만 확인) | https://know.creditsights.com/insights/technology-hyperscaler-capex-2026-estimates/ |
+| `h6` | DataCenterDynamics — Synergy Q3 2025 하이퍼스케일 capex | https://www.datacenterdynamics.com/en/news/hyperscale-capex-and-capacity-hits-peak-in-q3-2025-synergy/ |
+| `h7` | TechAfrica News — Synergy Q3 capex $142B | https://techafricanews.com/2025/12/19/hyperscale-operator-capex-hits-142-billion-in-q3-synergy-reports/ |
+| `b1` | Benzinga — Broadcom FY27 AI $100B 발언 | https://www.benzinga.com/markets/earnings/26/06/52993764/broadcom-just-made-bold-100-billion-ai-revenue-forecast-for-next-year-but-wall-street-doesnt-bel |
+| `b2` | TechTimes — Broadcom FY26 AI $56B | https://www.techtimes.com/articles/317846/20260605/nvidia-not-only-ai-chip-winner-broadcom-forecasts-56-billion-custom-silicon-demand-surges.htm |
+| `e1` | SEMI **2024-12-08** 릴리스 — 2026년 $139B (구판) | https://www.semi.org/en/semi-press-release/global-total-semiconductor-equipment-sales-forecast-to-reach-a-record-of-dollar-139-billion-in-2026-semi-reports |
+| `e2` | SEMI **2025-12** 릴리스 — 2027년 $156B (신판) | https://www.semi.org/en/semi-press-release/global-semiconductor-equipment-sales-projected-to-reach-a-record-of-156-billion-dollars-in-2027-semi-reports |
+| `e3` | PR Newswire — SEMI 2025-12-16 연말 전망 전문 (원문 페치 성공, semi.org 403 우회) | https://www.prnewswire.com/news-releases/global-semiconductor-equipment-sales-projected-to-reach-a-record-of-156-billion-in-2027-semi-reports-302640433.html |
+| `e4` | Semiecosystem — 2026 장비 전망 해설 (원문 페치 성공) | https://marklapedus.substack.com/p/whats-the-outlook-for-the-semi-equipment |
+| `n1` | NVIDIA Q1 FY27 IR 릴리스 (원문 페치 성공) | https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Announces-Financial-Results-for-First-Quarter-Fiscal-2027/default.aspx |
+| `v1` | stockanalysis.com NVDA 통계 (원문 페치 성공) | https://stockanalysis.com/stocks/nvda/statistics/ |
+| `v2` | stockanalysis.com MU 통계 (원문 페치 성공) | https://stockanalysis.com/stocks/mu/statistics/ |
+| `p1` | Axios — Intel 미 정부 지분 (2025-08-22) | https://www.axios.com/2025/08/22/trump-intel-stake-government |
+| `p2` | GovConWire — 미 정부 Intel 9.9% 취득 구조 | https://www.govconwire.com/articles/intel-us-government-investment-chips-act-grants-secure-enclave |
+| `tsm1` | TSMC Q2 2026 실적 발표문 (SEC EDGAR 6-K EX-99.1, 1차) | https://www.sec.gov/Archives/edgar/data/1046179/000104617926000451/a2q26e_withguidancexfinal.htm |
+
+**URL을 확보하지 못한 항목** (표에 `URL 미기록`으로 표시): WSTS Autumn 2025 PDF(7), IDC 2026 전망(9), IDC 데이터센터 반도체(24), TrendForce Q2 계약가 전망(25), TrendForce HBM 출하량(26), TI 세그먼트 출처(28), SEMI 300mm 릴리스(31), SOX 지수 페이지(57), BIS·East Asia Forum(59), AI OVERWATCH Act(60), TSMC 애리조나 TechTimes(61), Embedded Computing Design M&A(62). 이들은 `raw.md`에 URL이 달려 있으나 이번 검증에서 조회하지 않았으므로, 확인하지 않은 링크를 검증 근거처럼 옮겨 적지 않았다.
+
+[s1]: https://www.semiconductors.org/global-annual-semiconductor-sales-increase-25-6-to-791-7-billion-in-2025/
+[s2]: https://www.semiconductors.org/global-semiconductor-sales-increase-25-from-q4-2025-to-q1-2026/
+[w1]: https://www.wsts.org/76/103/Global-Semiconductor-Market-Surges-Beyond-15T-2026
+[t1]: https://www.trendforce.com/presscenter/news/20260601-13070.html
+[t2]: https://www.trendforce.com/presscenter/news/20260226-12937.html
+[f1]: https://marklapedus.substack.com/p/tsmc-gains-foundry-share-in-q1-26
+[f2]: https://telecomlead.com/semiconductor/global-foundry-market-hits-record-47-95-bn-in-q1-2026-as-ai-chip-demand-drives-growth-tsmc-expands-share-to-72-126247
+[f3]: https://www.eetasia.com/trendforce-top-10-foundries-register-3-7-qoq-revenue-growth-in-1q-2026/
+[f4]: https://gulfnews.com/technology/tsmc-market-share-rises-to-67-6-in-q1-extending-global-foundry-lead-1.500164069
+[x1]: https://x.com/MojoTricks/status/2075169846514659744
+[h0]: https://sourceability.com/post/semiconductor-industry-outlook-for-2026-shows-rebound-amid-mergers
+[h1]: https://www.tomshardware.com/tech-industry/big-tech/big-techs-ai-spending-plans-reach-725-billion
+[h2]: https://valueaddvc.com/blog/ai-hyperscaler-capex-compared-why-microsoft-google-meta-and-amazon-are-all-spending-at-once
+[h3]: https://datacenterrichness.substack.com/p/hyperscalers-plan-630-billion-in
+[h4]: https://www.cnbc.com/2026/02/06/google-microsoft-meta-amazon-ai-cash.html
+[h5]: https://know.creditsights.com/insights/technology-hyperscaler-capex-2026-estimates/
+[h6]: https://www.datacenterdynamics.com/en/news/hyperscale-capex-and-capacity-hits-peak-in-q3-2025-synergy/
+[h7]: https://techafricanews.com/2025/12/19/hyperscale-operator-capex-hits-142-billion-in-q3-synergy-reports/
+[b1]: https://www.benzinga.com/markets/earnings/26/06/52993764/broadcom-just-made-bold-100-billion-ai-revenue-forecast-for-next-year-but-wall-street-doesnt-bel
+[b2]: https://www.techtimes.com/articles/317846/20260605/nvidia-not-only-ai-chip-winner-broadcom-forecasts-56-billion-custom-silicon-demand-surges.htm
+[e1]: https://www.semi.org/en/semi-press-release/global-total-semiconductor-equipment-sales-forecast-to-reach-a-record-of-dollar-139-billion-in-2026-semi-reports
+[e2]: https://www.semi.org/en/semi-press-release/global-semiconductor-equipment-sales-projected-to-reach-a-record-of-156-billion-dollars-in-2027-semi-reports
+[e3]: https://www.prnewswire.com/news-releases/global-semiconductor-equipment-sales-projected-to-reach-a-record-of-156-billion-in-2027-semi-reports-302640433.html
+[e4]: https://marklapedus.substack.com/p/whats-the-outlook-for-the-semi-equipment
+[n1]: https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Announces-Financial-Results-for-First-Quarter-Fiscal-2027/default.aspx
+[v1]: https://stockanalysis.com/stocks/nvda/statistics/
+[v2]: https://stockanalysis.com/stocks/mu/statistics/
+[p1]: https://www.axios.com/2025/08/22/trump-intel-stake-government
+[p2]: https://www.govconwire.com/articles/intel-us-government-investment-chips-act-grants-secure-enclave
+[tsm1]: https://www.sec.gov/Archives/edgar/data/1046179/000104617926000451/a2q26e_withguidancexfinal.htm
 
 ---
 
 ## 12. 마무리
 
-62개 항목 중 32개가 일치했고 4개가 근사였다. 개별 숫자로는 약 150개를 대조해 대부분이 맞았다. **SEC EDGAR로 확인 가능한 구간(§3.1의 미국 신고사 14곳)은 사실상 전부 정확했고, 협회 릴리스로 확인 가능한 구간(§2.1~§2.2의 WSTS·SIA)도 전부 정확했다.**
+62개 항목 중 31개가 일치했고 4개가 근사였다. 개별 숫자로는 약 150개를 대조해 대부분이 맞았다. **SEC EDGAR로 확인 가능한 구간(§3.1의 미국 신고사 14곳)은 사실상 전부 정확했고, 협회 릴리스로 확인 가능한 구간(§2.1~§2.2의 WSTS·SIA)도 전부 정확했다.**
 
-문제는 그 바깥이다. 불일치 12건과 출처확인불가 14건은 대부분 **2차·3차 웹 출처에 의존한 구간**에 몰려 있다. 그리고 그중 세 건은 성격이 다르다.
+문제는 그 바깥이다. 불일치 13건과 출처확인불가 14건은 대부분 **2차·3차 웹 출처에 의존한 구간**에 몰려 있다. 그리고 그중 세 건은 성격이 다르다.
 
 1. **하이퍼스케일러 capex $600B** — 인용된 출처에 그 수치가 없다. 존재하지 않는 근거에 링크가 달려 있었다.
 2. **TSMC 67.6%** — 출처는 실재하지만 1년 전 기사다. 스킬은 이것을 "출처 간 충돌"로 해석하고 정의 차이를 추정하는 주석까지 달았다. 있지도 않은 방법론 차이를 설명한 것이다.

@@ -14,8 +14,9 @@ tags:
   - MCP
   - SEC EDGAR
 ---
-
 # 1. 들어가며
+
+![Claude Code 금융 스킬 가이드](cover.png)
 
 Anthropic이 `anthropics/financial-services`라는 저장소를 공개했다. 투자은행, 주식 리서치, 사모펀드, 자산관리 업무를 Claude Code에서 돌리도록 만든 플러그인 묶음이다. 설치는 명령어 두 줄이면 끝난다.
 
@@ -27,6 +28,8 @@ Anthropic이 `anthropics/financial-services`라는 저장소를 공개했다. �
 
 독자는 Claude Code를 이미 쓰고 있는 사람으로 잡았다. 그래서 설치 과정은 명령어 수준으로 압축하고, 지면은 5장부터 7장에 쓴다. 확인 기준일은 2026년 7월 26일이고, 마켓플레이스 저장소는 2026년 7월 22일 커밋 기준이다.
 
+
+
 # 2. Claude 금융 스킬이란
 
 ## 2.1 anthropics/financial-services 저장소
@@ -35,12 +38,12 @@ Anthropic이 직접 운영하는 플러그인 마켓플레이스다. 마켓플�
 
 구성은 이렇다.
 
-| 구분 | 개수 | 위치 |
-|---|---|---|
-| 업종별 플러그인 | 7 | `plugins/vertical-plugins/` |
-| 에이전트 플러그인 | 10 | `plugins/agent-plugins/` |
-| 파트너 제작 플러그인 | 2 | `plugins/partner-built/` |
-| 기타 | 1 | 저장소 루트 |
+| 구분          | 개수 | 위치                          |
+| ----------- | -- | --------------------------- |
+| 업종별 플러그인    | 7  | `plugins/vertical-plugins/` |
+| 에이전트 플러그인   | 10 | `plugins/agent-plugins/`    |
+| 파트너 제작 플러그인 | 2  | `plugins/partner-built/`    |
+| 기타          | 1  | 저장소 루트                      |
 
 기타 1개는 `claude-for-msft-365-install`인데, 리서치용 스킬이 아니라 Claude Microsoft 365 애드인을 프로비저닝하는 설치 도구다. 나머지 19개와 성격이 다르고 저장소 루트에 따로 놓여 있다.
 
@@ -72,7 +75,7 @@ graph TD
 
 사소하지만 확인한 김에 적어둔다. 이 `.mcp.json`은 파싱되지 않는다. `egnyte` 항목 뒤에 쉼표가 빠져 있어 JSON 문법 오류가 난다.
 
-```
+```text
     "egnyte": {
       "type": "http",
       "url": "https://mcp-server.egnyte.com/mcp"
@@ -88,13 +91,13 @@ README 본문은 커넥터를 11개라고 적어놨는데 표에는 12행이 있
 
 Claude Code 세션 안에서 슬래시 명령으로 등록한다.
 
-```
+```text
 /plugin marketplace add anthropics/financial-services
 ```
 
 터미널에서 하려면 CLI 형태도 있다.
 
-```bash
+```shellscript
 claude plugin marketplace add anthropics/financial-services
 ```
 
@@ -102,7 +105,7 @@ claude plugin marketplace add anthropics/financial-services
 
 필요한 것만 골라 설치한다. README는 `financial-analysis`를 먼저 깔라고 권한다. 공용 모델링 스킬과 커넥터 정의가 전부 여기 들어 있기 때문이다.
 
-```
+```text
 /plugin install financial-analysis@claude-for-financial-services
 /plugin install equity-research@claude-for-financial-services
 ```
@@ -111,7 +114,7 @@ claude plugin marketplace add anthropics/financial-services
 
 ## 3.3 설치 확인
 
-```
+```text
 /plugin
 ```
 
@@ -126,14 +129,14 @@ claude plugin marketplace add anthropics/financial-services
 
 설치 확인보다 중요한 건 파일이 어디 내려왔는지 알아두는 것이다.
 
-```bash
+```shellscript
 ls ~/.claude/plugins/marketplaces/claude-for-financial-services/plugins/
 # agent-plugins  partner-built  vertical-plugins
 ```
 
 스킬 정의는 평범한 마크다운이라 그냥 읽힌다.
 
-```bash
+```shellscript
 cat ~/.claude/plugins/marketplaces/claude-for-financial-services/plugins/\
 vertical-plugins/financial-analysis/skills/comps-analysis/SKILL.md
 ```
@@ -148,15 +151,15 @@ vertical-plugins/financial-analysis/skills/comps-analysis/SKILL.md
 
 7개다. 실제로 설치해 `ls`로 센 스킬 개수를 함께 적는다.
 
-| 플러그인 | 스킬 | 대표 스킬 |
-|---|---|---|
-| `financial-analysis` | 13 | `comps-analysis`(피어 비교), `dcf-model`(현금흐름할인), `lbo-model`(차입매수), `audit-xls`(스프레드시트 수식 감사) |
-| `equity-research` | 9 | `sector-overview`(섹터 리포트), `earnings-analysis`(실적 업데이트), `initiating-coverage`(커버리지 개시 리포트) |
-| `investment-banking` | 9 | `cim-builder`(투자설명서), `teaser`(티저), `merger-model`(합병 모델), `pitch-deck` |
-| `private-equity` | 10 | `deal-screening`(딜 스크리닝), `ic-memo`(투자심의 메모), `returns-analysis`(수익률 분석) |
-| `wealth-management` | 6 | `portfolio-rebalance`(리밸런싱), `tax-loss-harvesting`(손실 수확), `financial-plan` |
-| `fund-admin` | 6 | `gl-recon`(총계정원장 대사), `nav-tieout`(NAV 대조), `roll-forward` |
-| `operations` | 2 | `kyc-doc-parse`, `kyc-rules` |
+| 플러그인                 | 스킬 | 대표 스킬                                                                                       |
+| -------------------- | -- | ------------------------------------------------------------------------------------------- |
+| `financial-analysis` | 13 | `comps-analysis`(피어 비교), `dcf-model`(현금흐름할인), `lbo-model`(차입매수), `audit-xls`(스프레드시트 수식 감사)  |
+| `equity-research`    | 9  | `sector-overview`(섹터 리포트), `earnings-analysis`(실적 업데이트), `initiating-coverage`(커버리지 개시 리포트) |
+| `investment-banking` | 9  | `cim-builder`(투자설명서), `teaser`(티저), `merger-model`(합병 모델), `pitch-deck`                     |
+| `private-equity`     | 10 | `deal-screening`(딜 스크리닝), `ic-memo`(투자심의 메모), `returns-analysis`(수익률 분석)                    |
+| `wealth-management`  | 6  | `portfolio-rebalance`(리밸런싱), `tax-loss-harvesting`(손실 수확), `financial-plan`                 |
+| `fund-admin`         | 6  | `gl-recon`(총계정원장 대사), `nav-tieout`(NAV 대조), `roll-forward`                                  |
+| `operations`         | 2  | `kyc-doc-parse`, `kyc-rules`                                                                |
 
 개인 투자자가 실제로 쓸 만한 건 앞의 두 개다. `investment-banking` 아래쪽은 사내 데이터와 템플릿이 있어야 굴러가는 것들이다.
 
@@ -164,18 +167,18 @@ vertical-plugins/financial-analysis/skills/comps-analysis/SKILL.md
 
 10개다. 각 에이전트는 `agents/<이름>.md` 한 파일에 시스템 프롬프트를 갖고 있고, frontmatter의 `tools`에 쓸 도구를 선언한다. 아래 표의 마지막 열이 6.1절 이야기의 근거다.
 
-| 에이전트 | 하는 일 | `tools` 선언 |
-|---|---|---|
-| `pitch-agent` | 피치덱 초안 전 과정 | `mcp__capiq__*` |
-| `market-researcher` | 섹터·테마 리서치 | `mcp__capiq__*`, `mcp__factset__*` |
-| `earnings-reviewer` | 실적 발표 처리 | `mcp__factset__*`, `mcp__daloopa__*` |
-| `meeting-prep-agent` | 고객 미팅 브리핑 | `mcp__crm__*`, `mcp__capiq__*` |
-| `model-builder` | 엑셀 모델 신규 구축 | `mcp__capiq__*`, `mcp__daloopa__*` |
-| `gl-reconciler` | 원장 대사 | `mcp__internal-gl__*`, `mcp__subledger__*` |
-| `kyc-screener` | 온보딩 서류 심사 | `mcp__screening__*` |
-| `month-end-closer` | 월마감 | `mcp__internal-gl__*` |
-| `statement-auditor` | LP 명세서 감사 | `mcp__nav__*` |
-| `valuation-reviewer` | 분기 밸류에이션 검토 | `mcp__portfolio__*` |
+| 에이전트                 | 하는 일        | `tools` 선언                                 |
+| -------------------- | ----------- | ------------------------------------------ |
+| `pitch-agent`        | 피치덱 초안 전 과정 | `mcp__capiq__*`                            |
+| `market-researcher`  | 섹터·테마 리서치   | `mcp__capiq__*`, `mcp__factset__*`         |
+| `earnings-reviewer`  | 실적 발표 처리    | `mcp__factset__*`, `mcp__daloopa__*`       |
+| `meeting-prep-agent` | 고객 미팅 브리핑   | `mcp__crm__*`, `mcp__capiq__*`             |
+| `model-builder`      | 엑셀 모델 신규 구축 | `mcp__capiq__*`, `mcp__daloopa__*`         |
+| `gl-reconciler`      | 원장 대사       | `mcp__internal-gl__*`, `mcp__subledger__*` |
+| `kyc-screener`       | 온보딩 서류 심사   | `mcp__screening__*`                        |
+| `month-end-closer`   | 월마감         | `mcp__internal-gl__*`                      |
+| `statement-auditor`  | LP 명세서 감사   | `mcp__nav__*`                              |
+| `valuation-reviewer` | 분기 밸류에이션 검토 | `mcp__portfolio__*`                        |
 
 10개 전부가 `tools`에 MCP 커넥터를 선언한다. 예외가 없다. 6.1절에서 이 표로 다시 돌아온다.
 
@@ -185,8 +188,9 @@ vertical-plugins/financial-analysis/skills/comps-analysis/SKILL.md
 
 두 개는 데이터 벤더가 직접 만들었다.
 
-- **`lseg`** (8개) — `bond-relative-value`, `swap-curve-strategy`, `fx-carry-trade`, `option-vol-analysis`, `macro-rates-monitor`, `bond-futures-basis`, `fixed-income-portfolio`, `equity-research`. 채권·금리·FX·옵션 쪽에 몰려 있다.
-- **`sp-global`** (3개) — `tear-sheet`(기업 한 장 요약), `earnings-preview-beta`, `funding-digest`.
+* `lseg` (8개) — `bond-relative-value`, `swap-curve-strategy`, `fx-carry-trade`, `option-vol-analysis`, `macro-rates-monitor`, `bond-futures-basis`, `fixed-income-portfolio`, `equity-research`. 채권·금리·FX·옵션 쪽에 몰려 있다.
+
+* `sp-global` (3개) — `tear-sheet`(기업 한 장 요약), `earnings-preview-beta`, `funding-digest`.
 
 파트너 스킬은 유료 의존이 감춰져 있지 않다. `tear-sheet`의 description은 아예 이렇게 시작한다.
 
@@ -204,7 +208,7 @@ vertical-plugins/financial-analysis/skills/comps-analysis/SKILL.md
 
 이번에는 두 번 모두 이름을 지정해 호출했고, 인자를 한 번 넘겼다.
 
-```
+```text
 US semiconductor sector overview. Data as of 2026-07-26.
 No paid MCP connectors (FactSet/CapIQ/Daloopa) are available — use SEC EDGAR
 filings, company IR pages, and web search instead. Cite a source for every
@@ -224,7 +228,7 @@ Output as markdown.
 
 위 인자에서 결과를 가장 크게 바꾼 건 이 두 문장이었다.
 
-```
+```text
 Cite a source for every number. If a figure cannot be sourced, mark it
 UNSOURCED rather than estimating.
 ```
@@ -245,8 +249,7 @@ UNSOURCED rather than estimating.
 
 마크다운으로 달라고 하면 이게 전부 사장된다. 그중 아깝게 사라지는 것이 하나 있다.
 
-> Every derived value (margin, multiple, statistic) MUST be an Excel formula referencing input cells — never a pre-computed number pasted in
->
+> Every derived value (margin, multiple, statistic) MUST be an Excel formula referencing input cells — never a pre-computed number pasted in\
 > Why: the model must update automatically when an input changes. A hardcoded margin is a silent bug waiting to happen.
 
 마크다운 표에는 수식이 없다. 그래서 나온 모든 값이 계산이 끝난 상수다. 스킬이 "언제 터질지 모르는 조용한 버그"라고 부른 바로 그 상태로 산출된다. 엑셀이었으면 입력 셀 하나만 고쳐도 표 전체가 다시 계산되고 원가를 어떻게 잡았는지 셀을 클릭해 확인할 수 있었을 텐데, 마크다운에서는 숫자 하나하나를 손으로 재현해야 검증이 된다.
@@ -263,7 +266,7 @@ UNSOURCED rather than estimating.
 
 `sector-overview`의 `SKILL.md`는 88줄이다. 여기서 데이터 소스 관련 단어를 전수 검색해봤다.
 
-```bash
+```shellscript
 grep -i "mcp\|bloomberg\|edgar\|factset\|capiq\|kensho" \
   .../equity-research/skills/sector-overview/SKILL.md
 # 결과 없음
@@ -275,7 +278,7 @@ grep -i "mcp\|bloomberg\|edgar\|factset\|capiq\|kensho" \
 
 반면 에이전트 정의는 다르다. 4.2절 표에 적은 대로 10개 전부가 frontmatter에 커넥터를 선언한다.
 
-```
+```text
 market-researcher.md  ->  tools: Read, Write, Edit, mcp__capiq__*, mcp__factset__*
 earnings-reviewer.md  ->  tools: Read, Write, Edit, mcp__factset__*, mcp__daloopa__*
 kyc-screener.md       ->  tools: Read, Grep, Glob, mcp__screening__*
@@ -291,20 +294,17 @@ kyc-screener.md       ->  tools: Read, Grep, Glob, mcp__screening__*
 
 같은 마켓플레이스 안에서도 스킬 성격이 크게 갈린다. 두 스킬을 나란히 놓으면 이렇다.
 
-| | `sector-overview` | `comps-analysis` |
-|---|---|---|
-| `SKILL.md` 분량 | 88줄 | 661줄 |
-| 데이터 소스 규정 | **없음.** 조사 항목 목록과 빈 표 템플릿뿐 | **첫 섹션이 데이터 소스 위계.** `CRITICAL` + `READ FIRST` |
-| 위계 | - | MCP → 블룸버그 → SEC EDGAR, **웹 검색을 1차 소스로 금지** |
-| 실제 결과 | 2차·3차 웹 출처 혼재. SEC 공시와 X 게시물이 같은 문서 안에 근거로 공존 | 재무 수치는 웹 검색을 한 번도 거치지 않음. 전부 EDGAR 원문 |
-| 검증 통과율 | 62개 중 33개 = **53%** | 70개 중 66개 = **94%** |
+|               | `sector-overview`                             | `comps-analysis`                               |
+| ------------- | --------------------------------------------- | ---------------------------------------------- |
+| `SKILL.md` 분량 | 88줄                                           | 661줄                                           |
+| 데이터 소스 규정     | **없음.** 조사 항목 목록과 빈 표 템플릿뿐                    | **첫 섹션이 데이터 소스 위계.** `CRITICAL` + `READ FIRST` |
+| 위계            | -                                             | MCP → 블룸버그 → SEC EDGAR, **웹 검색을 1차 소스로 금지**    |
+| 실제 결과         | 2차·3차 웹 출처 혼재. SEC 공시와 X 게시물이 같은 문서 안에 근거로 공존 | 재무 수치는 웹 검색을 한 번도 거치지 않음. 전부 EDGAR 원문          |
+| 검증 통과율        | 62개 중 33개 = **53%**                           | 70개 중 66개 = **94%**                            |
 
 `comps-analysis`가 첫 섹션에 박아둔 규정은 이렇다.
 
-> 1. FIRST: Check for MCP data sources - If S&P Kensho MCP, FactSet MCP, or Daloopa MCP are available, use them exclusively
-> 2. DO NOT use web search if the above MCP data sources are available
-> 3. ONLY if MCPs are unavailable: Then use Bloomberg Terminal, SEC EDGAR filings, or other institutional sources
-> 4. NEVER use web search as a primary data source
+> FIRST: Check for MCP data sources - If S&P Kensho MCP, FactSet MCP, or Daloopa MCP are available, use them exclusively DO NOT use web search if the above MCP data sources are available ONLY if MCPs are unavailable: Then use Bloomberg Terminal, SEC EDGAR filings, or other institutional sources NEVER use web search as a primary data source
 
 이 스킬은 MCP 부재 상황에 대한 설계된 답을 갖고 있고, 그 답이 실제로 작동했다. MCP가 없음을 확인하고 3번 폴백으로 내려가 SEC EDGAR로 실행했다. 재무 수치 전체가 1차 자료라 접수번호로 원문 대조가 된다.
 
@@ -315,7 +315,9 @@ kyc-screener.md       ->  tools: Read, Grep, Glob, mcp__screening__*
 그래서 스킬을 처음 쓸 때의 순서는 이렇게 잡는다.
 
 1. `SKILL.md`를 열어 데이터 소스 규정이 있는지 확인한다
+
 2. 있으면 그 위계에서 내가 쓸 수 있는 등급이 어디인지 본다
+
 3. 없으면 프롬프트로 직접 지정한다. "SEC EDGAR와 회사 IR만 쓰고 웹 검색은 보조로만" 같은 식이다
 
 ## 6.3 SEC EDGAR로 대체하기
@@ -324,7 +326,7 @@ kyc-screener.md       ->  tools: Read, Grep, Glob, mcp__screening__*
 
 인증이 필요 없다. XBRL `companyfacts` API는 User-Agent 헤더만 붙이면 응답한다. API 키도 등록도 없다.
 
-```bash
+```shellscript
 curl -s -H "User-Agent: your-email@example.com" \
   "https://data.sec.gov/api/xbrl/companyfacts/CIK0001045810.json"
 ```
@@ -359,9 +361,11 @@ curl -s -H "User-Agent: your-email@example.com" \
 
 더 큰 문제는 스킬 쪽에 있을 것으로 본다.
 
-- **스킬이 기대하는 항목이 국내 공시 체계와 다르다.** `comps-analysis`의 폴백 경로는 "SEC EDGAR filings"를 명시하고, 산출물은 접수번호(accession number)로 출처를 표기한다. 이 구조가 DART의 접수번호 체계와 자동으로 맞물리지는 않는다
-- **XBRL 택소노미가 다르다.** 6.3절에서 본 태그 함정은 미국 `us-gaap` 기준으로 쌓은 지식이다. 한국 IFRS 공시에 그대로 적용되지 않는다
-- **컨센서스와 섹터 멀티플은 국내에서도 유료 영역이다.** 미국에서 막힌 것과 같은 자리에서 똑같이 막힐 가능성이 높다
+* **스킬이 기대하는 항목이 국내 공시 체계와 다르다.** `comps-analysis`의 폴백 경로는 "SEC EDGAR filings"를 명시하고, 산출물은 접수번호(accession number)로 출처를 표기한다. 이 구조가 DART의 접수번호 체계와 자동으로 맞물리지는 않는다
+
+* **XBRL 택소노미가 다르다.** 6.3절에서 본 태그 함정은 미국 `us-gaap` 기준으로 쌓은 지식이다. 한국 IFRS 공시에 그대로 적용되지 않는다
+
+* **컨센서스와 섹터 멀티플은 국내에서도 유료 영역이다.** 미국에서 막힌 것과 같은 자리에서 똑같이 막힐 가능성이 높다
 
 그래서 지금 시점의 정직한 서술은 이렇다. 미국 상장사는 이 스킬들의 무료 경로가 실제로 작동하는 것을 확인했고, 한국 종목은 확인하지 않았다. 시도한다면 DART API를 감싸는 별도의 스킬이나 MCP 서버를 직접 만드는 쪽이 현실적일 것으로 보이지만, 이 역시 해보지 않은 추측이다.
 
@@ -439,22 +443,23 @@ curl -s -H "User-Agent: your-email@example.com" \
 
 두 실행의 전체 기록은 각각 별도 글로 정리했다.
 
-- [Claude로 반도체 섹터 리포트를 뽑고 수치 62개를 검증해봤다](/stock/us-semiconductor-sector-overview/) — `equity-research:sector-overview`. 출처가 달려 있는데 틀린 수치들의 유형을 사례로 다룬다
-- [구글은 지금 싼가 - Claude comps 스킬로 빅테크 피어 비교](/stock/alphabet-comps-analysis/) — `financial-analysis:comps-analysis`. P/E와 EV/EBITDA가 정반대 판정을 내는 이유를 공시로 추적한다
+* [Claude로 반도체 섹터 리포트를 뽑고 수치 62개를 검증해봤다](/stock/us-semiconductor-sector-overview/) — `equity-research:sector-overview`. 출처가 달려 있는데 틀린 수치들의 유형을 사례로 다룬다
+
+* [구글은 지금 싼가 - Claude comps 스킬로 빅테크 피어 비교](/stock/alphabet-comps-analysis/) — `financial-analysis:comps-analysis`. P/E와 EV/EBITDA가 정반대 판정을 내는 이유를 공시로 추적한다
 
 실행 메트릭과 검증 결과를 나란히 놓으면 이렇다.
 
-| | `sector-overview` | `comps-analysis` |
-|---|---|---|
-| 대상 | 미국 반도체 섹터 | 알파벳 + 피어 4사 |
-| 소요 시간 | 8분 45초 | 11분 40초 |
-| 도구 호출 | WebSearch 16, WebFetch 20, EDGAR 6 | EDGAR 14, Yahoo Finance 5, WebFetch 5 |
-| 실패한 호출 | 3건 | 0건 |
-| 산출물 | 마크다운 320줄 | 마크다운 432줄 |
-| 검증 항목 | 62개 | 70개 |
-| 일치 + 근사 | 33개 (**53%**) | 66개 (**94%**) |
-| 불일치 | 15개 (24%) | 3개 (4%) |
-| 스킬 자체 `UNSOURCED` | 11건 | 10건 |
+|                   | `sector-overview`                  | `comps-analysis`                      |
+| ----------------- | ---------------------------------- | ------------------------------------- |
+| 대상                | 미국 반도체 섹터                          | 알파벳 + 피어 4사                           |
+| 소요 시간             | 8분 45초                             | 11분 40초                               |
+| 도구 호출             | WebSearch 16, WebFetch 20, EDGAR 6 | EDGAR 14, Yahoo Finance 5, WebFetch 5 |
+| 실패한 호출            | 3건                                 | 0건                                    |
+| 산출물               | 마크다운 320줄                          | 마크다운 432줄                             |
+| 검증 항목             | 62개                                | 70개                                   |
+| 일치 + 근사           | 33개 (**53%**)                      | 66개 (**94%**)                         |
+| 불일치               | 15개 (24%)                          | 3개 (4%)                               |
+| 스킬 자체 `UNSOURCED` | 11건                                | 10건                                   |
 
 같은 마켓플레이스의 두 스킬인데 통과율이 53%와 94%로 갈린다.
 
@@ -486,16 +491,20 @@ curl -s -H "User-Agent: your-email@example.com" \
 
 스킬 저장소
 
-- [anthropics/financial-services](https://github.com/anthropics/financial-services) — 이 글에서 다룬 마켓플레이스
-- [Model Context Protocol](https://modelcontextprotocol.io/) — 커넥터 층이 쓰는 프로토콜
+* [anthropics/financial-services](https://github.com/anthropics/financial-services) — 이 글에서 다룬 마켓플레이스
+
+* [Model Context Protocol](https://modelcontextprotocol.io/) — 커넥터 층이 쓰는 프로토콜
 
 데이터 소스
 
-- [SEC EDGAR 전문 검색](https://www.sec.gov/edgar/search/) — 공시 원문 조회
-- [SEC XBRL API 문서](https://www.sec.gov/edgar/sec-api-documentation) — `companyfacts` / `companyconcept` 엔드포인트. User-Agent 헤더만 붙이면 인증 없이 사용할 수 있다
-- [DART OpenAPI](https://opendart.fss.or.kr/) — 국내 공시. 6.4절에서 다룬 대로 이번 시리즈에서는 시도하지 않았다
+* [SEC EDGAR 전문 검색](https://www.sec.gov/edgar/search/) — 공시 원문 조회
+
+* [SEC XBRL API 문서](https://www.sec.gov/edgar/sec-api-documentation) — `companyfacts` / `companyconcept` 엔드포인트. User-Agent 헤더만 붙이면 인증 없이 사용할 수 있다
+
+* [DART OpenAPI](https://opendart.fss.or.kr/) — 국내 공시. 6.4절에서 다룬 대로 이번 시리즈에서는 시도하지 않았다
 
 시리즈
 
-- [Claude로 반도체 섹터 리포트를 뽑고 수치 62개를 검증해봤다](/stock/us-semiconductor-sector-overview/)
-- [구글은 지금 싼가 - Claude comps 스킬로 빅테크 피어 비교](/stock/alphabet-comps-analysis/)
+* [Claude로 반도체 섹터 리포트를 뽑고 수치 62개를 검증해봤다](/stock/us-semiconductor-sector-overview/)
+
+* [구글은 지금 싼가 - Claude comps 스킬로 빅테크 피어 비교](/stock/alphabet-comps-analysis/)

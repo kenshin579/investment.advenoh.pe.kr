@@ -641,7 +641,7 @@ mkdir -p contents/etc/claude-code-finance-skills-guide
 ```yaml
 ---
 title: "Claude Code로 투자 리서치하기 - 금융 스킬 설치부터 검증까지"
-description: "Anthropic이 공개한 금융 스킬 마켓플레이스를 설치하고 실제로 돌려봤습니다. 21개 플러그인의 구성, 유료 데이터 없이 쓰는 방법, AI가 뽑은 리포트를 검증하는 절차를 정리했습니다."
+description: "Anthropic이 공개한 금융 스킬 마켓플레이스를 설치하고 실제로 돌려봤습니다. 20개 플러그인의 구성, 유료 데이터 없이 쓰는 방법, AI가 뽑은 리포트를 검증하는 절차를 정리했습니다."
 date: 2026-07-26
 update: 2026-07-26
 series: "Claude 금융 스킬"
@@ -706,7 +706,7 @@ tags:
 
 - [ ] **Step 4: `## 4.1`~`## 4.3`에 플러그인 분류표를 넣는다**
 
-21개 플러그인을 세 갈래로 나눈 표를 만든다.
+20개 플러그인을 네 갈래로 나눈 표를 만든다.
 
 - 업종별(vertical) 7개: `financial-analysis`, `equity-research`, `investment-banking`, `private-equity`, `wealth-management`, `fund-admin`, `operations`
 - 에이전트(agent) 10개: `pitch-agent`, `market-researcher`, `earnings-reviewer`, `meeting-prep-agent`, `model-builder`, `gl-reconciler`, `kyc-screener`, `valuation-reviewer`, `month-end-closer`, `statement-auditor`

@@ -480,6 +480,7 @@ XBRL 태그 하나를 믿고 내린 결론이 아니라는 점을 확인하기 �
 
 **시리즈**
 
+- [Claude Code로 투자 리서치하기 - 금융 스킬 설치부터 검증까지](/etc/claude-code-finance-skills-guide/) — 설치 방법, 스킬 지도, 검증 체크리스트
 - [Claude로 반도체 섹터 리포트를 뽑고 수치 62개를 검증해봤다](/stock/us-semiconductor-sector-overview/) — 같은 방식으로 `equity-research:sector-overview`를 검증한 글
 
 **스킬**

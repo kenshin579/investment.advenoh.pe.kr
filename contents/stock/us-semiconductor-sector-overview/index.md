@@ -459,7 +459,7 @@ curl -s -H "User-Agent: your-email@example.com" \
 
 반대로 희망적인 부분도 있다. SEC EDGAR로 확인 가능한 구간은 사실상 전부 정확했다. 무료 API에 헤더 하나 붙이면 미국 상장사의 분기 재무를 1차 자료로 받아올 수 있고, 택소노미와 서식을 바꿔 재시도하면 커버리지가 더 늘어난다. **확인 가능한 것을 확인하는 비용은 생각보다 싸다.**
 
-이 시리즈 다음 글에서는 같은 방식으로 구글의 피어 비교 분석을 돌리고 검증한다.
+이 시리즈 다음 글 [구글은 지금 싼가 - Claude comps 스킬로 빅테크 피어 비교](/stock/alphabet-comps-analysis/)에서는 같은 방식으로 `financial-analysis:comps-analysis`를 돌리고 검증한다. 결과가 사뭇 다르게 나왔다.
 
 # 8. 참고
 

@@ -20,15 +20,9 @@ tags:
 
 Anthropic이 `anthropics/financial-services`라는 저장소를 공개했다. 투자은행, 주식 리서치, 사모펀드, 자산관리 업무를 Claude Code에서 돌리도록 만든 플러그인 묶음이다. 설치는 명령어 두 줄이면 끝난다.
 
-문제는 그다음이다. 이 도구가 FactSet이나 Capital IQ 같은 유료 데이터 구독을 전제하고 만들어졌다면 개인 투자자에게는 그림의 떡이고, 유료 데이터 없이도 돌아간다면 그렇게 나온 리포트를 얼마나 믿을 수 있는지가 다시 문제가 된다.
+기관 업무를 염두에 두고 만든 것이라, 개인 투자자가 쓸 만한지는 직접 돌려봐야 알 수 있다. 그래서 두 개를 골랐다. 미국 반도체 섹터 리포트 하나(`equity-research:sector-overview`), 구글 피어 비교 하나(`financial-analysis:comps-analysis`). 유료 커넥터는 하나도 붙이지 않았고, 나온 수치를 각각 62개·70개 항목으로 쪼개 SEC 공시 원문과 대조했다.
 
-그래서 두 개를 골라 실제로 돌렸다. 미국 반도체 섹터 리포트 하나(`equity-research:sector-overview`), 구글 피어 비교 하나(`financial-analysis:comps-analysis`). 유료 커넥터는 하나도 붙이지 않았고, 나온 결과물의 수치를 각각 62개·70개 항목으로 쪼개 SEC 공시 원문과 대조했다.
-
-이 글은 시리즈의 첫 글이지만 가장 마지막에 썼다. 두 번 돌려보기 전에는 쓸 재료가 없었기 때문이다. 어떤 스킬이 있는지는 저장소 목록만 봐도 알 수 있지만, 프롬프트 한 줄이 결과를 어떻게 바꾸는지, 어디서 막히는지, 무엇이 어떤 식으로 틀리는지는 돌려봐야 나온다.
-
-독자는 Claude Code를 이미 쓰고 있는 사람으로 잡았다. 그래서 설치 과정은 명령어 수준으로 압축하고, 지면은 5장부터 7장에 쓴다. 확인 기준일은 2026년 7월 26일이고, 마켓플레이스 저장소는 2026년 7월 22일 커밋 기준이다.
-
-
+결과물은 시리즈의 나머지 두 글에 그대로 실었다. [반도체 섹터 리포트](/stock/us-semiconductor-sector-overview/), [구글 피어 비교](/stock/alphabet-comps-analysis/). 이 글은 그 두 번을 돌리면서 알게 된 것을 정리한다. 어떤 스킬이 있는지, 어떻게 부르는지, 유료 데이터 없이 어디까지 되는지, 나온 숫자를 어떻게 검증하는지다.
 
 # 2. Claude 금융 스킬이란
 
@@ -51,20 +45,26 @@ Anthropic이 직접 운영하는 플러그인 마켓플레이스다. 마켓플�
 
 > Authored once in the verticals; each agent bundles a synced copy of the ones it needs.
 
-빌드 단계는 없다. 전부 마크다운과 JSON 파일이고, 설치하면 `~/.claude/plugins/marketplaces/claude-for-financial-services/` 아래에 그대로 내려온다. 이 글의 6장과 7장에서 하는 이야기 대부분이 그 파일들을 직접 열어 읽은 결과다.
-
 ## 2.2 스킬 · 에이전트 · 커넥터 3층 구조
 
-저장소는 세 층으로 나뉘어 있고, 층마다 성격이 다르다.
+저장소는 세 층으로 나뉘어 있고, 층마다 성격이 다르다. 그리고 그 층이 그대로 디렉토리가 된다.
 
 ```mermaid
 graph TD
-    A["에이전트 10개 - 시스템 프롬프트 + 번들 스킬 + tools 선언"]
-    S["스킬 66개 - SKILL.md 방법론 문서"]
-    C["커넥터 - MCP 서버 12개"]
-    A -->|스킬을 복사해 번들| S
-    A -->|tools에 직접 선언| C
-    S -.->|일부만 언급, 대부분 무관| C
+    subgraph P["partner-built/"]
+        PS["skills - 벤더 제작 11개. 예: lseg"]
+    end
+    subgraph A["agent-plugins/"]
+        AG["agents - 프롬프트와 tools 선언. 예: market-researcher"]
+        AS["skills - 복사본 51개"]
+    end
+    subgraph V["vertical-plugins/"]
+        S["skills - 원본 55개. 예: comps-analysis"]
+        M[".mcp.json - 커넥터 12개. 예: FactSet"]
+    end
+    S -.->|그대로 복사| AS
+    S -.->|일부만 언급| M
+    AG -->|tools에 직접 선언| M
 ```
 
 스킬은 `SKILL.md` 한 파일이다. 어떤 순서로 무엇을 조사하고 어떤 표를 만들라는 방법론이 적혀 있다. frontmatter의 `description`에 트리거 문구가 들어 있어서, 대화에서 관련된 요청이 나오면 자동으로 발동한다.
@@ -72,18 +72,6 @@ graph TD
 에이전트는 시스템 프롬프트 + 자기가 쓸 스킬 복사본 + `tools` 선언으로 이뤄진다. 워크플로 하나를 처음부터 끝까지 책임지는 단위다.
 
 커넥터는 MCP 서버다. `financial-analysis` 플러그인의 `.mcp.json` 한 곳에 몰아넣고 나머지가 공유하는 구조이며, Daloopa · Morningstar · S&P Global(Kensho) · FactSet · Moody's · MT Newswires · Aiera · LSEG · PitchBook · Chronograph · Egnyte · Box 12개가 선언돼 있다. README는 "MCP access may require a subscription or API key from the provider"라고 적어놨다. 즉 커넥터는 붙일 곳만 마련해둔 것이고, 실제로 붙이려면 각 벤더 계약이 필요하다.
-
-사소하지만 확인한 김에 적어둔다. 이 `.mcp.json`은 파싱되지 않는다. `egnyte` 항목 뒤에 쉼표가 빠져 있어 JSON 문법 오류가 난다.
-
-```text
-    "egnyte": {
-      "type": "http",
-      "url": "https://mcp-server.egnyte.com/mcp"
-    }
-    "box": {
-```
-
-README 본문은 커넥터를 11개라고 적어놨는데 표에는 12행이 있고 `.mcp.json`에도 12개가 들어 있다. 어차피 유료 계약 없이는 쓸 일이 없는 파일이라 이번 실행에는 영향이 없었지만, 커넥터를 실제로 붙일 사람은 이 파일부터 고쳐야 한다.
 
 # 3. 설치하기
 
@@ -239,9 +227,28 @@ claude plugin marketplace add anthropics/financial-services
 
 두 개는 데이터 벤더가 직접 만들었다.
 
-* `lseg` (8개) — `bond-relative-value`, `swap-curve-strategy`, `fx-carry-trade`, `option-vol-analysis`, `macro-rates-monitor`, `bond-futures-basis`, `fixed-income-portfolio`, `equity-research`. 채권·금리·FX·옵션 쪽에 몰려 있다.
+**`lseg` — 8개**
 
-* `sp-global` (3개) — `tear-sheet`(기업 한 장 요약), `earnings-preview-beta`, `funding-digest`.
+| 스킬 | 하는 일 | 이렇게 쓴다 |
+| --- | --- | --- |
+| `bond-relative-value` | 채권이 비싼지 싼지 판별. 스프레드 분해와 금리 충격 시나리오 | "이 회사채가 커브 대비 싼지 봐줘" |
+| `swap-curve-strategy` | 금리 스왑 커브 분석. 스티프너, 플래트너, 버터플라이 거래 발굴 | "10년-2년 스왑 스프레드로 할 만한 거래 있나" |
+| `bond-futures-basis` | 채권 선물 베이시스. 최저가 인도채권(CTD)과 내재 레포 금리 계산 | "국채 선물 CTD와 내재 레포 금리 뽑아줘" |
+| `fixed-income-portfolio` | 채권 포트폴리오 점검. 듀레이션, DV01, 현금흐름, 금리 스트레스 | "이 채권 포트폴리오 듀레이션과 DV01 계산해줘" |
+| `fx-carry-trade` | FX 캐리 트레이드 평가. 선물환 포인트, 금리차, 변동성 대비 캐리 | "달러-엔 캐리가 변동성 대비 남는 장사인가" |
+| `option-vol-analysis` | 옵션 변동성 분석. 변동성 곡면, 그릭, 내재 대 실현 변동성 | "이 종목 내재 변동성이 실현보다 비싼가" |
+| `macro-rates-monitor` | 매크로·금리 대시보드. 수익률 곡선, 기대 인플레이션, 스왑 금리 | "지금 수익률 곡선과 기대 인플레이션 정리해줘" |
+| `equity-research` | 주식 리서치 스냅샷. 컨센서스 추정치, 실적, 주가, 매크로를 한데 묶는다 | "이 종목 컨센서스와 실제 실적 비교해줘" |
+
+여덟 개 중 일곱 개가 채권·금리·FX·옵션이다. 업종별 플러그인 55개에는 이 영역이 통째로 비어 있으니, LSEG가 자기 데이터가 강한 쪽을 채운 셈이다.
+
+**`sp-global` — 3개**
+
+| 스킬 | 하는 일 | 이렇게 쓴다 |
+| --- | --- | --- |
+| `tear-sheet` | 기업 한 장 요약. Capital IQ 데이터를 Kensho MCP로 받아 만든다 | "엔비디아 한 장짜리 기업 요약 만들어줘" |
+| `earnings-preview-beta` | 단일 종목 실적 프리뷰 4-5쪽. 직전 실적 콜 전사, 경쟁사, 밸류에이션 | "다음 실적 앞두고 프리뷰 리포트 뽑아줘" |
+| `funding-digest` | 최근 펀딩 라운드와 자본시장 동향을 한 장짜리 슬라이드로 | "이번 주 우리 섹터 펀딩 라운드 정리해줘" |
 
 파트너 스킬은 유료 의존이 감춰져 있지 않다. `tear-sheet`의 description은 아예 이렇게 시작한다.
 
@@ -253,27 +260,19 @@ claude plugin marketplace add anthropics/financial-services
 
 ## 5.1 스킬 호출하기
 
-스킬은 두 가지로 발동한다. `description`에 적힌 트리거 문구가 대화에 나오면 자동으로 걸리고, 이름으로 직접 부를 수도 있다. `sector-overview`의 description을 보면 트리거가 나열돼 있다.
+스킬은 두 가지로 발동한다. `description`에 적힌 트리거 문구가 대화에 나오면 자동으로 걸리고, 슬래시 커맨드로 직접 부를 수도 있다. 커맨드는 스킬 이름과 다르고, 업종별 스킬 55개 중 39개에만 붙어 있다. `/equity-research:sector`가 `sector-overview` 스킬을, `/financial-analysis:comps`가 `comps-analysis` 스킬을 불러온다.
 
-> Triggers on "sector overview", "industry report", "market landscape", "sector analysis", "industry deep dive", or "thematic research".
-
-이번에는 두 번 모두 이름을 지정해 호출했고, 인자를 한 번 넘겼다.
+이번에는 두 번 다 커맨드로 부르면서 제약 조건을 인자로 붙였다.
 
 ```text
-US semiconductor sector overview. Data as of 2026-07-26.
+/equity-research:sector US semiconductor sector overview. Data as of 2026-07-26.
 No paid MCP connectors (FactSet/CapIQ/Daloopa) are available — use SEC EDGAR
 filings, company IR pages, and web search instead. Cite a source for every
 number. If a figure cannot be sourced, mark it UNSOURCED rather than estimating.
 Output as markdown.
 ```
 
-두 번 다 중간에 아무것도 묻지 않고 끝까지 달렸다. 이게 무조건 좋은 건 아니다. `comps-analysis`의 `SKILL.md`에는 "사용자와 단계별로 확인하라"는 섹션이 따로 있고, 헤더 배치 후 / 원시 입력 후 / 영업지표 계산 후 / 멀티플 계산 후 네 번 확인받으라고 명시한다. 마지막 줄은 대문자로 강조까지 돼 있다.
-
-> `Do NOT build the entire sheet end-to-end and then present it`
-
-실제 실행은 정확히 그 금지된 방식이었고, 확인 요청은 0회였다. 스킬 정의에 적힌 상호작용 규정에 강제력이 없다는 뜻이다.
-
-실무적으로는 이렇게 정리된다. 스킬은 되묻지 않으므로 제약 조건을 인자에 전부 넣어야 한다. 데이터 기준일, 쓸 수 있는 소스, 산출물 형식, 출처 규칙을 처음 한 번에 다 적어야 한다. 나중에 고치려면 다시 돌려야 한다.
+제약은 처음 한 번에 다 넣어야 한다. `comps-analysis`의 `SKILL.md`는 중간에 네 번 확인받으라고 대문자로까지 강조해두지만, 실제 실행에서 확인 요청은 0회였고 두 번 다 끝까지 달렸다. 스킬 정의에 적힌 상호작용 규정에는 강제력이 없다. 되묻지 않는다고 보고 데이터 기준일, 쓸 수 있는 소스, 산출물 형식, 출처 규칙을 인자에 미리 적는 게 낫다. 나중에 고치려면 다시 돌려야 한다.
 
 ## 5.2 프롬프트 한 줄이 결과를 바꾼다
 

@@ -112,56 +112,107 @@ claude plugin marketplace add anthropics/financial-services
 
 이 글에서 다루는 두 스킬은 각각 여기서 나온다. `comps-analysis`는 `financial-analysis`에, `sector-overview`는 `equity-research`에 있다.
 
-## 3.3 설치 확인
-
-```text
-/plugin
-```
-
-설치된 플러그인 목록이 나온다. 활성화 상태는 `~/.claude/settings.json`의 `enabledPlugins`에도 기록된다.
-
-```json
-"enabledPlugins": {
-  "financial-analysis@claude-for-financial-services": true,
-  "equity-research@claude-for-financial-services": true
-}
-```
-
-설치 확인보다 중요한 건 파일이 어디 내려왔는지 알아두는 것이다.
-
-```shellscript
-ls ~/.claude/plugins/marketplaces/claude-for-financial-services/plugins/
-# agent-plugins  partner-built  vertical-plugins
-```
-
-스킬 정의는 평범한 마크다운이라 그냥 읽힌다.
-
-```shellscript
-cat ~/.claude/plugins/marketplaces/claude-for-financial-services/plugins/\
-vertical-plugins/financial-analysis/skills/comps-analysis/SKILL.md
-```
-
-처음 쓰는 스킬이라면 돌리기 전에 `SKILL.md`를 한 번 읽어보길 권한다. 이번 시리즈에서 얻은 발견 중 여러 개가 산출물이 아니라 이 정의 파일에서 나왔다. 어떤 데이터 소스를 쓰라고 규정하는지, 산출물 형식이 무엇인지, 어떤 품질 규칙을 갖고 있는지가 전부 여기 적혀 있다. 그중 하나는 아예 틀린 규칙이었다.
-
 # 4. 어떤 스킬이 있나
 
-이 장은 지도다. 100개 넘는 스킬을 하나씩 설명하는 건 의미가 없고, 어느 묶음에 무엇이 있는지만 알면 필요할 때 찾아갈 수 있다.
+이 장은 지도다. 스킬 디렉토리 117개에서 복사본을 걷어내면 고유한 것은 66개고, 그중 55개가 업종별 플러그인에, 11개가 파트너 플러그인에 있다. 이름만 봐서는 무슨 일을 하는지 짐작이 안 되는 게 절반이라, 55개를 전부 적고 각 스킬의 `description`을 한 줄로 줄여 붙였다.
 
 ## 4.1 업종별 스킬 묶음
 
-7개다. 실제로 설치해 `ls`로 센 스킬 개수를 함께 적는다.
+플러그인 7개, 스킬 55개다. 개수는 설치 후 각 플러그인의 `skills/` 디렉토리를 센 것이다. 세 번째 열은 실제로 어떻게 부르면 되는지 적은 것이고, "이 …"로 시작하는 요청은 파일이나 템플릿을 함께 줘야 돌아간다.
 
-| 플러그인                 | 스킬 | 대표 스킬                                                                                       |
-| -------------------- | -- | ------------------------------------------------------------------------------------------- |
-| `financial-analysis` | 13 | `comps-analysis`(피어 비교), `dcf-model`(현금흐름할인), `lbo-model`(차입매수), `audit-xls`(스프레드시트 수식 감사)  |
-| `equity-research`    | 9  | `sector-overview`(섹터 리포트), `earnings-analysis`(실적 업데이트), `initiating-coverage`(커버리지 개시 리포트) |
-| `investment-banking` | 9  | `cim-builder`(투자설명서), `teaser`(티저), `merger-model`(합병 모델), `pitch-deck`                     |
-| `private-equity`     | 10 | `deal-screening`(딜 스크리닝), `ic-memo`(투자심의 메모), `returns-analysis`(수익률 분석)                    |
-| `wealth-management`  | 6  | `portfolio-rebalance`(리밸런싱), `tax-loss-harvesting`(손실 수확), `financial-plan`                 |
-| `fund-admin`         | 6  | `gl-recon`(총계정원장 대사), `nav-tieout`(NAV 대조), `roll-forward`                                  |
-| `operations`         | 2  | `kyc-doc-parse`, `kyc-rules`                                                                |
+**`financial-analysis` — 13개**
 
-개인 투자자가 실제로 쓸 만한 건 앞의 두 개다. `investment-banking` 아래쪽은 사내 데이터와 템플릿이 있어야 굴러가는 것들이다.
+| 스킬 | 하는 일 | 이렇게 쓴다 |
+| --- | --- | --- |
+| `comps-analysis` | 피어 비교. 영업 지표와 밸류에이션 배수를 엑셀로 | "구글을 메타, 아마존, MS와 비교해줘" |
+| `dcf-model` | 현금흐름할인 밸류에이션. WACC 계산과 민감도 분석 포함 | "엔비디아 DCF 돌려줘. 성장률 가정은 셋으로" |
+| `lbo-model` | 차입매수 모델 템플릿 작성 | "이 템플릿으로 레버리지 5배 LBO 짜줘" |
+| `3-statement-model` | 손익·재무상태·현금흐름 3표를 서로 연결해 채우기 | "이 템플릿에 최근 3년 실적 채워줘" |
+| `competitive-analysis` | 경쟁 구도 덱. 포지셔닝, 경쟁사 심층, 비교 분석 | "국내 2차전지 3사 경쟁 구도 정리해줘" |
+| `audit-xls` | 스프레드시트 수식 감사. 대차 일치와 현금 대사까지 확인 | "이 모델 수식 틀린 데 없는지 봐줘" |
+| `clean-data-xls` | 지저분한 시트 정리. 공백, 표기, 텍스트로 저장된 숫자, 중복 | "이 시트 숫자가 텍스트로 들어가 있어. 고쳐줘" |
+| `deck-refresh` | 기존 덱의 숫자만 새 분기 값으로 교체 | "이 덱을 4분기 숫자로 갱신해줘" |
+| `ib-check-deck` | 덱 품질 검사. 슬라이드 사이 숫자가 어긋나는지 확인 | "이 덱 보내기 전에 숫자 맞는지 확인해줘" |
+| `pptx-author` | 파워포인트 없이 `.pptx` 파일 생성 | 직접 부를 일은 없다. 다른 스킬이 슬라이드를 저장할 때 붙는다 |
+| `xlsx-author` | 엑셀 없이 `.xlsx` 파일 생성 | 직접 부를 일은 없다. 다른 스킬이 엑셀을 저장할 때 붙는다 |
+| `ppt-template-creator` | 갖고 있는 PPT 템플릿을 재사용 가능한 스킬로 변환 | "이 회사 표준 템플릿을 스킬로 만들어줘" |
+| `skill-creator` | 스킬을 만드는 스킬 | "내 종목 점검 절차를 스킬로 만들어줘" |
+
+13개라고 해서 분석 도구가 13개는 아니다. 표 끝의 네 개는 파일을 뽑거나 스킬을 만드는 범용 도구라 금융 자체와는 상관이 없다. 그중 `xlsx-author`는 에이전트 플러그인 8곳이 복사해 가서 저장소에 총 9벌 있는데, 117개 중 가장 많이 중복된 스킬이다.
+
+**`equity-research` — 9개**
+
+| 스킬 | 하는 일 | 이렇게 쓴다 |
+| --- | --- | --- |
+| `sector-overview` | 섹터 리포트. 시장 구조, 경쟁 구도, 주요 기업, 테마 | "미국 반도체 섹터 리포트 써줘" |
+| `initiating-coverage` | 커버리지 개시 리포트. 5단계 작업으로 쪼개 진행 | "테슬라 커버리지 개시 리포트. 1단계부터 시작" |
+| `earnings-analysis` | 분기 실적 업데이트. 서프라이즈 분석과 추정치 수정 | "애플 이번 분기 실적 뜯어줘" |
+| `earnings-preview` | 발표 전 시나리오와 관전 포인트 정리 | "다음 주 엔비디아 실적, 뭘 봐야 하나" |
+| `model-update` | 실적과 가이던스를 반영해 모델 추정치 갱신 | "이 모델에 4분기 실적과 가이던스 반영해줘" |
+| `thesis-tracker` | 투자 아이디어의 근거와 마일스톤을 시간순으로 추적 | "내 삼성전자 투자 논리 아직 유효한지 점검" |
+| `idea-generation` | 정량 스크리닝과 테마 리서치로 신규 아이디어 발굴 | "배당 늘리는 저PBR 종목 스크리닝해줘" |
+| `catalyst-calendar` | 실적일, 컨퍼런스, 규제 결정 일정 관리 | "관심종목 다음 달 일정 뽑아줘" |
+| `morning-note` | 간밤 이슈와 트레이드 아이디어를 담은 모닝 미팅 노트 | "간밤에 뭐 있었는지 한 장으로 정리" |
+
+**`investment-banking` — 9개**
+
+| 스킬 | 하는 일 | 이렇게 쓴다 |
+| --- | --- | --- |
+| `cim-builder` | 투자설명서(CIM) 구성과 초안 | "이 자료로 매각용 CIM 초안 잡아줘" |
+| `teaser` | 회사명을 가린 익명 한 장짜리 소개서 | "이 CIM 기반으로 익명 티저 한 장" |
+| `merger-model` | 인수 후 주당순이익 증감(accretion/dilution) 분석 | "A가 B를 인수하면 EPS가 어떻게 되나" |
+| `pitch-deck` | 기존 피치덱 템플릿에 소스 데이터 채우기 | "이 템플릿에 이 엑셀 숫자 채워줘" |
+| `strip-profile` | 피치북용 기업 프로필 슬라이드 1-4장 | "이 회사 프로필 두 장으로 만들어줘" |
+| `buyer-list` | 인수 후보군을 전략적·재무적으로 나눠 우선순위 매기기 | "이 회사를 살 만한 곳 추려줘" |
+| `datapack-builder` | CIM, 공시, 웹에서 뽑은 수치를 표준 엑셀 데이터팩으로 | "이 CIM에서 재무 숫자만 엑셀로 뽑아줘" |
+| `process-letter` | 매각 절차 안내문과 입찰 지침서 | "1차 입찰 안내문 초안 써줘" |
+| `deal-tracker` | 진행 중인 딜의 마일스톤, 기한, 액션 아이템 관리 | "이번 주 마감 임박한 건이 뭐가 있나" |
+
+**`private-equity` — 10개**
+
+| 스킬 | 하는 일 | 이렇게 쓴다 |
+| --- | --- | --- |
+| `deal-screening` | 들어온 CIM과 티저를 펀드 투자 기준으로 1차 선별 | "이 티저, 우리 투자 기준에 맞는지 봐줘" |
+| `ic-memo` | 투자심의위원회 메모 | "실사 결과 정리해서 IC 메모 써줘" |
+| `returns-analysis` | IRR/MOIC 민감도 표. 진입·청산 배수, 레버리지, 보유기간별 | "진입 8배, 청산 10배면 IRR이 얼마인가" |
+| `unit-economics` | ARR 코호트, LTV/CAC, 순유지율 같은 단위경제성 분석 | "이 SaaS 회사 코호트별 유지율 분석해줘" |
+| `dd-checklist` | 업종과 딜 유형에 맞춘 실사 체크리스트와 진행 추적 | "제조업 바이아웃 실사 항목 뽑아줘" |
+| `dd-meeting-prep` | 경영진 미팅과 전문가 콜 전 질문지, 파고들 위험 신호 | "내일 경영진 미팅 질문지 만들어줘" |
+| `deal-sourcing` | 타깃 발굴, CRM 중복 확인, 창업자 대상 콜드메일 초안 | "이 섹터에서 볼 만한 비상장사 찾아줘" |
+| `portfolio-monitoring` | 포트폴리오사 월·분기 실적을 계획 대비로 추적 | "이 회사 월 실적, 계획 대비 어떤가" |
+| `value-creation-plan` | 인수 후 100일 계획과 EBITDA 브리지 | "인수 직후 100일 계획 짜줘" |
+| `ai-readiness` | 포트폴리오사 중 AI 도입 효과가 큰 곳을 골라 순위화 | "어느 포트폴리오사부터 AI를 붙일까" |
+
+**`wealth-management` — 6개**
+
+| 스킬 | 하는 일 | 이렇게 쓴다 |
+| --- | --- | --- |
+| `portfolio-rebalance` | 자산배분 이탈 점검과 리밸런싱 매매안. 세금과 워시세일 고려 | "이 계좌가 목표 비중에서 얼마나 벌어졌나" |
+| `tax-loss-harvesting` | 손실 확정 대상 발굴과 대체 종목 제안 | "연말인데 손실 확정할 만한 종목 있나" |
+| `financial-plan` | 은퇴, 교육자금, 상속을 포함한 종합 재무 설계 | "지금 자산으로 60세 은퇴가 되는지 계산해줘" |
+| `client-report` | 고객용 성과 리포트. 수익률, 자산배분, 시장 코멘트 | "이 계좌 분기 성과 리포트 만들어줘" |
+| `client-review` | 고객 미팅 전 성과 요약과 대화 포인트 정리 | "내일 미팅 전에 한 장으로 요약해줘" |
+| `investment-proposal` | 신규 고객 대상 투자 제안서 | "이 성향 고객용 제안서 초안 잡아줘" |
+
+**`fund-admin` — 6개**
+
+| 스킬 | 하는 일 | 이렇게 쓴다 |
+| --- | --- | --- |
+| `gl-recon` | 총계정원장과 보조원장 대사. 불일치 항목을 원인별로 분류 | "이 3월 원장과 보조원장 대사해줘" |
+| `break-trace` | 대사 불일치를 원거래까지 역추적 | "이 불일치가 어디서 났는지 추적해줘" |
+| `nav-tieout` | LP 명세서를 펀드 NAV 팩과 대조 | "이 LP 명세서를 NAV 팩과 맞춰봐줘" |
+| `roll-forward` | 계정 잔액의 기초, 증감, 기말 명세 | "이 계정 기초부터 기말까지 명세 만들어줘" |
+| `accrual-schedule` | 기말 발생액 명세와 분개 초안 | "3월 발생액 명세와 분개 초안 뽑아줘" |
+| `variance-commentary` | 전기·예산 대비 변동에 대한 설명 작성 | "전분기 대비 5% 넘게 변한 항목 설명 써줘" |
+
+**`operations` — 2개**
+
+| 스킬 | 하는 일 | 이렇게 쓴다 |
+| --- | --- | --- |
+| `kyc-doc-parse` | 온보딩 서류를 신원, 지분, 자금원 항목으로 구조화 | "이 온보딩 서류 항목별로 정리해줘" |
+| `kyc-rules` | 파싱 결과에 KYC/AML 규칙을 적용해 위험등급 부여 | "파싱 결과에 우리 KYC 규칙 적용해줘" |
+
+개인 투자자가 실제로 쓸 만한 건 앞의 두 개다. `investment-banking` 아래쪽은 사내 데이터와 템플릿이 있어야 굴러가는 것들이다. `fund-admin`과 `operations`는 아예 사내 원장과 규정 파일을 전제한다.
 
 ## 4.2 전문 에이전트
 

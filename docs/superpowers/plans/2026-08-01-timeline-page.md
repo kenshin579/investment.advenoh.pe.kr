@@ -1162,7 +1162,14 @@ Expected: 각 줄의 값이 괄호 안 기대값과 일치. 하나라도 어긋�
 - [ ] **Step 4: 파일 크기 확인**
 
 Run: `ls -lh data/timeline/`
-Expected: `series.json`이 300KB 이하. 크게 초과하면 보고할 것.
+Expected: `series.json` 이 400~550KB. 실측 488KB (8,627 포인트, pretty-print).
+
+pretty-print 를 유지하는 이유: 데이터를 갱신하면 월이 뒤에 몇 개 붙을 뿐인데,
+minify 하면 한 줄이 통째로 바뀐 것으로 보여 diff 를 읽을 수 없다. 줄당 한 값이면 추가된 월만 보인다.
+저장소 용량 488KB 는 문제되지 않는다.
+
+브라우저로 가는 양은 이것과 다르다 — Task 9 가 `public/data/timeline-series.json` 을 minify 로 쓰고(150KB, gzip 39KB),
+Task 13 은 사건 구간만 잘라 넘긴다(2KB). 아래 Task 13 참고.
 
 - [ ] **Step 5: 커밋**
 
@@ -1733,6 +1740,14 @@ export interface TimelineSeriesFile {
   series: Record<SeriesKey, SeriesData>;
 }
 
+/**
+ * 사건 구간으로 이미 잘려 나온 계열들.
+ *
+ * 전체 시계열은 8,627 포인트(minify 150KB)라 클라이언트로 통째로 넘기면 안 된다.
+ * 서버 컴포넌트가 사건 구간(보통 12~36개월)만 잘라 이 형태로 넘긴다 — 2KB 수준.
+ */
+export type WindowedSeries = Partial<Record<SeriesKey, Point[]>>;
+
 export const SERIES_LABEL: Record<SeriesKey, string> = {
   sp500: '지수',
   nasdaq: '나스닥',
@@ -2243,7 +2258,7 @@ import {
 } from 'lightweight-charts';
 
 import { useTheme } from '@/components/theme-provider';
-import type { Point, SeriesKey, TimelineSeriesFile } from './types';
+import type { Point, SeriesKey, WindowedSeries } from './types';
 
 const LINES: { key: SeriesKey; label: string; color: string }[] = [
   { key: 'sp500', label: 'S&P 500', color: '#4f46e5' },
@@ -2253,20 +2268,20 @@ const LINES: { key: SeriesKey; label: string; color: string }[] = [
 ];
 
 interface Props {
-  seriesFile: TimelineSeriesFile;
+  /** 이미 사건 구간으로 잘린 계열들. 서버에서 잘라 넘긴다 */
+  series: WindowedSeries;
   from: string;
   to: string;
 }
 
-/** 구간을 잘라 시작값 100으로 환산한다. 시작값이 없으면 빈 배열 */
-function rebase(values: Point[], from: string, to: string): Point[] {
-  const window = values.filter(([ym]) => ym >= from && ym <= to);
-  const base = window[0]?.[1];
+/** 시작값 100으로 환산한다. 값이 없으면 빈 배열 */
+function rebase(values: Point[]): Point[] {
+  const base = values[0]?.[1];
   if (!base) return [];
-  return window.map(([ym, value]) => [ym, Math.round((value / base) * 1000) / 10]);
+  return values.map(([ym, value]) => [ym, Math.round((value / base) * 1000) / 10]);
 }
 
-export function RebasedChart({ seriesFile, from, to }: Props) {
+export function RebasedChart({ series, from, to }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<IChartApi | null>(null);
   const { theme } = useTheme();
@@ -2293,7 +2308,7 @@ export function RebasedChart({ seriesFile, from, to }: Props) {
     chartRef.current = chart;
 
     for (const { key, color } of LINES) {
-      const data = rebase(seriesFile.series[key].values, from, to);
+      const data = rebase(series[key] ?? []);
       if (data.length === 0) continue;
 
       const line = chart.addSeries(LineSeries, {
@@ -2317,7 +2332,7 @@ export function RebasedChart({ seriesFile, from, to }: Props) {
       chart.remove();
       chartRef.current = null;
     };
-  }, [seriesFile, from, to, isDark]);
+  }, [series, isDark]);
 
   return (
     <figure className="my-6">
@@ -2331,7 +2346,8 @@ export function RebasedChart({ seriesFile, from, to }: Props) {
         ))}
       </div>
       <figcaption className="mt-2 text-xs text-gray-500 dark:text-gray-400">
-        사건 시작({from.replace('-', '.')}) = 100 으로 환산. 출처: Shiller / datasets.io, FRED, LBMA.
+        사건 시작({from.replace('-', '.')}) = 100 으로 환산. 지수는 월중 평균, 그 외는 월말 값 기준.
+        출처: Shiller / datasets.io, FRED, LBMA.
       </figcaption>
     </figure>
   );
@@ -2348,7 +2364,7 @@ import { useEffect, useRef } from 'react';
 import { createChart, LineSeries, type IChartApi, type Time } from 'lightweight-charts';
 
 import { useTheme } from '@/components/theme-provider';
-import type { SeriesKey, TimelineSeriesFile } from './types';
+import type { SeriesKey, WindowedSeries } from './types';
 
 const LINES: { key: SeriesKey; label: string; color: string }[] = [
   { key: 'ust10y', label: '美 10년물', color: '#059669' },
@@ -2356,12 +2372,11 @@ const LINES: { key: SeriesKey; label: string; color: string }[] = [
 ];
 
 interface Props {
-  seriesFile: TimelineSeriesFile;
-  from: string;
-  to: string;
+  /** 이미 사건 구간으로 잘린 계열들. 서버에서 잘라 넘긴다 */
+  series: WindowedSeries;
 }
 
-export function RateChart({ seriesFile, from, to }: Props) {
+export function RateChart({ series }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<IChartApi | null>(null);
   const { theme } = useTheme();
@@ -2388,7 +2403,7 @@ export function RateChart({ seriesFile, from, to }: Props) {
     chartRef.current = chart;
 
     for (const { key, color } of LINES) {
-      const data = seriesFile.series[key].values.filter(([ym]) => ym >= from && ym <= to);
+      const data = series[key] ?? [];
       if (data.length === 0) continue;
 
       const line = chart.addSeries(LineSeries, {
@@ -2412,7 +2427,7 @@ export function RateChart({ seriesFile, from, to }: Props) {
       chart.remove();
       chartRef.current = null;
     };
-  }, [seriesFile, from, to, isDark]);
+  }, [series, isDark]);
 
   return (
     <figure className="my-6">
@@ -2442,15 +2457,26 @@ import { join } from 'path';
 
 import { RebasedChart } from '@/components/timeline/RebasedChart';
 import { RateChart } from '@/components/timeline/RateChart';
-import type { TimelineEvent, TimelineSeriesFile } from '@/components/timeline/types';
+import type {
+  SeriesKey,
+  TimelineEvent,
+  TimelineSeriesFile,
+  WindowedSeries,
+} from '@/components/timeline/types';
 ```
 
 같은 파일에 헬퍼를 추가한다:
 ```tsx
-/** History 카테고리 글이면 해당 사건과 시계열을 읽어 온다 */
+/**
+ * History 카테고리 글이면 해당 사건과 **그 구간만 잘라낸** 시계열을 읽어 온다.
+ *
+ * 전체 시계열은 7계열 8,627 포인트(minify 150KB)다. 그걸 그대로 클라이언트 컴포넌트에
+ * props 로 넘기면 사건 글 14개가 각각 150KB 를 RSC 페이로드에 임베드한다.
+ * 사건 구간(보통 12~36개월)만 자르면 2KB 로 떨어진다.
+ */
 async function loadTimelineFor(slug: string): Promise<{
   event: TimelineEvent;
-  seriesFile: TimelineSeriesFile;
+  window: WindowedSeries;
 } | null> {
   try {
     const dir = join(process.cwd(), 'public', 'data');
@@ -2463,7 +2489,15 @@ async function loadTimelineFor(slug: string): Promise<{
     const seriesFile = JSON.parse(
       await readFile(join(dir, 'timeline-series.json'), 'utf-8'),
     ) as TimelineSeriesFile;
-    return { event, seriesFile };
+
+    const window = {} as WindowedSeries;
+    for (const key of Object.keys(seriesFile.series) as SeriesKey[]) {
+      window[key] = seriesFile.series[key].values.filter(
+        ([ym]) => ym >= event.peak && ym <= event.trough,
+      );
+    }
+
+    return { event, window };
   } catch {
     return null;
   }
@@ -2479,15 +2513,11 @@ async function loadTimelineFor(slug: string): Promise<{
   const timelineBlock = timeline ? (
     <section className="not-prose">
       <RebasedChart
-        seriesFile={timeline.seriesFile}
+        series={timeline.window}
         from={timeline.event.peak}
         to={timeline.event.trough}
       />
-      <RateChart
-        seriesFile={timeline.seriesFile}
-        from={timeline.event.peak}
-        to={timeline.event.trough}
-      />
+      <RateChart series={timeline.window} />
     </section>
   ) : null;
 ```

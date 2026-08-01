@@ -50,11 +50,23 @@ async function loadTimelineFor(slug: string): Promise<{
       await readFile(join(dir, 'timeline-series.json'), 'utf-8'),
     ) as TimelineSeriesFile
 
+    // 짧은 사건은 구간 그대로 자르면 차트에 점이 두세 개밖에 안 남는다.
+    // 코로나는 2020-02~2020-03 이라 2개, 블랙먼데이 4개, 유럽 재정위기 6개다.
+    // 최소 24개월이 되도록 앞뒤로 균등하게 늘린다. 낙폭·지표 계산은 사건 구간 그대로이고
+    // 늘어난 건 차트가 보여주는 범위뿐이다. 코로나처럼 회복이 빨랐던 사건은
+    // 오히려 폭락과 회복이 한 화면에 들어와 이야기가 살아난다.
+    const MIN_MONTHS = 24
+    const toIdx = (ym: string) => Number(ym.slice(0, 4)) * 12 + Number(ym.slice(5, 7)) - 1
+    const toYm = (i: number) => `${Math.floor(i / 12)}-${String((i % 12) + 1).padStart(2, '0')}`
+
+    const span = toIdx(event.trough) - toIdx(event.peak) + 1
+    const pad = Math.max(0, Math.ceil((MIN_MONTHS - span) / 2))
+    const from = toYm(toIdx(event.peak) - pad)
+    const to = toYm(toIdx(event.trough) + pad)
+
     const window = {} as WindowedSeries
     for (const key of Object.keys(seriesFile.series) as SeriesKey[]) {
-      window[key] = seriesFile.series[key].values.filter(
-        ([ym]) => ym >= event.peak && ym <= event.trough,
-      )
+      window[key] = seriesFile.series[key].values.filter(([ym]) => ym >= from && ym <= to)
     }
 
     return { event, window }

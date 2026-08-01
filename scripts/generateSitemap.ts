@@ -6,6 +6,7 @@ interface BlogPost {
   slug: string;
   categories: string[];
   date: string;
+  stub?: boolean;
 }
 
 function determineChangefreq(url: string): string {
@@ -39,9 +40,12 @@ async function generateSitemap() {
   const staticPages = [
     { url: baseUrl, changefreq: determineChangefreq(baseUrl), priority: '1.0' },
     { url: `${baseUrl}/series`, changefreq: determineChangefreq(`${baseUrl}/series`), priority: '0.7' },
+    { url: `${baseUrl}/timeline`, changefreq: determineChangefreq(`${baseUrl}/timeline`), priority: '0.8' },
   ];
 
-  const postUrls = posts.map(post => {
+  const postUrls = posts
+    .filter((post) => post.stub !== true)
+    .map(post => {
     const postDate = new Date(post.date);
     const isRecent = postDate > thirtyDaysAgo;
     const category = post.categories[0] || 'etc';

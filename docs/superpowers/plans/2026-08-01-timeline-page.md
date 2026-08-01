@@ -71,8 +71,20 @@ Date,SP500,Dividend,Earnings,Consumer Price Index,Long Interest Rate,Real Price,
 1900-01-01,6.1,...,7.9,3.15,...
 2026-07-01,7481.34,0.0,0.0,0.0,0.0,...
 ```
-날짜는 항상 `YYYY-MM-01`. **마지막 몇 행은 CPI와 Long Interest Rate가 `0.0`으로 들어온다 — 이를 결측으로 처리해야 한다.**
-SP500 컬럼은 월중 평균이지 월말 종가가 아니다.
+날짜는 항상 `YYYY-MM-01`. SP500 컬럼은 월중 평균이지 월말 종가가 아니다.
+
+**CPI와 Long Interest Rate 컬럼은 2023-09에서 끊기고, 이후 34개월이 전부 `0.0`으로 들어온다** (2026-08-01 실측).
+SP500만 2026-07까지 채워진다. `0`을 결측으로 처리해야 하며, 이 두 계열은 다른 소스로 이어붙여야 한다:
+
+| 계열 | Shiller 사용 구간 | 이후 |
+|---|---|---|
+| SP500 | 1900-01 ~ 현재 (전 구간) | — |
+| Long Interest Rate | 1900-01 ~ 1961-12 | FRED `DGS10` |
+| CPI | 1900-01 ~ 1912-12 | FRED `CPIAUCNS` |
+
+FRED `CPIAUCNS`(1913-01~)는 Shiller CPI와 **동일한 지수**임을 실측으로 확인했다 —
+1913-01 `9.8` vs `9.800`, 1950-01 `23.5` vs `23.500`, 2000-01 `168.8` vs `168.800`.
+(2023년 이후 최근 몇 달은 Shiller가 보간값을 써서 0.3% 내외 차이가 나지만, 경계가 1913년이라 무관하다.)
 
 **LBMA** — `https://prices.lbma.org.uk/json/gold_pm.json`
 ```json
@@ -923,8 +935,15 @@ async function main(): Promise<void> {
   const shiller = shillerText ? parseShillerCsv(shillerText) : null;
 
   const sp500 = shiller ? clampFrom(shiller.sp500) : keep('sp500');
-  const cpi = shiller ? clampFrom(shiller.cpi) : keep('cpi');
   const ust10yOld = shiller ? clampFrom(shiller.ust10y).filter(([ym]) => ym < '1962-01') : [];
+
+  // ---- 물가: Shiller(1900-01~1912-12) → FRED CPIAUCNS(1913-01~) ----
+  // Shiller CSV의 CPI 컬럼은 2023-09에서 끊기고 이후 34개월이 0으로 채워져 온다.
+  // FRED가 같은 지수(CPI-U)를 1913년부터 최신까지 주므로 그쪽으로 이어붙인다.
+  const cpiOld = shiller ? clampFrom(shiller.cpi).filter(([ym]) => ym < '1913-01') : [];
+  const cpiText = await fetchText(fredUrl('CPIAUCNS'), 'fred:CPIAUCNS');
+  const cpiNew = cpiText ? toMonthly(parseFredCsv(cpiText)) : [];
+  const cpi = cpiOld.length || cpiNew.length ? spliceSeries([cpiOld, cpiNew]) : keep('cpi');
 
   // ---- 나스닥 ----
   const nasdaqText = await fetchText(fredUrl('NASDAQCOM'), 'fred:NASDAQCOM');
@@ -996,7 +1015,14 @@ async function main(): Promise<void> {
         ],
         values: policyRate,
       },
-      cpi: { unit: 'index', source: 'shiller', values: cpi },
+      cpi: {
+        unit: 'index',
+        segments: [
+          { to: '1912-12', kind: 'market', source: 'shiller' },
+          { to: null, kind: 'market', source: 'fred:CPIAUCNS' },
+        ],
+        values: cpi,
+      },
       kospi: {
         unit: 'index',
         from: '1981-01',
@@ -1018,7 +1044,7 @@ async function main(): Promise<void> {
       { key: 'gold', name: 'LBMA Gold PM (1968-04~), 이전은 법정 고정가', url: LBMA_URL },
       { key: 'ust10y', name: 'Shiller GS10 (~1961), FRED DGS10 (1962~)', url: fredUrl('DGS10') },
       { key: 'policyRate', name: 'NY연은 재할인율 (~1954-06), FRED FEDFUNDS (1954-07~)', url: fredUrl('FEDFUNDS') },
-      { key: 'cpi', name: 'Shiller CPI', url: SHILLER_URL },
+      { key: 'cpi', name: 'Shiller CPI (~1912), FRED CPIAUCNS (1913~)', url: fredUrl('CPIAUCNS') },
       { key: 'kospi', name: 'OECD Share Prices Korea (FRED)', url: fredUrl('SPASTT01KRM661N') },
     ],
   };
@@ -1056,11 +1082,14 @@ nasdaq        666개월  1971-02 ~ 2026-07
 gold         1516개월  1900-01 ~ 2026-07
 ust10y       1519개월  1900-01 ~ 2026-07
 policyRate   1341개월  1914-11 ~ 2026-06
-cpi          1518개월  1900-01 ~ 2026-06
+cpi          1517개월  1900-01 ~ 2026-06
 kospi         546개월  1981-01 ~ 2026-06
 ```
 
 어떤 계열이든 `(비어 있음)`이 나오면 중단하고 경고 메시지를 보고할 것.
+
+**`cpi`가 `2023-09`에서 끝나면 이어붙이기가 동작하지 않은 것이다.** Shiller CPI만 쓰고 FRED `CPIAUCNS`를
+못 받았다는 뜻이므로 중단하고 보고할 것. `cpi`의 마지막 월은 `sp500`과 한 달 이내로 붙어 있어야 한다.
 
 - [ ] **Step 3: 생성된 데이터의 참조값 검증**
 

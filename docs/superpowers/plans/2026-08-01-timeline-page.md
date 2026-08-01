@@ -2653,5 +2653,21 @@ EOF
 - **`npm run dev` / `npm run build`는 `generateStaticData.ts`를 먼저 돌린다.** `data/timeline/series.json`이 없으면 Task 9 이후로는 빌드가 깨진다. Task 7을 반드시 먼저 끝낼 것.
 - **`npm run timeline:fetch`는 빌드가 부르지 않는다.** 수동 실행 전용이다.
 - **프로덕션 빌드는 TypeScript 에러를 무시한다** (`ignoreBuildErrors: true`). `npm run build`가 통과해도 `npm run check`를 따로 돌려야 한다.
+- **`npm run check`는 기존 에러 11개 때문에 원래 실패한다.** Task 1 완료 시점(커밋 `5956704`)에 측정한 베이스라인이며, 이번 작업과 무관한 레거시 코드다. 각 태스크의 "`npm run check` 에러 없음"은 **"이 목록보다 늘지 않았음"** 으로 읽어야 한다.
+
+  | 파일 | 개수 | 원인 |
+  |---|---|---|
+  | `src/lib/search.ts` | 3 | 미설치 `fuse.js`, `@shared/schema` |
+  | `src/lib/queryClient.ts` | 2 | `ImportMeta.env` |
+  | `src/lib/user-analytics.ts` | 1 | 암묵적 any |
+  | `src/lib/seo.ts` | 1 | 미설치 `@shared/schema` |
+  | `src/lib/blog-client.ts` | 1 | `BlogPost` export |
+  | `src/components/series-navigation.tsx` | 1 | 미설치 `wouter` |
+  | `src/components/markdown-renderer.tsx` | 1 | `Blob` 타입 |
+  | `src/components/category-filter.tsx` | 1 | 미설치 `wouter` (죽은 코드) |
+
+  확인 방법: `npm run check 2>&1 | grep -cE "error TS"` → **11이면 정상**, 12 이상이면 이번 변경이 에러를 추가한 것이다.
+- **`package-lock.json`은 이 저장소에서 gitignore 대상이다** (`.gitignore:72`). 커밋 명령에 들어 있어도 스테이징되지 않는 게 정상이다.
+- **`npm test`는 테스트 파일이 생기기 전(Task 3 이전)까지 "No test files found"로 exit 1** 한다. 정상이다.
 - **이 저장소의 GitHub Actions는 대부분 `.disabled` 상태다.** CI가 검증해 줄 거라 가정하지 말 것.
 - **lightweight-charts v5의 export 이름**(`createSeriesMarkers`, `PriceScaleMode`, `LineSeries`)이 설치된 버전과 다르면, `node_modules/lightweight-charts/dist/typings.d.ts`에서 확인해 맞출 것. 참고 구현이 `moneyflow.advenoh.pe.kr/frontend/components/chart/StockChart.tsx`에 있다.

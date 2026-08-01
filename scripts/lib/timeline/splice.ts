@@ -30,8 +30,15 @@ export function constantMonths(from: YearMonth, to: YearMonth, value: number): P
 }
 
 /**
- * 여러 구간을 이어붙인다. 배열 뒤쪽이 더 신뢰할 수 있는 출처라고 보고,
+ * 여러 구간을 병합한다. 배열 뒤쪽이 더 신뢰할 수 있는 출처라고 보고,
  * 같은 월이 겹치면 뒤쪽 값이 이긴다.
+ *
+ * 주의: 이 함수는 앞 구간을 **끊지 않는다.** 겹치는 달만 덮어쓸 뿐이다.
+ * 앞 구간이 뒤 구간의 시작보다 늦은 달까지 뻗어 있고 그 달이 뒤 구간에 없으면,
+ * 앞 구간 값이 그대로 살아남는다.
+ *
+ * 따라서 **호출자가 앞 구간을 경계에서 미리 잘라 넘겨야 한다.**
+ * 예: `spliceSeries([shillerCpi.filter(([ym]) => ym < '1913-01'), fredCpi])`
  */
 export function spliceSeries(parts: Point[][]): Point[] {
   const merged = new Map<YearMonth, number>();

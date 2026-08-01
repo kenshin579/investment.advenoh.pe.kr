@@ -860,6 +860,11 @@ git commit -m "[feature/timeline-page] feat: 구간 변동률과 퍼센트포인
 - Create: `scripts/fetchTimelineData.ts`
 - Create (실행 결과): `data/timeline/series.json`, `data/timeline/sources.json`
 
+> **`spliceSeries` 는 앞 구간을 끊지 않는다.** 겹치는 달만 덮어쓸 뿐이다.
+> 앞 구간이 뒤 구간 시작보다 늦은 달까지 뻗어 있고 그 달이 뒤 구간에 없으면 앞 구간 값이 살아남는다.
+> 아래 코드에서 `cpiOld`·`ust10yOld`·`discount` 에 붙은 `.filter(([ym]) => ym < '...')` 는 장식이 아니라
+> **경계를 강제하는 유일한 장치다.** 네 호출부(금·정책금리·10년물·CPI) 모두에서 이 사전 절단을 지울 수 없다.
+
 - [ ] **Step 1: 수집 스크립트 작성**
 
 `scripts/fetchTimelineData.ts`:

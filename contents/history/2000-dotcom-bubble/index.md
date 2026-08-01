@@ -97,7 +97,7 @@ stub: false
 
 # 7. 참고 자료
 
-- Robert Shiller, 『Irrational Exuberance』 — 초판이 2000년 3월, 나스닥 고점과 같은 달에 나왔다
+- Robert Shiller, [『Irrational Exuberance』](https://en.wikipedia.org/wiki/Irrational_Exuberance_%28book%29) — 초판이 2000년 3월, 나스닥 고점과 같은 달에 나왔다
 - Robert Shiller, [Online Data](http://www.econ.yale.edu/~shiller/data.htm) — 이 글의 S&P 500·물가 데이터
-- [FRED](https://fred.stlouisfed.org/) — 나스닥 종합, 미 10년물, 정책금리
-- [LBMA](https://www.lbma.org.uk/) — 금 현물
+- FRED — [나스닥 종합](https://fred.stlouisfed.org/series/NASDAQCOM), [미 10년물](https://fred.stlouisfed.org/series/DGS10), [정책금리](https://fred.stlouisfed.org/series/FEDFUNDS)
+- [LBMA 금 현물](https://www.lbma.org.uk/prices-and-data/precious-metal-prices)

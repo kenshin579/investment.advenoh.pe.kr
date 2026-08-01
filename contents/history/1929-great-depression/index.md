@@ -88,7 +88,7 @@ graph LR
 
 # 6. 참고 자료
 
-- Milton Friedman, Anna J. Schwartz, 『A Monetary History of the United States, 1867–1960』
+- Milton Friedman, Anna J. Schwartz, [『A Monetary History of the United States, 1867–1960』](https://en.wikipedia.org/wiki/A_Monetary_History_of_the_United_States) — 연준의 통화 긴축을 대공황의 핵심 원인으로 지목한 고전
+- Ben Bernanke, [『Essays on the Great Depression』](https://openlibrary.org/works/OL5812279W) — 은행 시스템 붕괴가 실물로 번진 경로를 다룬다
 - Robert Shiller, [Online Data](http://www.econ.yale.edu/~shiller/data.htm) — 이 글의 지수·물가·장기금리 데이터
-- [FRED](https://fred.stlouisfed.org/) — 정책금리(NY연은 재할인율)
-- Ben Bernanke, 『Essays on the Great Depression』
+- FRED — [NY연은 재할인율](https://fred.stlouisfed.org/series/M13009USM156NNBR), [Fed Funds](https://fred.stlouisfed.org/series/FEDFUNDS)

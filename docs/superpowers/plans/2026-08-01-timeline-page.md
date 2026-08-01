@@ -1212,6 +1212,30 @@ git commit -m "[feature/timeline-page] feat: 타임라인 시계열 수집 스�
 - 다이어그램은 ASCII art가 아니라 Mermaid 코드 블록을 쓴다
 - 마지막 본문 섹션 제목은 "정리"가 아니라 **"마무리"** 로 한다
 
+### `headlineDrawdown` — 손으로 넣는 유일한 숫자
+
+Shiller 의 S&P 500 컬럼은 **월중 평균**이고 사건 구간도 **월 단위**로만 잡는다.
+그래서 자동 계산한 낙폭이 세상이 아는 숫자와 벌어진다 (2026-08-01 실측):
+
+| 사건 | 자동 계산 | 통상 인용 | 차이 |
+|---|---:|---:|---:|
+| 1929 대공황 | -84.76% | -86% | 1.2%p |
+| 2008 금융위기 | -50.82% | -57% | 6.2%p |
+| 2000 닷컴 | -40.74% | -49% | 8.3%p |
+| 1987 블랙먼데이 | -25.60% | -34% | 8.4%p |
+| **2020 코로나** | **-19.07%** | **-34%** | **14.9%p** |
+
+코로나가 특히 심한 건 2020-02-19 고점에서 2020-03-23 저점까지 33일이라 월 단위에 담기지 않기 때문이다.
+그대로 두면 사건 카드 배지는 "지수 -19%" 인데 바로 옆 요약문은 "33일 만에 34% 폭락" 이라고 말하는 모순이 생긴다.
+
+**규칙:**
+- `event.headlineDrawdown`(선택, 숫자)이 있으면 사건 카드 배지와 `drawdown` 필드에 그 값을 쓴다
+- 없으면 월간 데이터에서 계산한 값을 쓴다
+- **차트와 나머지 지표(나스닥·금·금리·채권·물가·한국)는 언제나 월간 데이터로 계산한다.**
+  손으로 넣는 숫자는 `headlineDrawdown` 하나뿐이다
+- 값의 기준은 **일간 종가 고점 → 저점**이다. 본문에서 기간과 기준을 밝힌다
+- 자동 계산값과 3%p 이상 차이 나는 사건에만 넣는다. 대공황(1.2%p)처럼 붙는 사건은 넣지 않는다
+
 **Files:**
 - Create: `contents/history/{slug}/index.md` × 14
 
@@ -1234,6 +1258,7 @@ event:
   trough: 1932-06
   label: 대공황
   summary: 신용으로 부풀린 주식시장이 3년 가까이 하락했고, 고점 회복에는 25년이 걸렸다.
+  # headlineDrawdown 없음 — 자동 계산 -84.76% 와 통상 인용 -86% 의 차이가 1.2%p 뿐이다
 stub: false
 ---
 
@@ -1265,6 +1290,7 @@ event:
   trough: 2002-10
   label: 닷컴 버블
   summary: 기술주 밸류에이션이 무너지며 나스닥이 78% 하락했다. 실적 없는 성장 서사가 처음으로 값을 치렀다.
+  headlineDrawdown: -49.1   # 일간 종가 2000-03-24 1527.46 → 2002-10-09 776.76
 stub: false
 ---
 ```
@@ -1286,6 +1312,7 @@ event:
   trough: 2009-03
   label: 금융위기
   summary: 서브프라임 부실이 리먼 파산으로 번지며 전 세계 신용이 얼어붙었다.
+  headlineDrawdown: -56.8   # 일간 종가 2007-10-09 1565.15 → 2009-03-09 676.53
 stub: false
 ---
 ```
@@ -1307,6 +1334,7 @@ event:
   trough: 2020-03
   label: 코로나
   summary: 팬데믹 봉쇄로 33일 만에 34% 하락했으나, 전례 없는 통화·재정 대응으로 5개월 만에 고점을 되찾았다.
+  headlineDrawdown: -33.9   # 일간 종가 2020-02-19 3386.15 → 2020-03-23 2237.40
 stub: false
 ---
 ```
@@ -1329,6 +1357,13 @@ stub: false
 | `1997-asian-financial-crisis` | drawdown | peak 1997-07 / trough 1998-06 | IMF 외환위기 | 아시아 통화가 연쇄적으로 무너지며 한국은 IMF 구제금융을 받았다. |
 | `2011-european-debt-crisis` | drawdown | peak 2011-05 / trough 2011-10 | 유럽 재정위기 | 그리스발 국가부채 위기와 미국 신용등급 강등이 겹쳤다. |
 | `2022-inflation-tightening` | drawdown | peak 2022-01 / trough 2022-10 | 인플레이션·긴축 | 40년 만의 물가 상승에 맞선 급격한 긴축으로, 주식과 채권이 동시에 하락했다. |
+
+**스텁 10개에는 `headlineDrawdown` 을 넣지 않는다.** 일간 종가 기준 고점·저점을 확실한 출처로 확인한
+사건에만 붙이는 값인데, 스텁은 본문을 쓸 때 조사하면서 함께 채우는 게 맞다.
+그때까지는 자동 계산값이 표시되고, 그건 "월평균·월단위 기준으로 정확한" 값이므로 틀린 숫자가 아니다.
+
+(참고로 본문 4개 중 대공황도 넣지 않았다 — 자동 계산 -84.76% 와 통상 인용 -86% 의 차이가 1.2%p 뿐이다.
+나머지 3개는 일간 종가가 널리 문서화되어 있어 넣었다.)
 
 `moment` 사건(`1971-nixon-shock`)의 frontmatter는 `peak`/`trough` 대신 `at` 하나만 쓴다:
 ```yaml
@@ -1430,6 +1465,28 @@ describe('buildEvent', () => {
     expect(e.indicators.kospi.kind).toBe('unavailable');
   });
 
+  it('headlineDrawdown 이 있으면 자동 계산값 대신 그것을 쓴다', () => {
+    const e = buildEvent(
+      'x',
+      'x',
+      { ...frontMatter, headlineDrawdown: -86 },
+      false,
+      seriesFile,
+    );
+    expect(e.drawdown).toBe(-86);
+    expect(e.drawdownSource).toBe('daily');
+    // 카드 배지도 같은 값을 말해야 한다
+    expect(e.indicators.sp500).toEqual({ kind: 'change', value: -86 });
+    // 나머지 지표는 그대로 자동 계산이다
+    expect(e.indicators.ust10y).toEqual({ kind: 'delta', value: 0.14, unit: '%p' });
+  });
+
+  it('headlineDrawdown 이 없으면 자동 계산값과 monthly 를 쓴다', () => {
+    const e = buildEvent('x', 'x', frontMatter, false, seriesFile);
+    expect(e.drawdown).toBe(-84.76);
+    expect(e.drawdownSource).toBe('monthly');
+  });
+
   it('href와 stub을 담는다', () => {
     const e = buildEvent('1929-great-depression', '대공황', frontMatter, true, seriesFile);
     expect(e.href).toBe('/history/1929-great-depression');
@@ -1471,9 +1528,21 @@ Expected: FAIL — `Failed to resolve import "./buildEvents"`
 import { changePct, deltaPP, valueAt } from './returns';
 import type { Indicator, SeriesFile, SeriesKey, YearMonth } from './types';
 
+type EventCommon = {
+  label: string;
+  summary: string;
+  /**
+   * 통상 인용되는 낙폭(일간 종가 고점→저점 기준). 생략하면 월간 데이터에서 계산한 값을 쓴다.
+   *
+   * Shiller S&P 500 은 월중 평균이고 구간도 월 단위라, 자동 계산값이 세상이 아는 숫자와
+   * 벌어진다 (코로나: 자동 -19.07% vs 통상 -34%). 손으로 넣는 숫자는 이것 하나뿐이다.
+   */
+  headlineDrawdown?: number;
+};
+
 export type EventFrontMatter =
-  | { kind: 'drawdown'; peak: YearMonth; trough: YearMonth; label: string; summary: string }
-  | { kind: 'moment'; at: YearMonth; label: string; summary: string };
+  | ({ kind: 'drawdown'; peak: YearMonth; trough: YearMonth } & EventCommon)
+  | ({ kind: 'moment'; at: YearMonth } & EventCommon);
 
 export interface TimelineEvent {
   slug: string;
@@ -1490,6 +1559,8 @@ export interface TimelineEvent {
   href: string;
   stub: boolean;
   drawdown: number | null;
+  /** drawdown 이 어느 기준에서 나왔는지. 'daily' 는 frontmatter 의 headlineDrawdown */
+  drawdownSource: 'monthly' | 'daily';
   indicators: Record<SeriesKey, Indicator>;
 }
 
@@ -1582,7 +1653,13 @@ export function buildEvent(
     indicators[key] = indicatorFor(file, key, from, to);
   }
 
-  const sp500 = indicators.sp500;
+  const computed = indicators.sp500.kind === 'change' ? indicators.sp500.value : null;
+
+  // 손으로 넣은 값이 있으면 배지에 보이는 지수 지표도 그 값으로 맞춘다.
+  // 그러지 않으면 카드의 배지(-19%)와 drawdown 필드(-34%)가 서로 다른 숫자를 말하게 된다.
+  if (fm.headlineDrawdown !== undefined) {
+    indicators.sp500 = { kind: 'change', value: fm.headlineDrawdown };
+  }
 
   return {
     slug,
@@ -1595,7 +1672,9 @@ export function buildEvent(
     trough: to,
     href: `/history/${slug}`,
     stub,
-    drawdown: sp500.kind === 'change' ? sp500.value : null,
+    // 손으로 넣은 값이 있으면 그것이 이긴다. 나머지 지표는 언제나 자동 계산이다.
+    drawdown: fm.headlineDrawdown ?? computed,
+    drawdownSource: fm.headlineDrawdown === undefined ? 'monthly' : 'daily',
     indicators,
   };
 }
@@ -1604,7 +1683,7 @@ export function buildEvent(
 - [ ] **Step 4: 테스트 통과 확인**
 
 Run: `npm test -- buildEvents`
-Expected: PASS, 6 tests
+Expected: PASS, 8 tests
 
 - [ ] **Step 5: generateStaticData.ts에서 호출**
 
@@ -1740,6 +1819,8 @@ export interface TimelineEvent {
   href: string;
   stub: boolean;
   drawdown: number | null;
+  /** 'daily' 면 frontmatter 의 headlineDrawdown, 'monthly' 면 자동 계산값 */
+  drawdownSource: 'monthly' | 'daily';
   indicators: Record<SeriesKey, Indicator>;
 }
 

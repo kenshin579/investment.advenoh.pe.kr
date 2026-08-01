@@ -101,3 +101,5 @@ stub: false
 - Robert Shiller, [Online Data](http://www.econ.yale.edu/~shiller/data.htm) — 이 글의 S&P 500·물가 데이터
 - FRED — [나스닥 종합](https://fred.stlouisfed.org/series/NASDAQCOM), [미 10년물](https://fred.stlouisfed.org/series/DGS10), [정책금리](https://fred.stlouisfed.org/series/FEDFUNDS)
 - [LBMA 금 현물](https://www.lbma.org.uk/prices-and-data/precious-metal-prices)
+- [연준 공개시장조작 기록](https://www.federalreserve.gov/monetarypolicy/openmarket_archive.htm) — 2001년 금리 인하 11회, 6.5% → 1.75%
+- [NBER 경기순환 기준일](https://www.nber.org/research/data/us-business-cycle-expansions-and-contractions) — 2001년 침체 2001-03 ~ 2001-11, 8개월

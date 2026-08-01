@@ -94,3 +94,5 @@ graph LR
 - FRED — [NY연은 재할인율](https://fred.stlouisfed.org/series/M13009USM156NNBR), [Fed Funds](https://fred.stlouisfed.org/series/FEDFUNDS)
 - 금 — 이 구간은 시장 시세가 아니라 법정 고정가다. [행정명령 6102호](https://en.wikipedia.org/wiki/Executive_Order_6102)(1933, 민간 금 보유 금지)와 [금준비법](https://en.wikipedia.org/wiki/Gold_Reserve_Act)(1934, 1온스 20.67달러 → 35달러)
 - [부채 디플레이션](https://en.wikipedia.org/wiki/Debt_deflation) — 어빙 피셔가 정리한 자기강화 구조. 2.1절의 다이어그램이 이것이다
+- [FDIC 1930–1939](https://www.fdic.gov/history/1930-1939) — 9,000개 넘는 은행 파산과 1933년 은행법(예금보험 도입)
+- [NBER 경기순환 기준일](https://www.nber.org/research/data/us-business-cycle-expansions-and-contractions) — 대공황 수축기 1929-08 ~ 1933-03, 43개월

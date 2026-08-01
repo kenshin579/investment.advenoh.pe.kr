@@ -19,15 +19,26 @@ const LINES: { key: SeriesKey; label: string; color: string }[] = [
 ];
 
 interface Props {
-  /** 이미 사건 구간으로 잘린 계열들. 서버에서 잘라 넘긴다 */
+  /**
+   * 차트에 그릴 계열들. 서버가 잘라서 넘긴다.
+   * 짧은 사건은 최소 24개월이 되도록 앞뒤로 늘어나 있으므로,
+   * 이 배열의 첫 달이 사건 시작(from)과 다를 수 있다.
+   */
   series: WindowedSeries;
+  /** 사건 시작. 리베이스 기준점이다 */
   from: string;
   to: string;
 }
 
-/** 시작값 100으로 환산한다. 값이 없으면 빈 배열 */
-function rebase(values: Point[]): Point[] {
-  const base = values[0]?.[1];
+/**
+ * 사건 시작(from) 시점을 100으로 환산한다.
+ *
+ * 창의 첫 값이 아니라 from 을 기준으로 삼는 이유: 짧은 사건은 창이 앞뒤로 늘어나 있어서
+ * 첫 값이 사건 시작보다 몇 달 앞선다. 그걸 100으로 잡으면 "사건 시작 = 100" 이 거짓이 된다.
+ * from 을 기준으로 하면 사건 이전 구간은 100 위로, 이후는 아래로 그려져 흐름이 그대로 읽힌다.
+ */
+function rebase(values: Point[], from: string): Point[] {
+  const base = (values.find(([ym]) => ym >= from) ?? values[0])?.[1];
   if (!base) return [];
   return values.map(([ym, value]) => [ym, Math.round((value / base) * 1000) / 10]);
 }
@@ -59,7 +70,7 @@ export function RebasedChart({ series, from, to }: Props) {
     chartRef.current = chart;
 
     for (const { key, color } of LINES) {
-      const data = rebase(series[key] ?? []);
+      const data = rebase(series[key] ?? [], from);
       if (data.length === 0) continue;
 
       const line = chart.addSeries(LineSeries, {
@@ -83,7 +94,7 @@ export function RebasedChart({ series, from, to }: Props) {
       chart.remove();
       chartRef.current = null;
     };
-  }, [series, isDark]);
+  }, [series, from, isDark]);
 
   return (
     <figure className="my-6">
@@ -97,7 +108,8 @@ export function RebasedChart({ series, from, to }: Props) {
         ))}
       </div>
       <figcaption className="mt-2 text-xs text-gray-500 dark:text-gray-400">
-        사건 시작({from.replace('-', '.')}) = 100 으로 환산. 지수는 월중 평균, 그 외는 월말 값 기준.
+        사건 시작({from.replace('-', '.')}) = 100 으로 환산. 짧은 사건은 앞뒤 흐름이 보이도록 구간을 넓혔다.
+        지수는 월중 평균, 그 외는 월말 값 기준.
         출처: Shiller / datasets.io, FRED, LBMA.
       </figcaption>
     </figure>

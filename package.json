@@ -10,6 +10,7 @@
     "build": "next build",
     "start": "npx serve out",
     "check": "tsc",
+    "check:scripts": "tsc --noEmit -p tsconfig.scripts.json",
     "lint": "next lint",
     "test": "vitest run",
     "test:performance": "./test-performance.sh",

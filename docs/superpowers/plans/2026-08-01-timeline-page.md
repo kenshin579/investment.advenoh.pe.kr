@@ -243,8 +243,10 @@ export type Indicator =
 
 - [ ] **Step 2: 타입 검사**
 
-Run: `npm run check`
-Expected: 에러 없음
+Run: `npm run check:scripts`
+Expected: 에러 없음, exit 0
+
+`npm run check`가 아니다 — 그쪽은 `scripts/`를 보지 않으므로 이 파일을 검증하지 못한다.
 
 - [ ] **Step 3: 커밋**
 
@@ -2667,6 +2669,16 @@ EOF
   | `src/components/category-filter.tsx` | 1 | 미설치 `wouter` (죽은 코드) |
 
   확인 방법: `npm run check 2>&1 | grep -cE "error TS"` → **11이면 정상**, 12 이상이면 이번 변경이 에러를 추가한 것이다.
+- **`npm run check`는 `scripts/` 를 아예 보지 않는다.** `tsconfig.json`의 `include`가 `src`/`shared`/`server`만 담고 있어서,
+  `scripts/` 아래에 타입 에러를 심어도 검출되지 않는 것을 실측으로 확인했다. vitest도 esbuild로 타입을 지울 뿐 검사하지 않는다.
+  그래서 `tsconfig.scripts.json`과 **`npm run check:scripts`** 를 추가했다 (커밋 `1f18610`).
+
+  | 대상 | 명령 | 합격 기준 |
+  |---|---|---|
+  | `scripts/**` (Task 2~9) | `npm run check:scripts` | **에러 0, exit 0** |
+  | `src/**` (Task 10~14) | `npm run check` | 기존 11개보다 늘지 않음 |
+
+  `scripts/` 아래 코드를 만지는 태스크는 반드시 `npm run check:scripts`를 돌려야 한다. `npm run check`만으로는 아무것도 검증되지 않는다.
 - **`package-lock.json`은 이 저장소에서 gitignore 대상이다** (`.gitignore:72`). 커밋 명령에 들어 있어도 스테이징되지 않는 게 정상이다.
 - **`npm test`는 테스트 파일이 생기기 전(Task 3 이전)까지 "No test files found"로 exit 1** 한다. 정상이다.
 - **이 저장소의 GitHub Actions는 대부분 `.disabled` 상태다.** CI가 검증해 줄 거라 가정하지 말 것.

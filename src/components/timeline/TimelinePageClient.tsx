@@ -61,7 +61,10 @@ export function TimelinePageClient({ events, series }: Props) {
 
       <div
         className={`sticky top-16 z-30 mt-4 border-b border-gray-200 bg-white transition-[height] duration-200 dark:border-gray-700 dark:bg-gray-900 ${
-          compact ? 'h-12 sm:h-24' : 'h-24'
+          // h-24(96px)면 연도 축이 30px 남짓 먹어 라인이 눌린다.
+          // 로그 스케일과 1900년 시작을 고른 이유가 대공황 낙폭을 보이게 하려는 것이므로
+          // 펼친 상태는 h-36(144px)까지 준다. 모바일 스크롤 시에는 h-12로 접힌다.
+          compact ? 'h-12 sm:h-28' : 'h-28 sm:h-36'
         }`}
       >
         <TimelineMinimap

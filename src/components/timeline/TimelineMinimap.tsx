@@ -60,7 +60,14 @@ export function TimelineMinimap({ series, events, activeSlug, onSelect }: Props)
         vertLines: { visible: false },
         horzLines: { visible: false },
       },
-      rightPriceScale: { visible: false, mode: PriceScaleMode.Logarithmic },
+      rightPriceScale: {
+        visible: false,
+        mode: PriceScaleMode.Logarithmic,
+        // 기본 여백(top 0.2 / bottom 0.1)에 aboveBar 마커 공간까지 더해지면
+        // 라인이 캔버스 세로의 1/3 안으로 눌려 로그 스케일인데도 평평해 보인다.
+        // 미니맵은 높이가 100px 남짓이라 여백을 최소로 줘야 대공황 낙폭이 눈에 보인다.
+        scaleMargins: { top: 0.12, bottom: 0.04 },
+      },
       timeScale: { borderVisible: false, timeVisible: false },
       crosshair: { mode: 1 },
       handleScroll: true,

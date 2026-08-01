@@ -26,6 +26,7 @@ interface TimelineEvent {
   label: string;
   summary: string;
   kind: 'drawdown' | 'moment';
+  markerAt: string;
   peak: string;
   trough: string;
   drawdown: number | null;
@@ -156,7 +157,11 @@ function checkReferenceLinks(slug: string, body: string) {
 // 그래서 실제 개월 수를 옆에 찍어 주고 판단은 사람이 한다.
 // ---------------------------------------------------------------------------
 function reportPeriod(slug: string, body: string, event: TimelineEvent): string {
-  if (event.kind !== 'drawdown') return `${slug}  (moment, at ${event.peak} 기준 ±12개월)`;
+  // moment 는 peak/trough 가 at 전후 12개월로 넓혀진 창이다. peak 를 "기준 시점" 으로
+  // 찍으면 1년 어긋난 날짜를 보여주게 되므로 markerAt 을 쓴다.
+  if (event.kind !== 'drawdown') {
+    return `${slug}  ${event.markerAt} 기준, 창 ${event.peak}~${event.trough}`;
+  }
   const actual = monthsBetween(event.peak, event.trough);
   const mentioned = [...body.matchAll(/(\d+)\s*개월/g)].map((m) => Number(m[1]));
   const uniq = [...new Set(mentioned)];

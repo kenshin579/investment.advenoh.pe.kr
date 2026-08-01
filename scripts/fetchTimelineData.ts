@@ -89,9 +89,16 @@ async function loadPrevious(): Promise<SeriesFile | null> {
 
 async function main(): Promise<void> {
   const previous = await loadPrevious();
+
+  /** keep() 이 한 번이라도 발동했는지. 종료 코드를 바꾸는 데 쓴다 */
+  let stale = false;
+
   const keep = (key: SeriesKey): Point[] => {
     const kept = previous?.series?.[key]?.values ?? [];
-    if (kept.length > 0) warnings.push(`${key}: 기존 커밋 값을 유지한다 (${kept.length}개월)`);
+    if (kept.length > 0) {
+      stale = true;
+      warnings.push(`${key}: 기존 커밋 값을 유지한다 (${kept.length}개월)`);
+    }
     return kept;
   };
 
@@ -239,6 +246,15 @@ async function main(): Promise<void> {
   if (warnings.length > 0) {
     console.warn('\n경고:');
     for (const w of warnings) console.warn(`  - ${w}`);
+  }
+
+  // 소스가 죽어 기존 값을 유지했다면 파일은 썼지만 성공으로 끝내지 않는다.
+  // 한 번 죽은 소스는 고칠 때까지 매 실행마다 조용히 같은 상태가 되므로,
+  // 경고문만으로는 사람이 놓치고 낡은 계열을 몇 년째 커밋할 수 있다.
+  if (stale) {
+    console.error('\n소스 하나 이상이 실패해 기존 커밋 값을 그대로 유지했다.');
+    console.error('이 상태로 커밋하면 해당 계열만 낡은 채 남는다. 위 경고의 원인을 확인할 것.');
+    process.exitCode = 1;
   }
 }
 

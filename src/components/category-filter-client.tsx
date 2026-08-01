@@ -29,10 +29,11 @@ export function CategoryFilterClient({
 }: CategoryFilterClientProps) {
   const router = useRouter()
 
-  // History는 헤더의 Timeline이 진입점이므로 홈 필터에서는 감춘다
-  const visibleCategories = Array.isArray(categories)
-    ? categories.filter((cat) => cat.category.toLowerCase() !== 'history')
-    : []
+  // History 도 다른 카테고리와 똑같이 노출한다.
+  // 한때 감췄던 이유는 본문 없는 스텁 14개가 목록을 덮는 것을 막기 위해서였는데,
+  // 지금은 stub 글이 categories.json 집계와 홈 목록 양쪽에서 빠지므로 그 우회책이 필요 없다.
+  // 오히려 감춰 두면 "전체" 개수와 실제 목록 개수가 어긋난다.
+  const visibleCategories = Array.isArray(categories) ? categories : []
 
   // Calculate total count for "전체" category
   const totalCount = visibleCategories.reduce((sum, cat) => sum + cat.count, 0)

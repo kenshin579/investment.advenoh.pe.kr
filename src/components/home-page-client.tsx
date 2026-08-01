@@ -26,7 +26,10 @@ export function HomePageClient({ posts, categories }: HomePageClientProps) {
 
   // 필터링 및 정렬 로직 (useMemo로 최적화)
   const sortedPosts = useMemo(() => {
-    let filteredPosts = posts
+    // 본문 없는 타임라인 사건 글(stub)은 홈 목록에서 제외한다.
+    // 14개가 모두 같은 날짜라 그냥 두면 최신 글 목록을 통째로 밀어낸다.
+    // /timeline 에서는 정상 노출되고, 본문을 쓰면서 stub 을 false 로 바꾸면 여기에도 나온다.
+    let filteredPosts = posts.filter(post => post.stub !== true)
 
     // 카테고리 필터링
     if (selectedCategory !== 'all') {

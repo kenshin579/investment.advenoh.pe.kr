@@ -45,6 +45,8 @@
 | `package.json` | recharts 제거, lightweight-charts·vitest 추가, 스크립트 2개 추가 |
 | `scripts/generateStaticData.ts` | `timeline.json` 생성, `stub` 전파 |
 | `scripts/generateRssFeed.ts` | `stub !== true` 필터 |
+| `src/app/rss.xml/route.ts` | **여기가 실제로 배포되는 RSS다.** 같은 필터·정렬·20개 slice 를 넣는다 |
+| `src/types/blog.ts` | `BlogPost` 에 `stub?: boolean` 추가 |
 | `scripts/generateSitemap.ts` | `stub !== true` 필터 |
 | `src/components/header.tsx` | Timeline 링크 |
 | `src/components/category-filter-client.tsx` | 홈 필터에서 History 숨김 |
@@ -2670,6 +2672,16 @@ git commit -m "[feature/timeline-page] feat: 사건 상세 글에 리베이스 �
 **Files:**
 - Modify: `src/components/header.tsx`
 - Modify: `scripts/generateRssFeed.ts`
+- Modify: `src/app/rss.xml/route.ts` ← **이걸 빼먹으면 배포되는 피드가 그대로다**
+- Modify: `src/types/blog.ts`
+
+> **저장소에 RSS 생성기가 둘이다.** `scripts/generateRssFeed.ts`(→ `public/rss.xml`, 20개 필터링)와
+> `src/app/rss.xml/route.ts`(→ `out/rss.xml`, `force-static`, 무필터 전체 113개).
+> 정적 export 에서는 라우트 핸들러가 이기므로 **스크립트 산출물은 원래부터 가려진 죽은 파일**이다.
+> 이번 작업과 무관한 기존 버그다.
+> 스크립트만 고치고 `public/rss.xml` 을 확인하면 고쳤다고 착각하게 된다 —
+> **반드시 `out/rss.xml` 을 열어 확인할 것.**
+
 - Modify: `scripts/generateSitemap.ts`
 - Modify: `src/components/category-filter-client.tsx`
 - 건드리지 않음: `src/components/category-filter.tsx` (죽은 레거시 코드 — 아래 Step 4 참고)

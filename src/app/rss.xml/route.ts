@@ -4,9 +4,17 @@ import { getAllBlogPosts } from '@/lib/blog'
 export const dynamic = 'force-static'
 
 export async function GET() {
-  const posts = await getAllBlogPosts()
+  const allPosts = await getAllBlogPosts()
   const baseUrl = process.env.SITE_URL || 'https://investment.advenoh.pe.kr'
-  
+
+  // 이 라우트 핸들러가 out/rss.xml 을 만들면서 scripts/generateRssFeed.ts 가 쓴
+  // public/rss.xml 을 가린다. 그래서 필터·정렬·개수 제한을 여기에도 똑같이 둬야 한다.
+  // (stub 은 본문 없이 frontmatter 만 채운 타임라인 사건 글이다. 피드에 나가면 안 된다.)
+  const posts = allPosts
+    .filter(post => post.stub !== true)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, 20)
+
   const rssItems = posts.map(post => `
     <item>
       <title><![CDATA[${post.title}]]></title>

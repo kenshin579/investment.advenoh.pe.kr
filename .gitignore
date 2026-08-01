@@ -75,3 +75,5 @@ package-lock.json
 .next
 out
 dist
+# superpowers 브레인스토밍 산출물
+.superpowers/

@@ -54,6 +54,15 @@ export function Header() {
                 </a>
               );
             })}
+            <span className="h-4 w-px bg-gray-300 dark:bg-gray-600" aria-hidden="true" />
+            <Link
+              href="/timeline"
+              className={`text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors ${
+                pathname.startsWith('/timeline') ? 'text-primary' : ''
+              }`}
+            >
+              Timeline
+            </Link>
           </div>
 
           {/* Search, Tags, Series & Dark Mode Toggle */}
@@ -138,6 +147,15 @@ export function Header() {
                   </a>
                 );
               })}
+              <Link
+                href="/timeline"
+                className={`block px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors ${
+                  pathname.startsWith('/timeline') ? 'text-primary' : ''
+                }`}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Timeline
+              </Link>
               {/* Mobile search removed for now */}
             </div>
           </div>

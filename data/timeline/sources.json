@@ -1,0 +1,42 @@
+{
+  "generatedAt": "2026-08-01",
+  "note": "각 차트 하단에 출처를 표기한다.",
+  "entries": [
+    {
+      "key": "sp500",
+      "name": "Robert Shiller / datasets.io s-and-p-500",
+      "url": "https://raw.githubusercontent.com/datasets/s-and-p-500/main/data/data.csv",
+      "license": "PDDL"
+    },
+    {
+      "key": "nasdaq",
+      "name": "FRED NASDAQCOM",
+      "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=NASDAQCOM"
+    },
+    {
+      "key": "gold",
+      "name": "LBMA Gold PM (1968-04~), 이전은 법정 고정가",
+      "url": "https://prices.lbma.org.uk/json/gold_pm.json"
+    },
+    {
+      "key": "ust10y",
+      "name": "Shiller GS10 (~1961), FRED DGS10 (1962~)",
+      "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS10"
+    },
+    {
+      "key": "policyRate",
+      "name": "NY연은 재할인율 (~1954-06), FRED FEDFUNDS (1954-07~)",
+      "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=FEDFUNDS"
+    },
+    {
+      "key": "cpi",
+      "name": "Shiller CPI (~1912), FRED CPIAUCNS (1913~)",
+      "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=CPIAUCNS"
+    },
+    {
+      "key": "kospi",
+      "name": "OECD Share Prices Korea (FRED)",
+      "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=SPASTT01KRM661N"
+    }
+  ]
+}

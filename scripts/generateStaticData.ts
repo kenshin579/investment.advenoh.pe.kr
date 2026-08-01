@@ -1,5 +1,7 @@
 import { readFile, readdir, stat, writeFile, mkdir, copyFile } from 'fs/promises';
 import { join } from 'path';
+import { buildEvent, type EventFrontMatter, type TimelineEvent } from './lib/timeline/buildEvents';
+import type { SeriesFile } from './lib/timeline/types';
 
 interface MarkdownFrontMatter {
   title: string;
@@ -9,6 +11,8 @@ interface MarkdownFrontMatter {
   category?: string;
   tags?: string[];
   series?: string;
+  event?: EventFrontMatter;
+  stub?: boolean;
 }
 
 interface BlogPost {
@@ -27,6 +31,8 @@ interface BlogPost {
   seriesOrder?: number;
   views: number;
   likes: number;
+  event?: EventFrontMatter;
+  stub?: boolean;
 }
 
 interface CategoryData {
@@ -45,6 +51,52 @@ interface SeriesData {
   }[];
 }
 
+/**
+ * frontmatter 안에서 한 단계 중첩된 객체 블록(예: `event:` 아래 kind/peak/trough/...)을 뽑아낸다.
+ *
+ * 기존 파서는 최상위 스칼라 값과 `- ` 배열만 다루므로, 중첩 객체를 그대로 넘기면
+ * 하위 키(kind, peak, ...)가 최상위로 새어나가고 event 자체는 빈 배열이 된다.
+ * 그래서 중첩 블록을 먼저 떼어내 별도로 파싱하고, 남은 텍스트만 기존 파서에 넘긴다.
+ */
+function extractNestedBlock(
+  frontMatterText: string,
+  key: string,
+): { value: Record<string, unknown> | undefined; rest: string } {
+  const lines = frontMatterText.split('\n');
+  const startIndex = lines.findIndex((line) => line.trim() === `${key}:`);
+
+  if (startIndex === -1) {
+    return { value: undefined, rest: frontMatterText };
+  }
+
+  let endIndex = startIndex + 1;
+  while (endIndex < lines.length && /^\s+\S/.test(lines[endIndex])) {
+    endIndex++;
+  }
+
+  const value: Record<string, unknown> = {};
+  for (const line of lines.slice(startIndex + 1, endIndex)) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith('#')) continue;
+    if (!trimmed.includes(':')) continue;
+
+    const colonIndex = trimmed.indexOf(':');
+    const subKey = trimmed.substring(0, colonIndex).trim();
+    let subValue = trimmed.substring(colonIndex + 1).trim();
+
+    // 인라인 주석 제거 (예: "headlineDrawdown: -33.9   # 일간 종가 ...")
+    const commentIndex = subValue.indexOf('#');
+    if (commentIndex !== -1) subValue = subValue.slice(0, commentIndex).trim();
+    subValue = subValue.replace(/^["']|["']$/g, '');
+
+    if (subValue === '') continue;
+    value[subKey] = /^-?\d+(\.\d+)?$/.test(subValue) ? Number(subValue) : subValue;
+  }
+
+  const rest = [...lines.slice(0, startIndex), ...lines.slice(endIndex)].join('\n');
+  return { value, rest };
+}
+
 function parseMarkdownFile(content: string): { frontMatter: MarkdownFrontMatter; content: string } {
   const frontMatterMatch = content.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
 
@@ -52,8 +104,11 @@ function parseMarkdownFile(content: string): { frontMatter: MarkdownFrontMatter;
     throw new Error('No front matter found in markdown file');
   }
 
-  const frontMatterText = frontMatterMatch[1];
+  const rawFrontMatterText = frontMatterMatch[1];
   const markdownContent = frontMatterMatch[2];
+
+  // event: 는 중첩 객체라 기존의 평면 파서로는 다룰 수 없다. 먼저 떼어낸다.
+  const { value: event, rest: frontMatterText } = extractNestedBlock(rawFrontMatterText, 'event');
 
   const frontMatter: any = {};
   const lines = frontMatterText.split('\n');
@@ -94,6 +149,14 @@ function parseMarkdownFile(content: string): { frontMatter: MarkdownFrontMatter;
   if (inArray && currentKey) {
     frontMatter[currentKey] = arrayItems;
   }
+
+  if (event !== undefined) {
+    frontMatter.event = event;
+  }
+
+  // 기존 파서는 모든 스칼라 값을 문자열로 남긴다. stub은 boolean이어야 한다.
+  if (frontMatter.stub === 'true') frontMatter.stub = true;
+  else if (frontMatter.stub === 'false') frontMatter.stub = false;
 
   return {
     frontMatter: frontMatter as MarkdownFrontMatter,
@@ -200,7 +263,9 @@ async function importMarkdownFiles(contentDir: string = 'contents'): Promise<Blo
               series: frontMatter.series,
               seriesOrder: undefined,
               views: 0,
-              likes: 0
+              likes: 0,
+              event: frontMatter.event,
+              stub: frontMatter.stub === true,
             };
 
             posts.push(blogPost);
@@ -327,6 +392,41 @@ async function copyImages(contentDir: string = 'contents'): Promise<void> {
   }
 }
 
+/**
+ * contents/history/ 의 frontmatter와 data/timeline/series.json 을 결합해
+ * public/data/timeline.json 을 만든다.
+ */
+async function generateTimeline(posts: BlogPost[]): Promise<void> {
+  const raw = await readFile(join('data', 'timeline', 'series.json'), 'utf-8');
+  const seriesFile = JSON.parse(raw) as SeriesFile;
+
+  const events: TimelineEvent[] = posts
+    .filter((post) => post.event !== undefined)
+    .map((post) =>
+      buildEvent(
+        post.slug,
+        post.title,
+        post.event as EventFrontMatter,
+        post.stub === true,
+        seriesFile,
+      ),
+    )
+    .sort((a, b) => (a.markerAt < b.markerAt ? -1 : 1));
+
+  await writeFile(
+    join('public', 'data', 'timeline.json'),
+    `${JSON.stringify({ events }, null, 2)}\n`,
+    'utf-8',
+  );
+  await writeFile(
+    join('public', 'data', 'timeline-series.json'),
+    `${JSON.stringify(seriesFile)}\n`,
+    'utf-8',
+  );
+
+  console.log(`timeline.json 생성: 사건 ${events.length}개`);
+}
+
 async function main() {
   console.log('🚀 Starting static data generation...\n');
 
@@ -353,6 +453,8 @@ async function main() {
     'utf-8'
   );
   console.log('\n✅ Generated: public/data/posts.json');
+
+  await generateTimeline(posts);
 
   await writeFile(
     'public/data/categories.json',

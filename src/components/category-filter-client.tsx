@@ -29,18 +29,21 @@ export function CategoryFilterClient({
 }: CategoryFilterClientProps) {
   const router = useRouter()
 
+  // History는 헤더의 Timeline이 진입점이므로 홈 필터에서는 감춘다
+  const visibleCategories = Array.isArray(categories)
+    ? categories.filter((cat) => cat.category.toLowerCase() !== 'history')
+    : []
+
   // Calculate total count for "전체" category
-  const totalCount = Array.isArray(categories)
-    ? categories.reduce((sum, cat) => sum + cat.count, 0)
-    : 0
+  const totalCount = visibleCategories.reduce((sum, cat) => sum + cat.count, 0)
 
   const allCategories: CategoryOption[] = [
     { id: "all", label: "전체", count: totalCount },
-    ...(Array.isArray(categories) ? categories.map(({ category, count }) => ({
+    ...visibleCategories.map(({ category, count }) => ({
       id: category,
       label: category,
       count: count
-    })) : [])
+    }))
   ]
 
   const handleCategoryChange = (category: string) => {

@@ -7,6 +7,7 @@ interface BlogPost {
   excerpt: string;
   tags: string[];
   date: string;
+  stub?: boolean;
 }
 
 async function generateRssFeed() {
@@ -18,6 +19,7 @@ async function generateRssFeed() {
   const baseUrl = process.env.SITE_URL || 'https://investment.advenoh.pe.kr';
 
   const sortedPosts = posts
+    .filter((post) => post.stub !== true)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     .slice(0, 20);
 

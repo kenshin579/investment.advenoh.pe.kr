@@ -15,6 +15,11 @@ export interface BlogPost {
   seriesOrder?: number;
   views?: number;
   likes?: number;
+  /**
+   * 본문 없이 frontmatter 만 채운 타임라인 사건 글.
+   * 홈 목록·RSS·사이트맵에서 제외하고 /timeline 에서만 노출한다.
+   */
+  stub?: boolean;
 }
 
 // Category interface

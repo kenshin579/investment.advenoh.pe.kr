@@ -1,3 +1,5 @@
+import { readFile } from 'fs/promises'
+import { join } from 'path'
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getAllBlogPosts, getBlogPost, getRelatedPosts } from '@/lib/blog'
@@ -9,12 +11,56 @@ import { Breadcrumb } from '@/components/breadcrumb'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Calendar, ArrowLeft } from 'lucide-react'
+import { RebasedChart } from '@/components/timeline/RebasedChart'
+import { RateChart } from '@/components/timeline/RateChart'
+import type {
+  SeriesKey,
+  TimelineEvent,
+  TimelineSeriesFile,
+  WindowedSeries,
+} from '@/components/timeline/types'
 
 interface CategorySlugPageProps {
   params: Promise<{
     category: string
     slug: string
   }>
+}
+
+/**
+ * History 카테고리 글이면 해당 사건과 **그 구간만 잘라낸** 시계열을 읽어 온다.
+ *
+ * 전체 시계열은 7계열 8,627 포인트(minify 150KB)다. 그걸 그대로 클라이언트 컴포넌트에
+ * props 로 넘기면 사건 글 14개가 각각 150KB 를 RSC 페이로드에 임베드한다.
+ * 사건 구간(보통 12~36개월)만 자르면 2KB 로 떨어진다.
+ */
+async function loadTimelineFor(slug: string): Promise<{
+  event: TimelineEvent;
+  window: WindowedSeries;
+} | null> {
+  try {
+    const dir = join(process.cwd(), 'public', 'data')
+    const { events } = JSON.parse(
+      await readFile(join(dir, 'timeline.json'), 'utf-8'),
+    ) as { events: TimelineEvent[] }
+    const event = events.find((e) => e.slug === slug)
+    if (!event) return null
+
+    const seriesFile = JSON.parse(
+      await readFile(join(dir, 'timeline-series.json'), 'utf-8'),
+    ) as TimelineSeriesFile
+
+    const window = {} as WindowedSeries
+    for (const key of Object.keys(seriesFile.series) as SeriesKey[]) {
+      window[key] = seriesFile.series[key].values.filter(
+        ([ym]) => ym >= event.peak && ym <= event.trough,
+      )
+    }
+
+    return { event, window }
+  } catch {
+    return null
+  }
 }
 
 // ISR 설정: 1시간마다 재생성
@@ -88,6 +134,20 @@ export default async function CategorySlugPage({ params }: CategorySlugPageProps
     if (!post.categories.map(c => c.toLowerCase()).includes(category.toLowerCase())) {
       notFound()
     }
+
+    const timeline =
+      post.categories?.[0]?.toLowerCase() === 'history' ? await loadTimelineFor(slug) : null
+
+    const timelineBlock = timeline ? (
+      <section className="not-prose">
+        <RebasedChart
+          series={timeline.window}
+          from={timeline.event.peak}
+          to={timeline.event.trough}
+        />
+        <RateChart series={timeline.window} />
+      </section>
+    ) : null
 
     const relatedPosts = await getRelatedPosts(post.slug, post.categories)
     const structuredData = generateStructuredData('article', post)
@@ -256,7 +316,8 @@ export default async function CategorySlugPage({ params }: CategorySlugPageProps
             <div className="flex flex-col lg:flex-row gap-8">
               <div className="lg:w-3/4 order-2 lg:order-1">
                 <div className="markdown-content max-w-none">
-                  <MarkdownRenderer 
+                  {timelineBlock}
+                  <MarkdownRenderer
                     content={post.content} 
                     slug={post.slug}
                     category={post.categories[0]}

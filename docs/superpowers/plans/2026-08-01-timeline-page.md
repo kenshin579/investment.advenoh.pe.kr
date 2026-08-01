@@ -2062,8 +2062,12 @@ export function TimelineMinimap({ series, events, activeSlug, onSelect }: Props)
 
     line.setData(series.map(([ym, value]) => ({ time: toTime(ym), value })));
 
-    createSeriesMarkers(
-      line,
+    // createSeriesMarkers 는 호출할 때마다 새 primitive 를 series 에 attach 하고
+    // 이전 것을 detach 하지 않는다. 이 effect 는 activeSlug 가 바뀔 때마다(스크롤할 때마다)
+    // 다시 도는데, 여기서 매번 호출하면 마커가 겹겹이 쌓인다.
+    // 마운트 effect 에서 createSeriesMarkers(line, []) 를 한 번만 부르고
+    // 그 반환값(ISeriesMarkersPluginApi)을 ref 에 담아 두었다가 여기서는 setMarkers 만 쓴다.
+    markersRef.current?.setMarkers(
       events.map((event) => ({
         time: toTime(event.markerAt),
         position: 'aboveBar' as const,
@@ -2809,11 +2813,13 @@ Expected: PASS, 5 files / 34 tests
 
 Run:
 ```bash
-npm run check
-npm run lint
-npm run build
+npm run check 2>&1 | grep -cE "error TS"   # 기대: 11 (기존 레거시 에러, 늘지 않아야 한다)
+npm run check:scripts                       # 기대: exit 0
+npm run build                               # 기대: 성공
 ```
-Expected: 셋 다 에러 없이 종료
+
+`npm run lint` 는 돌리지 않는다 — 이 저장소에서 이미 깨져 있다 (위 "알아둘 것" 참고).
+새로 추가한 파일의 스타일은 기존 코드 관례를 눈으로 맞추는 선에서 처리한다.
 
 - [ ] **Step 3: 로컬 서빙**
 
@@ -2908,4 +2914,10 @@ EOF
 - **`package-lock.json`은 이 저장소에서 gitignore 대상이다** (`.gitignore:72`). 커밋 명령에 들어 있어도 스테이징되지 않는 게 정상이다.
 - **`npm test`는 테스트 파일이 생기기 전(Task 3 이전)까지 "No test files found"로 exit 1** 한다. 정상이다.
 - **이 저장소의 GitHub Actions는 대부분 `.disabled` 상태다.** CI가 검증해 줄 거라 가정하지 말 것.
+- **`npm run lint` 는 이번 작업과 무관하게 이미 깨져 있다.** 두 가지가 겹쳐 있다 (2026-08-01 실측):
+  1. `package.json` 의 `lint` 스크립트가 `next lint` 인데 Next 16 에서 제거된 명령이라
+     `lint` 를 디렉토리 이름으로 해석한다 — `Invalid project directory provided, no such directory: .../lint`
+  2. `npx eslint` 를 직접 돌려도 `ERR_PACKAGE_PATH_NOT_EXPORTED` 로 죽는다
+  커밋된 베이스라인에서도 동일하게 재현되므로 이번 변경 탓이 아니다.
+  **린트를 합격 기준으로 삼지 말 것.** 별도 이슈로 다뤄야 한다.
 - **lightweight-charts v5의 export 이름**(`createSeriesMarkers`, `PriceScaleMode`, `LineSeries`)이 설치된 버전과 다르면, `node_modules/lightweight-charts/dist/typings.d.ts`에서 확인해 맞출 것. 참고 구현이 `moneyflow.advenoh.pe.kr/frontend/components/chart/StockChart.tsx`에 있다.

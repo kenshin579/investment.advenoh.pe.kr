@@ -284,10 +284,15 @@ async function importMarkdownFiles(contentDir: string = 'contents'): Promise<Blo
   return posts;
 }
 
+/**
+ * 카테고리별 글 수. 본문 없는 타임라인 사건 글(stub)은 세지 않는다.
+ * 푸터와 홈 필터가 이 숫자를 그대로 보여주므로, 스텁을 포함하면
+ * 실제로 열리는 글보다 많은 수를 광고하게 된다.
+ */
 function generateCategories(posts: BlogPost[]): CategoryData[] {
   const categoryCount: { [key: string]: number } = {};
 
-  posts.forEach(post => {
+  posts.filter(post => post.stub !== true).forEach(post => {
     post.categories.forEach(category => {
       categoryCount[category] = (categoryCount[category] || 0) + 1;
     });

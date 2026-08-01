@@ -9,9 +9,9 @@ tags:
   - 인플레이션
 event:
   kind: drawdown
-  peak: 1980-02
-  trough: 1982-08
+  peak: 1980-11
+  trough: 1982-07
   label: 볼커 쇼크
-  summary: 물가를 잡기 위해 기준금리를 20%까지 올렸다. 두 번의 침체를 치르고 인플레이션이 꺾였다.
+  summary: 물가를 잡기 위해 정책금리를 19% 위로 끌어올렸다. 두 번의 침체를 치르고 인플레이션이 꺾였다.
 stub: true
 ---

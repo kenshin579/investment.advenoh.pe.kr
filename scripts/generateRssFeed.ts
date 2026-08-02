@@ -18,8 +18,15 @@ async function generateRssFeed() {
 
   const baseUrl = process.env.SITE_URL || 'https://investment.advenoh.pe.kr';
 
+  // 선별 규칙은 src/app/rss.xml/route.ts 와 반드시 같아야 한다.
+  // 그 라우트가 out/rss.xml 을 만들며 이 파일이 쓴 public/rss.xml 을 가리기 때문에,
+  // 한쪽만 고치면 배포된 피드는 안 바뀐다. 실제로 그렇게 사고가 났었다.
+  //
+  //  - stub: 본문 없이 frontmatter 만 채운 타임라인 사건 글
+  //  - History: 사건 14개가 모두 같은 날짜라 최신 20칸을 통째로 차지한다. 제자리는 /timeline
   const sortedPosts = posts
     .filter((post) => post.stub !== true)
+    .filter((post) => !post.categories?.some((c) => c.toLowerCase() === 'history'))
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     .slice(0, 20);
 

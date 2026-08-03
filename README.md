@@ -3,12 +3,11 @@
 
 # Frank's Investment Insights Blog - Table of Contents
 
-Updated 2026-07-26
+Updated 2026-08-02
 
 현재 [블로그](https://investment.advenoh.pe.kr)에 작성된 내용입니다.
 
 ## Etc
-* [Claude Code로 투자 리서치하기 - 금융 스킬 설치부터 검증까지](https://investment.advenoh.pe.kr/claude-code-finance-skills-guide/)
 * [Gatsby 블로그 구글 검색에 더 많이 노출하는 방법](https://investment.advenoh.pe.kr/gatsby-blog-google-seo-tips/)
 * [ISA 계좌, 이것만 알면 된다 — 비과세·손익 통산·분리과세 총정리](https://investment.advenoh.pe.kr/isa-basics/)
 * [구글 Adsense 미국 세금 정보 입력하는 방법](https://investment.advenoh.pe.kr/google-adsense-us-tax-info-entry/)
@@ -36,6 +35,22 @@ Updated 2026-07-26
 * [만기매칭형 ETF란](https://investment.advenoh.pe.kr/maturity-matching-etf/)
 * [주식/ETF 종목 매매 타이밍 전략 정리](https://investment.advenoh.pe.kr/stock-etf-trading-timing-strategy/)
 
+## History
+* [1907년 은행 공황 - 연방준비제도를 만든 신용 경색](https://investment.advenoh.pe.kr/1907-bankers-panic/)
+* [1937년 불황 - 회복이 끝나기 전에 조인 결과](https://investment.advenoh.pe.kr/1937-roosevelt-recession/)
+* [2차 세계대전과 진주만 공습 - 전쟁 초반 하락과 후반 반등](https://investment.advenoh.pe.kr/1941-pearl-harbor-wwii/)
+* [IMF 외환위기 - 아시아 통화 위기와 구제금융](https://investment.advenoh.pe.kr/1997-asian-financial-crisis/)
+* [글로벌 금융위기 - 신용이 얼어붙은 18개월](https://investment.advenoh.pe.kr/2008-financial-crisis/)
+* [닉슨 쇼크 - 금 태환 정지와 브레튼우즈 체제의 종말](https://investment.advenoh.pe.kr/1971-nixon-shock/)
+* [닷컴 버블 붕괴 - 실적 없는 성장 서사가 값을 치른 시간](https://investment.advenoh.pe.kr/2000-dotcom-bubble/)
+* [대공황 - 신용으로 부풀린 시장이 무너지기까지](https://investment.advenoh.pe.kr/1929-great-depression/)
+* [볼커 쇼크 - 기준금리 20%가 잡은 인플레이션](https://investment.advenoh.pe.kr/1980-volcker-shock/)
+* [블랙먼데이 - 다우존스 하루 22.6%와 프로그램 매매](https://investment.advenoh.pe.kr/1987-black-monday/)
+* [오일쇼크 - 유가 급등이 부른 스태그플레이션](https://investment.advenoh.pe.kr/1973-oil-shock/)
+* [유럽 재정위기 - 그리스발 부채 위기와 미국 신용등급 강등](https://investment.advenoh.pe.kr/2011-european-debt-crisis/)
+* [인플레이션과 긴축 - 40년 만의 물가 상승과 급격한 금리 인상](https://investment.advenoh.pe.kr/2022-inflation-tightening/)
+* [코로나 팬데믹 - 33일 만의 폭락과 그보다 빠른 회복](https://investment.advenoh.pe.kr/2020-covid-pandemic/)
+
 ## Stock
 * [2024년 1분기 주요 일정](https://investment.advenoh.pe.kr/2024-q1-key-schedule/)
 * [2024년 2분기 빌 아크만 포트폴리오](https://investment.advenoh.pe.kr/2024-q2-bill-ackman-portfolio/)
@@ -54,14 +69,12 @@ Updated 2026-07-26
 * [3분기 미국 관심 배당주 정리](https://investment.advenoh.pe.kr/q3-us-dividend-stocks-of-interest/)
 * [CMA의 종류](https://investment.advenoh.pe.kr/types-of-cma/)
 * [CPI와 PPI의 차이점](https://investment.advenoh.pe.kr/differences-between-cpi-and-ppi/)
-* [Claude로 반도체 섹터 리포트를 뽑고 수치 62개를 검증해봤다](https://investment.advenoh.pe.kr/us-semiconductor-sector-overview/)
 * [ISA 만기, 연장할까 해지할까? 꼭 알아야 할 선택 가이드](https://investment.advenoh.pe.kr/isa-maturity-extension-or-termination-guide/)
 * [SK텔레콤 주가 배당수익률로 방어선은 어디일까?](https://investment.advenoh.pe.kr/sk-telecom-dividend-yield-support/)
 * [TDF에 대해서 알아보자](https://investment.advenoh.pe.kr/about-target-date-funds/)
 * [Tradingview에서 꼭 써봐야 할 유용한 Indicator 추천 모음](https://investment.advenoh.pe.kr/must-try-tradingview-indicator-recommendations/)
 * [경기침체 징조는 어떻게 판단하나](https://investment.advenoh.pe.kr/how-to-identify-signs-of-economic-recession/)
 * [공매도란? 대차거래부터 개인투자자 영향까지 완벽 정리](https://investment.advenoh.pe.kr/short-selling-complete-guide/)
-* [구글은 지금 싼가 - Claude comps 스킬로 빅테크 피어 비교](https://investment.advenoh.pe.kr/alphabet-comps-analysis/)
 * [금리, 환율, 채권, 주가 서로간의 상관관계](https://investment.advenoh.pe.kr/correlation-between-interest-rates-exchange-rates-bonds-and-stock-prices/)
 * [금리인하 수혜주 : 유망 종목과 투자 전략](https://investment.advenoh.pe.kr/interest-rate-cut-beneficiary-stocks-and-investment-strategies/)
 * [금융소득 종합과세 대상자 피하는 방법](https://investment.advenoh.pe.kr/how-to-avoid-comprehensive-taxation-on-financial-income/)

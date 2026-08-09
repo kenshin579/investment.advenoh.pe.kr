@@ -5,7 +5,7 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { tomorrow } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { MarkdownImage } from './markdown-image';
 import { MermaidDiagram } from './mermaid-diagram';
-import { parseQuiz } from '@/lib/quiz';
+import { parseQuiz } from '@/lib/quiz-parse';
 import { Quiz } from './quiz/quiz';
 
 interface MarkdownRendererProps {

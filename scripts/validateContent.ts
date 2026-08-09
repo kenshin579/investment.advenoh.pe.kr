@@ -11,9 +11,12 @@
  */
 import { readdir, readFile } from 'fs/promises';
 import { join } from 'path';
+import { extractQuizBlocks } from '../src/lib/quiz';
+import { checkQuizBlock } from './lib/quiz-checks';
 
 const HISTORY_DIR = join('contents', 'history');
 const TIMELINE_JSON = join('public', 'data', 'timeline.json');
+const CONTENTS_DIR = 'contents';
 
 interface Indicator {
   kind: 'change' | 'delta' | 'fixed' | 'unavailable';
@@ -41,6 +44,9 @@ interface Problem {
 
 const problems: Problem[] = [];
 const add = (slug: string, rule: string, detail: string) => problems.push({ slug, rule, detail });
+
+/** severity 가 warn 인 문제의 키(`slug|rule|detail`). 이것만 있으면 exit code 를 올리지 않는다 */
+const warnings = new Set<string>();
 
 /** frontmatter 와 본문을 나눈다 */
 function split(raw: string): { front: string; body: string } {
@@ -189,6 +195,52 @@ function checkRepoRules(slug: string, body: string) {
   }
 }
 
+/**
+ * contents/ 전체의 quiz 블록을 검사한다.
+ * history 검사와 달리 카테고리를 가리지 않는다 — 퀴즈는 어느 글에나 들어갈 수 있다.
+ */
+async function checkAllQuizzes(): Promise<void> {
+  const categories = (await readdir(CONTENTS_DIR, { withFileTypes: true }))
+    .filter((d) => d.isDirectory())
+    .map((d) => d.name)
+    .sort();
+
+  let blockCount = 0;
+  let articleCount = 0;
+
+  for (const category of categories) {
+    const dir = join(CONTENTS_DIR, category);
+    const folders = (await readdir(dir, { withFileTypes: true }))
+      .filter((d) => d.isDirectory())
+      .map((d) => d.name)
+      .sort();
+
+    for (const folder of folders) {
+      let raw: string;
+      try {
+        raw = await readFile(join(dir, folder, 'index.md'), 'utf-8');
+      } catch {
+        continue; // index.md 가 없는 폴더는 건너뛴다
+      }
+
+      const blocks = extractQuizBlocks(raw);
+      if (blocks.length === 0) continue;
+
+      articleCount += 1;
+      blocks.forEach((block, i) => {
+        blockCount += 1;
+        const label = blocks.length > 1 ? `${folder} (${i + 1}번째 블록)` : folder;
+        for (const problem of checkQuizBlock(block)) {
+          add(label, problem.rule, problem.detail);
+          if (problem.severity === 'warn') warnings.add(`${label}|${problem.rule}|${problem.detail}`);
+        }
+      });
+    }
+  }
+
+  console.log(`퀴즈 검사: 글 ${articleCount}편, 블록 ${blockCount}개\n`);
+}
+
 async function main(): Promise<void> {
   let events: TimelineEvent[] = [];
   try {
@@ -236,6 +288,8 @@ async function main(): Promise<void> {
     periods.push(reportPeriod(slug, body, event));
   }
 
+  await checkAllQuizzes();
+
   console.log(`검사: 사건 ${slugs.length}개 중 본문 있는 글 ${checked}개\n`);
   console.log('구간 길이 — 본문 서술과 눈으로 대조할 것:');
   for (const line of periods) console.log(`  ${line}`);
@@ -246,17 +300,22 @@ async function main(): Promise<void> {
     return;
   }
 
-  console.error(`\n문제 ${problems.length}건:\n`);
+  const isWarning = (p: Problem) => warnings.has(`${p.slug}|${p.rule}|${p.detail}`);
+  const errors = problems.filter((p) => !isWarning(p));
+
+  console.error(`\n문제 ${problems.length}건 (실패 ${errors.length}, 경고 ${problems.length - errors.length}):\n`);
   let last = '';
   for (const p of problems) {
     if (p.slug !== last) {
       console.error(`  ${p.slug}`);
       last = p.slug;
     }
-    console.error(`    [${p.rule}] ${p.detail}`);
+    console.error(`    ${isWarning(p) ? '경고' : '실패'} [${p.rule}] ${p.detail}`);
   }
   console.error('\n이 검사로 잡히지 않는 사실 오류가 있다. 1차 출처 확인은 여전히 사람 몫이다.');
-  process.exitCode = 1;
+  console.error('퀴즈의 blank 정답 노출 검사는 문자열 일치만 본다. 의미로 답이 드러나는 경우는 눈으로 확인할 것.');
+
+  if (errors.length > 0) process.exitCode = 1;
 }
 
 main().catch((e) => {

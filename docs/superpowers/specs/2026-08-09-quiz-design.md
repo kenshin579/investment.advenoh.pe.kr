@@ -81,7 +81,8 @@ if (!inline && language === 'quiz') {
 
 | 단위 | 책임 |
 |------|------|
-| `src/lib/quiz.ts` (신규) | 문항 타입, `parseQuiz`, `normalizeBlankAnswer`, `isBlankCorrect` |
+| `src/lib/quiz.ts` (신규) | 문항 타입, `isValidQuestion`, `normalizeBlankAnswer`, `isBlankCorrect`, `extractQuizBlocks`. 클라이언트 안전 |
+| `src/lib/quiz-parse.ts` (신규) | `parseQuiz`, `parseQuizRaw`. `yaml` 을 import 하는 유일한 모듈 |
 | `src/components/markdown-renderer.tsx` (수정) | `code` 분기에 `quiz` 추가. 서버에서 파싱해 문항 배열을 props로 전달 |
 | `src/components/quiz/quiz.tsx` (신규) | 퀴즈 세트 UI. 클라이언트 컴포넌트. 문항 상태, 판정, 점수, 다시 풀기 |
 | `src/components/quiz/quiz-card.tsx` (신규) | `/quiz` 목록의 글 카드 |
@@ -89,7 +90,16 @@ if (!inline && language === 'quiz') {
 
 ### 파서 위치
 
-`src/lib/quiz.ts` **단일 소스**로 둔다. 빌드 스크립트(`scripts/generateStaticData.ts`, `scripts/validateContent.ts`)는 상대 경로(`../src/lib/quiz`)로 import한다.
+파서는 **단일 소스**다. 빌드 스크립트(`scripts/generateStaticData.ts`, `scripts/validateContent.ts`)도 페이지와 같은 파일을 상대 경로로 import한다.
+
+단 파일은 둘로 나눈다. **`quiz.ts` 는 `yaml` 을 import 하지 않는다.**
+
+| 모듈 | 내용 | 쓰는 곳 |
+|------|------|--------|
+| `src/lib/quiz.ts` | 타입, `isValidQuestion`, `normalizeBlankAnswer`, `isBlankCorrect`, `extractQuizBlocks` | 클라이언트 컴포넌트 + 서버 + 스크립트 |
+| `src/lib/quiz-parse.ts` | `parseQuiz`, `parseQuizRaw` (`yaml` 사용) | 서버 컴포넌트 + 빌드 스크립트만 |
+
+**이 분리는 장식이 아니라 하중을 받는다.** 한 모듈에 두면 `yaml` 파서 전체가 클라이언트 번들로 샌다. `quiz.tsx` 가 `'use client'` 이면서 거기서 `isBlankCorrect` 를 가져오는데, 모듈 최상단에 `import { parse } from 'yaml'` 이 있으면 번들러가 통째로 끌고 오고 트리 셰이킹이 걷어내지 못한다. 구현 중 실측한 결과 청크 하나(257KB)에 `Composer`·`Scalar`·`parseDocument`·`lineCounter` 가 전부 들어갔다. 모든 글 페이지가 쓰지도 않는 파서를 내려받는다.
 
 이 저장소에는 `scripts/lib/timeline/types.ts`와 `src/components/timeline/types.ts`를 복제해 둔 선례가 있지만 퀴즈는 그러면 안 된다. 파서가 갈라지면 "빌드가 센 문항 수"와 "페이지가 실제로 렌더한 문항 수"가 어긋나 목록 페이지의 숫자가 틀린다.
 
@@ -97,7 +107,7 @@ if (!inline && language === 'quiz') {
 
 ### 의존성
 
-- `yaml` 패키지를 `dependencies`에 추가한다. 빌드 타임에만 쓰이지만 `next build`가 서버 컴포넌트를 렌더할 때 필요하다
+- `yaml` 패키지를 `dependencies`에 추가한다. 빌드 타임에만 쓰이지만 `next build`가 서버 컴포넌트를 렌더할 때 필요하다. `devDependencies` 가 아닌 이유가 이것이고, 그렇다고 클라이언트로 나가도 된다는 뜻은 아니다 (위 "파서 위치" 참조)
 
 ### 오류 처리
 

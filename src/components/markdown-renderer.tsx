@@ -132,6 +132,22 @@ export function MarkdownRenderer({ content, className = "", slug, category }: Ma
               {children}
             </blockquote>
           ),
+          // react-markdown 은 펜스 코드 블록을 <pre><code> 로 감싼다. 아래 code 분기가
+          // 퀴즈를 자체 컨테이너로 바꿔 반환해도 이 <pre> 는 그대로 남고, 그러면
+          // globals.css 의 `.markdown-content pre` 회색 배경과 pre 기본 monospace 글꼴을
+          // 퀴즈가 통째로 뒤집어쓴다. 퀴즈일 때만 껍데기를 벗긴다.
+          //
+          // mermaid 와 일반 코드 블록은 일부러 건드리지 않는다. 전자는 글 113편의
+          // 다이어그램 모양이 한꺼번에 바뀌는 변경이라 별도 판단이 필요하고,
+          // 후자는 언어 없는 펜스(``` 만 쓴 경우)가 컨테이너 없이 남는다.
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          pre: (props: any) => {
+            const { node, children, ...rest } = props;
+            const childClass = node?.children?.[0]?.properties?.className;
+            const isQuiz = Array.isArray(childClass) && childClass.includes('language-quiz');
+            if (isQuiz) return <>{children}</>;
+            return <pre {...rest}>{children}</pre>;
+          },
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           code: (props: any) => {
             const { inline, children, className, ...rest } = props;

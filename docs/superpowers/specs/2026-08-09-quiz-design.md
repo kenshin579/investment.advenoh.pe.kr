@@ -190,6 +190,8 @@ blog-v2의 `components/article/quiz.tsx`를 이식하되 i18n 배관을 걷어�
 
 ### 스타일 격리
 
+> **이 절의 결론은 불완전했다.** 배포 후 확인한 결과 퀴즈가 `<pre>` 안에 들어 있어 코드 블록의 회색 배경과 고정폭 글꼴을 상속받고 있었다. `not-prose`는 Typography 플러그인의 스타일만 끊고 `<pre>` 껍데기 자체는 건드리지 못한다. 후속 설계: `docs/superpowers/specs/2026-08-09-quiz-styling-design.md`
+
 퀴즈는 `.markdown-content` 안에서 렌더된다. `src/app/globals.css:152`의 `.markdown-content`가 `@apply prose prose-gray dark:prose-invert max-w-none`이므로 **blog-v2와 같이 퀴즈 루트에 `not-prose`를 건다.** 이것으로 Typography 플러그인이 주는 목록 마커·여백·`li` 스타일이 `case`의 `given` 목록에 끼어드는 것을 막는다.
 
 `not-prose`로 끊기지 않는 것이 하나 남는다. 같은 파일의 `.markdown-content p`(162행)와 `.markdown-content ul, ol`(183행)은 후손 선택자라 `not-prose` 안쪽에도 계속 걸린다. 다만 이 둘이 주는 것은 글자색과 불투명도(`text-foreground text-opacity-80`)뿐이고 레이아웃을 건드리지 않는다. 퀴즈 컴포넌트가 자기 색을 명시하므로 그대로 두고, 실제로 어긋나는 곳이 보이면 그때 해당 요소에 색을 명시한다.
@@ -213,7 +215,18 @@ blog-v2의 `components/article/quiz.tsx`를 이식하되 i18n 배관을 걷어�
 
 카드 클릭이 원래도 동작한 것은 Next 라우터가 내비게이션 완료 후 해시 스크롤을 다시 적용하기 때문이고, 그 시점은 하이드레이션 이후다. 북마크·외부 링크·URL 직접 입력은 전부 실패했다.
 
-`quiz.tsx`가 마운트 후 한 번, `id === 'quiz'`이고 `window.location.hash === '#quiz'`일 때만 스스로 스크롤한다. 카드 클릭 경로에서는 이미 제자리라 같은 위치로 다시 스크롤하는 것이므로 무해하다.
+`quiz.tsx`가 마운트 후 `id === 'quiz'`이고 `window.location.hash === '#quiz'`일 때만 스스로 스크롤한다. 카드 클릭 경로에서는 이미 제자리라 같은 위치로 다시 스크롤하는 것이므로 무해하다.
+
+**한 번만 스크롤하면 부족하다.** 퀴즈 위쪽의 mermaid 다이어그램이 클라이언트에서 비동기로 그려지는데, 그 시점이 이 스크롤보다 늦으면 콘텐츠가 늘어나며 퀴즈를 아래로 밀어낸다. 실측:
+
+| 글 | 퀴즈 위 mermaid | 진입 시 퀴즈 위치 |
+|----|----------------|-----------------|
+| 연말정산 | 1개 | 32px |
+| 연금저축 | 4개 | **458px** |
+
+`ResizeObserver`로 문서 크기가 변할 때마다 다시 맞춘다. 다만 독자의 스크롤을 빼앗으면 안 되므로 **휠·터치·키 입력이 한 번이라도 들어오면 즉시 중단**하고, 늦게 오는 렌더를 무한정 기다리지 않도록 **3초 상한**을 둔다.
+
+입력 감지에 `scroll` 이벤트를 쓰지 않는 이유: 우리가 부른 `scrollIntoView`도 같은 이벤트를 발생시켜 독자 입력과 구분되지 않는다. `wheel`·`touchstart`·`keydown`은 실제 사용자 입력에만 발생한다.
 
 ## 7. 빌드 타임 검증
 

@@ -30,13 +30,37 @@ export function Quiz({ questions, id }: QuizProps) {
     // 이 사이트는 <body> 전체가 ClientOnly 로 감싸여 있어(src/app/layout.tsx),
     // 하이드레이션 전 정적 HTML에는 id="quiz" 앵커가 존재하지 않는다. 브라우저가
     // 최초 로드 시 URL 해시를 처리하는 시점엔 이미 지나가버려 네이티브 앵커 스크롤이
-    // 동작하지 않으므로, 마운트 후 해시가 실제로 이 퀴즈를 가리킬 때만 한 번 직접
-    // 스크롤한다. 클라이언트 사이드 네비게이션(Link 클릭)에서는 네이티브 스크롤이
-    // 이미 정상 동작하지만, 같은 위치로 다시 스크롤하는 것은 무해하다.
+    // 동작하지 않으므로, 마운트 후 해시가 이 퀴즈를 가리킬 때만 직접 스크롤한다.
+    //
+    // 한 번만 스크롤하면 부족하다. 퀴즈 위쪽의 mermaid 다이어그램은 클라이언트에서
+    // 비동기로 그려지는데, 그 시점이 이 effect 보다 늦으면 콘텐츠가 늘어나면서
+    // 퀴즈를 아래로 밀어낸다. 실측: 다이어그램이 1개인 글은 32px 로 정확했지만
+    // 4개인 글은 458px 어긋났다. 그래서 문서 크기가 변할 때마다 다시 맞춘다.
+    //
+    // 다만 독자의 스크롤을 빼앗으면 안 되므로, 실제 입력(휠·터치·키)이 한 번이라도
+    // 들어오면 즉시 손을 뗀다. 늦게 오는 렌더를 무한정 기다리지 않도록 시간 상한도 둔다.
     if (typeof window === 'undefined' || id !== 'quiz' || window.location.hash !== '#quiz') {
       return;
     }
-    rootRef.current?.scrollIntoView();
+    const el = rootRef.current;
+    if (!el) return;
+
+    const USER_INPUT = ['wheel', 'touchstart', 'keydown'] as const;
+    const observer = new ResizeObserver(() => el.scrollIntoView());
+    let timer: ReturnType<typeof setTimeout>;
+
+    const stop = () => {
+      observer.disconnect();
+      clearTimeout(timer);
+      USER_INPUT.forEach((e) => window.removeEventListener(e, stop));
+    };
+
+    el.scrollIntoView();
+    observer.observe(document.body);
+    USER_INPUT.forEach((e) => window.addEventListener(e, stop, { passive: true }));
+    timer = setTimeout(stop, 3000);
+
+    return stop;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

@@ -59,7 +59,16 @@ export function Quiz({ questions, id }: QuizProps) {
   };
 
   return (
-    <div id={id} ref={rootRef} className="not-prose my-8 space-y-6 scroll-mt-8">
+    // 섹션 틴트로 "여기부터 퀴즈" 를 알린다. 색은 --primary(hsl 207 90% 54%)를 옮긴
+    // rgba(32,148,243,…) 리터럴이다. 이 저장소의 Tailwind 색상은 <alpha-value>
+    // 플레이스홀더 없이 var(--primary) 로만 정의돼 있어 bg-primary/5 같은 투명도
+    // 수식이 먹지 않는다(기존 bg-muted/50 도 실제로는 불투명하게 렌더된다).
+    // 다크의 알파가 더 큰 이유는 어두운 배경에서 같은 농도면 보이지 않기 때문이다.
+    <div
+      id={id}
+      ref={rootRef}
+      className="not-prose my-8 scroll-mt-8 space-y-4 rounded-xl border border-[rgba(32,148,243,0.18)] bg-[rgba(32,148,243,0.045)] p-4 dark:border-[rgba(32,148,243,0.25)] dark:bg-[rgba(32,148,243,0.07)] md:p-6"
+    >
       {questions.map((question, i) => (
         <QuestionCard
           key={`${resetKey}-${i}`}
@@ -71,7 +80,7 @@ export function Quiz({ questions, id }: QuizProps) {
       ))}
 
       {finished && (
-        <div className="rounded-lg border border-border bg-muted/50 p-6 text-center">
+        <div className="rounded-lg border border-border bg-muted p-6 text-center">
           <p className="text-lg font-semibold text-foreground">
             {score} / {questions.length} 맞았습니다
           </p>
@@ -95,14 +104,17 @@ function QuestionCard({ index, question, answer, onSubmit }: QuestionCardProps) 
   const done = answer !== null;
 
   return (
-    <div className="rounded-lg border border-border p-5">
+    // bg-background 를 명시해야 한다. 배경 클래스가 없으면 투명이라 섹션 틴트가
+    // 카드 안까지 비친다. 다크에서는 --card 와 --background 가 같은 값이라
+    // bg-card 로는 이 문제가 해결되지 않는다.
+    <div className="rounded-lg border border-border bg-background p-5">
       <p className="font-medium text-foreground">
         <span className="mr-2 text-muted-foreground">Q{index + 1}.</span>
         {question.q}
       </p>
 
       {question.type === 'case' && (
-        <ul className="mt-3 space-y-1 rounded-md border border-border bg-muted/50 p-4 text-sm text-foreground">
+        <ul className="mt-3 space-y-1 rounded-md border border-border bg-muted p-4 text-sm text-foreground">
           {question.given.map((line, i) => (
             <li key={i}>{line}</li>
           ))}
@@ -209,9 +221,12 @@ function ChoiceList({ choices, correctIndex, selected, onSelect, row, numbered }
               if (!done) onSelect(i);
             }}
             className={cn(
-              'rounded-md border border-border px-4 py-2 text-left text-sm text-foreground transition-colors',
+              'rounded-md border border-border bg-background px-4 py-2 text-left text-sm text-foreground transition-colors',
               row && 'min-w-16 text-center font-semibold',
-              !done && 'hover:bg-accent hover:text-accent-foreground',
+              // hover:bg-accent 를 쓰지 않는 이유: 이 저장소는 --accent 와 --muted 가
+              // 같은 값(hsl 60 4.8% 95.9%)이라 마우스를 올려도 사실상 변화가 없다.
+              // 토큰을 고치면 사이트 전역 hover 가 바뀌므로 퀴즈 안에서만 색을 지정한다.
+              !done && 'hover:border-[#2094f3] hover:bg-[rgba(32,148,243,0.08)]',
               isCorrect && 'border-green-600 bg-green-500/10 dark:border-green-500',
               isWrongPick && 'border-red-600 bg-red-500/10 dark:border-red-500',
               done && !isCorrect && !isWrongPick && 'opacity-60',

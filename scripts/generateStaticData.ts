@@ -2,6 +2,8 @@ import { readFile, readdir, stat, writeFile, mkdir, copyFile } from 'fs/promises
 import { join } from 'path';
 import { buildEvent, type EventFrontMatter, type TimelineEvent } from './lib/timeline/buildEvents';
 import type { SeriesFile } from './lib/timeline/types';
+import { extractQuizBlocks } from '../src/lib/quiz';
+import { parseQuiz } from '../src/lib/quiz-parse';
 
 interface MarkdownFrontMatter {
   title: string;
@@ -32,6 +34,8 @@ interface BlogPost {
   views: number;
   likes: number;
   event?: EventFrontMatter;
+  hasQuiz?: boolean;
+  quizCount?: number;
   stub?: boolean;
 }
 
@@ -241,6 +245,16 @@ async function importMarkdownFiles(contentDir: string = 'contents'): Promise<Blo
             const wordCount = markdownContent.split(/\s+/).length;
             const readingTime = Math.ceil(wordCount / wordsPerMinute);
 
+            // 퀴즈: 빌드가 센 수와 페이지가 렌더한 수가 어긋나면 목록 숫자가 틀리므로
+            // 페이지와 같은 파서를 쓴다
+            const quizBlocks = extractQuizBlocks(markdownContent);
+            const quizCount = quizBlocks.reduce((sum, block) => sum + parseQuiz(block).length, 0);
+            if (quizBlocks.length > 0 && quizCount === 0) {
+              console.warn(
+                `⚠️  ${category}/${folder}: quiz 블록이 있는데 유효 문항이 0개입니다 (YAML 확인 필요)`
+              );
+            }
+
             // Format date
             const formattedDate = new Date(frontMatter.date).toLocaleDateString('ko-KR', {
               year: 'numeric',
@@ -265,6 +279,8 @@ async function importMarkdownFiles(contentDir: string = 'contents'): Promise<Blo
               views: 0,
               likes: 0,
               event: frontMatter.event,
+              hasQuiz: quizCount > 0 || undefined,
+              quizCount: quizCount || undefined,
               stub: frontMatter.stub === true,
             };
 

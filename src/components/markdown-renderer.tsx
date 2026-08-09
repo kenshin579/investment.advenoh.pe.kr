@@ -5,6 +5,8 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { tomorrow } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { MarkdownImage } from './markdown-image';
 import { MermaidDiagram } from './mermaid-diagram';
+import { parseQuiz } from '@/lib/quiz-parse';
+import { Quiz } from './quiz/quiz';
 
 interface MarkdownRendererProps {
   content: string;
@@ -16,6 +18,15 @@ interface MarkdownRendererProps {
 export function MarkdownRenderer({ content, className = "", slug, category }: MarkdownRendererProps) {
   // Helper to strip Markdown links like [text](url) -> text
   const stripMarkdownLinks = (input: string) => input.replace(/\[([^\]]+)\]\([^\)]+\)/g, '$1');
+  // 첫 퀴즈에만 #quiz 앵커를 단다. /quiz 목록 카드가 이 앵커로 링크한다.
+  // 반드시 함수 호출 안에서 선언한다 — 모듈 스코프에 두면 글 사이로 카운터가 새어 나간다.
+  //
+  // 렌더 도중 let 을 증가시키는 것이 규칙 위반처럼 보이지만 여기서는 안전하다.
+  // 이 컴포넌트는 서버 컴포넌트이고 정적 export 라 페이지당 빌드 시 한 번만 렌더된다.
+  // react-markdown 은 code 콜백을 문서 순서대로 동기 호출하며, 호출부도 하나뿐이다
+  // (src/app/[category]/[slug]/page.tsx). useState 나 ref 로 "고치면" 오히려
+  // 서버 컴포넌트에서 쓸 수 없거나 앵커가 중복된다.
+  let quizIndex = 0;
   return (
     <div className={`markdown-content ${className}`}>
       <ReactMarkdown
@@ -129,6 +140,15 @@ export function MarkdownRenderer({ content, className = "", slug, category }: Ma
 
             if (!inline && language === 'mermaid') {
               return <MermaidDiagram chart={String(children).replace(/\n$/, '')} />;
+            }
+
+            if (!inline && language === 'quiz') {
+              // 서버 컴포넌트라 파싱이 빌드 타임에 끝난다. yaml 은 클라이언트로 안 내려간다.
+              const questions = parseQuiz(String(children));
+              if (questions.length > 0) {
+                return <Quiz questions={questions} id={quizIndex++ === 0 ? 'quiz' : undefined} />;
+              }
+              // 파싱 실패 시 아래로 흘러가 원본 코드 블록이 보인다
             }
 
             return !inline && match ? (

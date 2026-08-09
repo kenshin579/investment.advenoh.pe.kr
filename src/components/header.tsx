@@ -63,6 +63,14 @@ export function Header() {
             >
               Timeline
             </Link>
+            <Link
+              href="/quiz"
+              className={`text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors ${
+                pathname.startsWith('/quiz') ? 'text-primary' : ''
+              }`}
+            >
+              Quiz
+            </Link>
           </div>
 
           {/* Search, Tags, Series & Dark Mode Toggle */}
@@ -155,6 +163,15 @@ export function Header() {
                 onClick={() => setIsMenuOpen(false)}
               >
                 Timeline
+              </Link>
+              <Link
+                href="/quiz"
+                className={`block px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors ${
+                  pathname.startsWith('/quiz') ? 'text-primary' : ''
+                }`}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Quiz
               </Link>
               {/* Mobile search removed for now */}
             </div>

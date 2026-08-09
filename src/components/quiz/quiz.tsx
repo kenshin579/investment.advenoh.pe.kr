@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { CheckCircle2, XCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -24,6 +24,21 @@ type Answer = { value: number | boolean | string; correct: boolean } | null;
 export function Quiz({ questions, id }: QuizProps) {
   const [answers, setAnswers] = useState<Answer[]>(() => questions.map(() => null));
   const [resetKey, setResetKey] = useState(0);
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // 이 사이트는 <body> 전체가 ClientOnly 로 감싸여 있어(src/app/layout.tsx),
+    // 하이드레이션 전 정적 HTML에는 id="quiz" 앵커가 존재하지 않는다. 브라우저가
+    // 최초 로드 시 URL 해시를 처리하는 시점엔 이미 지나가버려 네이티브 앵커 스크롤이
+    // 동작하지 않으므로, 마운트 후 해시가 실제로 이 퀴즈를 가리킬 때만 한 번 직접
+    // 스크롤한다. 클라이언트 사이드 네비게이션(Link 클릭)에서는 네이티브 스크롤이
+    // 이미 정상 동작하지만, 같은 위치로 다시 스크롤하는 것은 무해하다.
+    if (typeof window === 'undefined' || id !== 'quiz' || window.location.hash !== '#quiz') {
+      return;
+    }
+    rootRef.current?.scrollIntoView();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const answeredCount = answers.filter((a) => a !== null).length;
   const score = answers.filter((a) => a?.correct).length;
@@ -44,7 +59,7 @@ export function Quiz({ questions, id }: QuizProps) {
   };
 
   return (
-    <div id={id} className="not-prose my-8 space-y-6 scroll-mt-8">
+    <div id={id} ref={rootRef} className="not-prose my-8 space-y-6 scroll-mt-8">
       {questions.map((question, i) => (
         <QuestionCard
           key={`${resetKey}-${i}`}

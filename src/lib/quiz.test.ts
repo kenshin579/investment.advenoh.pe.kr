@@ -161,21 +161,52 @@ describe('extractQuizBlocks', () => {
     expect(extractQuizBlocks(markdown)).toEqual([]);
   });
 
-  it('닫히지 않은 quiz 펜스는 뽑지 않는다', () => {
-    const markdown = [
-      '# 제목',
-      '',
-      '```quiz',
-      '- type: mcq',
-      '  q: "닫히지 않음"',
-    ].join('\n');
-
-    expect(extractQuizBlocks(markdown)).toEqual([]);
-  });
-
   it('다른 언어 펜스 안의 quiz 는 뽑지 않는다', () => {
     const markdown = ['```ts', '```quiz', '- type: mcq', '```'].join('\n');
 
     expect(extractQuizBlocks(markdown)).toEqual([]);
+  });
+
+  it('info string 에 여분 텍스트가 붙어도 첫 토큰이 quiz 면 뽑는다', () => {
+    // remark 는 info string 의 첫 공백 구분 토큰만 lang 으로 본다
+    const markdown = ['```quiz extra text here', '- type: ox', '```'].join('\n');
+
+    const blocks = extractQuizBlocks(markdown);
+
+    expect(blocks).toHaveLength(1);
+    expect(blocks[0]).toContain('type: ox');
+  });
+
+  it('문서 끝에서 안 닫힌 quiz 펜스도 뽑는다 (EOF 암묵적 닫힘)', () => {
+    // remark 는 EOF 에서 열린 펜스를 암묵적으로 닫고 lang: 'quiz' 로 렌더한다
+    const markdown = ['```quiz', '- type: ox', '  q: "닫는 펜스가 아예 없음"'].join('\n');
+
+    const blocks = extractQuizBlocks(markdown);
+
+    expect(blocks).toHaveLength(1);
+    expect(blocks[0]).toContain('닫는 펜스가 아예 없음');
+  });
+
+  it('안 닫힌 quiz 펜스가 다른 블록의 닫는 펜스에 걸려 내용이 잘리지 않는다', () => {
+    const markdown = [
+      '```quiz',
+      '- type: mcq',
+      '  q: "닫는 펜스가 없다"',
+      '',
+      '# 다른 섹션',
+      '',
+      '본문 문단이다.',
+      '',
+      '```ts',
+      'const a = 1;',
+      '```',
+    ].join('\n');
+
+    const blocks = extractQuizBlocks(markdown);
+
+    expect(blocks).toHaveLength(1);
+    expect(blocks[0]).toContain('type: mcq');
+    expect(blocks[0]).toContain('다른 섹션');
+    expect(blocks[0]).toContain('const a = 1;');
   });
 });

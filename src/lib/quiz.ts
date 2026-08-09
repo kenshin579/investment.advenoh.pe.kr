@@ -128,7 +128,11 @@ export function parseQuiz(source: string): QuizQuestion[] {
   return valid;
 }
 
-/** 펜스 여는/닫는 줄: 앞에 공백 0~3칸, 백틱(또는 물결) 3개 이상, 그 뒤는 info string */
+/**
+ * 펜스 여는/닫는 줄: 앞에 공백 0~3칸, 백틱(또는 물결) 3개 이상, 그 뒤는 info string.
+ * 물결(~~~) 펜스도 CommonMark 상 유효한 펜스 문자라 `~{3,}`로 함께 잡는다 — 백틱
+ * 펜스만 추적하면 `~~~` 로 열린 블록 안의 ```quiz 텍스트를 오탐할 수 있다.
+ */
 const FENCE_LINE_RE = /^ {0,3}(`{3,}|~{3,})[ \t]*(.*)$/;
 /** 닫는 펜스는 info string 없이 공백만 허용된다 (CommonMark 규칙) */
 const ONLY_WHITESPACE_RE = /^[ \t]*$/;
@@ -139,12 +143,17 @@ const ONLY_WHITESPACE_RE = /^[ \t]*$/;
  * 정규식 대신 줄 단위 펜스 스캐너를 쓰는 이유: remark(react-markdown이 쓰는
  * 마크다운 파서)는 CommonMark 펜스 규칙을 따른다 — 닫는 펜스는 여는 펜스
  * 이상의 길이여야 하고, 이미 펜스가 열려 있는 동안에는 그 안의 어떤 줄도
- * 새 펜스를 열지 못한다. 정규식만으로는 이 상태를 추적할 수 없어서 백틱
- * 4개짜리 펜스 안에 설명용으로 중첩된 ```quiz 예시를 실제 퀴즈로 잘못
- * 뽑아내거나(remark는 절대 렌더링하지 않는데도), 닫히지 않은 펜스 뒤의
- * 무관한 ``` 까지 삼켜 깨진 YAML을 만든다. 이 스캐너는 remark가 실제로
- * 인식하는 펜스와 같은 규칙으로 상태를 추적해 "빌드가 센 문항 수"와
- * "페이지가 렌더한 문항 수"가 어긋나지 않게 한다.
+ * 새 펜스를 열지 못하며, info string 은 첫 공백 구분 토큰만 lang 으로 본다.
+ * 정규식만으로는 이 상태를 추적할 수 없어서 백틱 4개짜리 펜스 안에 설명용으로
+ * 중첩된 ```quiz 예시를 실제 퀴즈로 잘못 뽑아내거나(remark는 절대 렌더링하지
+ * 않는데도), 안 닫힌 펜스 뒤에 나오는 무관한 블록의 닫는 펜스에 걸려 내용이
+ * 잘리는 등 remark 와 다르게 동작한다. 이 스캐너는 remark가 실제로 인식하는
+ * 펜스와 같은 규칙으로 상태를 추적해 "빌드가 센 문항 수"와 "페이지가 렌더한
+ * 문항 수"가 어긋나지 않게 한다.
+ *
+ * 펜스 줄의 들여쓰기(공백 0~3칸)는 걷어내지 않고 그대로 YAML에 넘긴다.
+ * YAML은 블록 전체가 균일하게 들여쓰기 되어 있는 한 파싱에 지장이 없어
+ * 실무상 무해하다.
  */
 export function extractQuizBlocks(markdown: string): string[] {
   const blocks: string[] = [];
@@ -156,6 +165,10 @@ export function extractQuizBlocks(markdown: string): string[] {
   let isQuiz = false;
   let quizLines: string[] = [];
 
+  const closeQuizFence = () => {
+    blocks.push(quizLines.map((l) => `${l}\n`).join(''));
+  };
+
   for (const line of lines) {
     const fenceMatch = line.match(FENCE_LINE_RE);
 
@@ -163,10 +176,11 @@ export function extractQuizBlocks(markdown: string): string[] {
       if (fenceMatch) {
         const fence = fenceMatch[1];
         const info = fenceMatch[2].trim();
+        const lang = info.split(/\s+/)[0];
         inFence = true;
         fenceChar = fence[0];
         fenceLength = fence.length;
-        isQuiz = fenceLength === 3 && fenceChar === '`' && info === 'quiz';
+        isQuiz = fenceLength === 3 && fenceChar === '`' && lang === 'quiz';
         quizLines = [];
       }
       continue;
@@ -179,9 +193,7 @@ export function extractQuizBlocks(markdown: string): string[] {
       ONLY_WHITESPACE_RE.test(fenceMatch[2]);
 
     if (isClosing) {
-      if (isQuiz) {
-        blocks.push(quizLines.map((l) => `${l}\n`).join(''));
-      }
+      if (isQuiz) closeQuizFence();
       inFence = false;
       isQuiz = false;
       continue;
@@ -191,7 +203,10 @@ export function extractQuizBlocks(markdown: string): string[] {
       quizLines.push(line);
     }
   }
-  // 문서가 끝날 때까지 닫히지 않은 quiz 펜스는 버린다(뽑지 않는다).
+
+  // remark 는 EOF 에서 열려 있는 펜스를 암묵적으로 닫는다(CommonMark 규칙).
+  // 그래서 문서 끝까지 안 닫힌 quiz 펜스도 거기서 닫힌 것으로 보고 뽑는다.
+  if (inFence && isQuiz) closeQuizFence();
 
   return blocks;
 }

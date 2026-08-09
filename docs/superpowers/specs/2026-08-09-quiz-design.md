@@ -180,9 +180,9 @@ blog-v2의 `components/article/quiz.tsx`를 이식하되 i18n 배관을 걷어�
 
 ### 스타일 격리
 
-퀴즈는 `.markdown-content` 안에서 렌더된다. `src/app/globals.css`의 `.markdown-content ul, ol`(183행)과 `.markdown-content p`(162행) 규칙이 `case`의 `given` 목록과 문항 텍스트에 걸린다. 퀴즈 루트에서 이 규칙들의 영향을 끊는다.
+퀴즈는 `.markdown-content` 안에서 렌더된다. `src/app/globals.css:152`의 `.markdown-content`가 `@apply prose prose-gray dark:prose-invert max-w-none`이므로 **blog-v2와 같이 퀴즈 루트에 `not-prose`를 건다.** 이것으로 Typography 플러그인이 주는 목록 마커·여백·`li` 스타일이 `case`의 `given` 목록에 끼어드는 것을 막는다.
 
-blog-v2는 Tailwind Typography를 쓰므로 `not-prose` 한 클래스로 해결했지만, 이 저장소의 `.markdown-content`는 일반 CSS라 그 방법을 쓸 수 없다.
+`not-prose`로 끊기지 않는 것이 하나 남는다. 같은 파일의 `.markdown-content p`(162행)와 `.markdown-content ul, ol`(183행)은 후손 선택자라 `not-prose` 안쪽에도 계속 걸린다. 다만 이 둘이 주는 것은 글자색과 불투명도(`text-foreground text-opacity-80`)뿐이고 레이아웃을 건드리지 않는다. 퀴즈 컴포넌트가 자기 색을 명시하므로 그대로 두고, 실제로 어긋나는 곳이 보이면 그때 해당 요소에 색을 명시한다.
 
 ### 앵커
 

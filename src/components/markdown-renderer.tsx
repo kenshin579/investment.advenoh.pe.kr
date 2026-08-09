@@ -5,6 +5,8 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { tomorrow } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { MarkdownImage } from './markdown-image';
 import { MermaidDiagram } from './mermaid-diagram';
+import { parseQuiz } from '@/lib/quiz';
+import { Quiz } from './quiz/quiz';
 
 interface MarkdownRendererProps {
   content: string;
@@ -16,6 +18,9 @@ interface MarkdownRendererProps {
 export function MarkdownRenderer({ content, className = "", slug, category }: MarkdownRendererProps) {
   // Helper to strip Markdown links like [text](url) -> text
   const stripMarkdownLinks = (input: string) => input.replace(/\[([^\]]+)\]\([^\)]+\)/g, '$1');
+  // 첫 퀴즈에만 #quiz 앵커를 단다. /quiz 목록 카드가 이 앵커로 링크한다.
+  // 반드시 함수 호출 안에서 선언한다 — 모듈 스코프에 두면 글 사이로 카운터가 새어 나간다.
+  let quizIndex = 0;
   return (
     <div className={`markdown-content ${className}`}>
       <ReactMarkdown
@@ -129,6 +134,15 @@ export function MarkdownRenderer({ content, className = "", slug, category }: Ma
 
             if (!inline && language === 'mermaid') {
               return <MermaidDiagram chart={String(children).replace(/\n$/, '')} />;
+            }
+
+            if (!inline && language === 'quiz') {
+              // 서버 컴포넌트라 파싱이 빌드 타임에 끝난다. yaml 은 클라이언트로 안 내려간다.
+              const questions = parseQuiz(String(children));
+              if (questions.length > 0) {
+                return <Quiz questions={questions} id={quizIndex++ === 0 ? 'quiz' : undefined} />;
+              }
+              // 파싱 실패 시 아래로 흘러가 원본 코드 블록이 보인다
             }
 
             return !inline && match ? (

@@ -190,6 +190,8 @@ blog-v2의 `components/article/quiz.tsx`를 이식하되 i18n 배관을 걷어�
 
 ### 스타일 격리
 
+> **이 절의 결론은 불완전했다.** 배포 후 확인한 결과 퀴즈가 `<pre>` 안에 들어 있어 코드 블록의 회색 배경과 고정폭 글꼴을 상속받고 있었다. `not-prose`는 Typography 플러그인의 스타일만 끊고 `<pre>` 껍데기 자체는 건드리지 못한다. 후속 설계: `docs/superpowers/specs/2026-08-09-quiz-styling-design.md`
+
 퀴즈는 `.markdown-content` 안에서 렌더된다. `src/app/globals.css:152`의 `.markdown-content`가 `@apply prose prose-gray dark:prose-invert max-w-none`이므로 **blog-v2와 같이 퀴즈 루트에 `not-prose`를 건다.** 이것으로 Typography 플러그인이 주는 목록 마커·여백·`li` 스타일이 `case`의 `given` 목록에 끼어드는 것을 막는다.
 
 `not-prose`로 끊기지 않는 것이 하나 남는다. 같은 파일의 `.markdown-content p`(162행)와 `.markdown-content ul, ol`(183행)은 후손 선택자라 `not-prose` 안쪽에도 계속 걸린다. 다만 이 둘이 주는 것은 글자색과 불투명도(`text-foreground text-opacity-80`)뿐이고 레이아웃을 건드리지 않는다. 퀴즈 컴포넌트가 자기 색을 명시하므로 그대로 두고, 실제로 어긋나는 곳이 보이면 그때 해당 요소에 색을 명시한다.

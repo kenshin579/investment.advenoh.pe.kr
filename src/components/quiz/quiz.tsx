@@ -13,7 +13,12 @@ interface QuizProps {
   id?: string;
 }
 
-/** 문항별 응답 상태. null 이면 아직 안 풂 */
+/**
+ * 문항별 응답 상태. null 이면 아직 안 풂.
+ * value 의 실제 타입은 문항 유형에 종속된다 (mcq/case → number, ox → boolean,
+ * blank → string). submit 호출부가 항상 문항 유형에 맞는 값을 넣는다는
+ * 불변식에 기대며, QuestionCard 의 `as number` / `as boolean` 캐스팅이 이를 전제한다.
+ */
 type Answer = { value: number | boolean | string; correct: boolean } | null;
 
 export function Quiz({ questions, id }: QuizProps) {
@@ -112,6 +117,7 @@ function QuestionCard({ index, question, answer, onSubmit }: QuestionCardProps) 
 
         {question.type === 'blank' && (
           <BlankInput
+            label={question.q}
             done={done}
             value={done ? String(answer.value) : ''}
             onSubmit={(input) => onSubmit(index, input, isBlankCorrect(input, question.answer))}
@@ -171,22 +177,30 @@ function ChoiceList({ choices, correctIndex, selected, onSelect, row, numbered }
         const label = (
           <>
             {choice}
-            {isCorrect && <CheckCircle2 className="ml-1 inline h-3.5 w-3.5" />}
+            {isCorrect && (
+              <>
+                <CheckCircle2 className="ml-1 inline h-3.5 w-3.5" />
+                <span className="sr-only">(정답)</span>
+              </>
+            )}
           </>
         );
         return (
           <button
             key={i}
             type="button"
-            disabled={done}
-            onClick={() => onSelect(i)}
+            aria-disabled={done}
+            onClick={() => {
+              if (!done) onSelect(i);
+            }}
             className={cn(
               'rounded-md border border-border px-4 py-2 text-left text-sm text-foreground transition-colors',
               row && 'min-w-16 text-center font-semibold',
               !done && 'hover:bg-accent hover:text-accent-foreground',
               isCorrect && 'border-green-600 bg-green-500/10 dark:border-green-500',
               isWrongPick && 'border-red-600 bg-red-500/10 dark:border-red-500',
-              done && !isCorrect && !isWrongPick && 'opacity-60'
+              done && !isCorrect && !isWrongPick && 'opacity-60',
+              done && 'cursor-default'
             )}
           >
             {numbered ? (
@@ -206,21 +220,25 @@ function ChoiceList({ choices, correctIndex, selected, onSelect, row, numbered }
 }
 
 interface BlankInputProps {
+  /** 스크린 리더용 접근 가능한 레이블. 문항 텍스트(question.q)를 그대로 쓴다 */
+  label: string;
   done: boolean;
   value: string;
   onSubmit: (input: string) => void;
 }
 
-function BlankInput({ done, value, onSubmit }: BlankInputProps) {
+function BlankInput({ label, done, value, onSubmit }: BlankInputProps) {
   const [input, setInput] = useState('');
   const submit = () => {
-    if (input.trim()) onSubmit(input);
+    const trimmed = input.trim();
+    if (trimmed) onSubmit(trimmed);
   };
   return (
     <div className="flex gap-2">
       <Input
         value={done ? value : input}
-        disabled={done}
+        readOnly={done}
+        aria-label={label}
         placeholder="답을 입력하세요"
         className="max-w-64"
         onChange={(e) => setInput(e.target.value)}

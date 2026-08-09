@@ -15,6 +15,10 @@ export interface BlogPost {
   seriesOrder?: number;
   views?: number;
   likes?: number;
+  /** 본문에 유효 문항이 1개 이상 있는가. false 면 필드 자체를 생략한다 */
+  hasQuiz?: boolean;
+  /** 본문의 모든 quiz 블록을 합친 유효 문항 수. 0 이면 필드 자체를 생략한다 */
+  quizCount?: number;
   /**
    * 본문 없이 frontmatter 만 채운 타임라인 사건 글.
    * 홈 목록·RSS·사이트맵에서 제외하고 /timeline 에서만 노출한다.

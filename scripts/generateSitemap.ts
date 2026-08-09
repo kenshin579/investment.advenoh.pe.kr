@@ -41,6 +41,7 @@ async function generateSitemap() {
     { url: baseUrl, changefreq: determineChangefreq(baseUrl), priority: '1.0' },
     { url: `${baseUrl}/series`, changefreq: determineChangefreq(`${baseUrl}/series`), priority: '0.7' },
     { url: `${baseUrl}/timeline`, changefreq: determineChangefreq(`${baseUrl}/timeline`), priority: '0.8' },
+    { url: `${baseUrl}/quiz`, changefreq: determineChangefreq(`${baseUrl}/quiz`), priority: '0.7' },
   ];
 
   const postUrls = posts

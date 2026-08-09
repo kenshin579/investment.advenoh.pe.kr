@@ -102,7 +102,7 @@ export function parseQuizRaw(source: string): unknown[] | null {
     return null;
   }
   if (!Array.isArray(raw)) {
-    console.warn('퀴즈 YAML 이 배열이 아니다:', typeof raw);
+    console.warn('퀴즈 YAML 이 배열이 아니다:', raw);
     return null;
   }
   return raw;
@@ -128,11 +128,70 @@ export function parseQuiz(source: string): QuizQuestion[] {
   return valid;
 }
 
-/** 마크다운 본문에서 ```quiz 블록의 YAML 원문을 순서대로 뽑는다 */
+/** 펜스 여는/닫는 줄: 앞에 공백 0~3칸, 백틱(또는 물결) 3개 이상, 그 뒤는 info string */
+const FENCE_LINE_RE = /^ {0,3}(`{3,}|~{3,})[ \t]*(.*)$/;
+/** 닫는 펜스는 info string 없이 공백만 허용된다 (CommonMark 규칙) */
+const ONLY_WHITESPACE_RE = /^[ \t]*$/;
+
+/**
+ * 마크다운 본문에서 ```quiz 블록의 YAML 원문을 순서대로 뽑는다.
+ *
+ * 정규식 대신 줄 단위 펜스 스캐너를 쓰는 이유: remark(react-markdown이 쓰는
+ * 마크다운 파서)는 CommonMark 펜스 규칙을 따른다 — 닫는 펜스는 여는 펜스
+ * 이상의 길이여야 하고, 이미 펜스가 열려 있는 동안에는 그 안의 어떤 줄도
+ * 새 펜스를 열지 못한다. 정규식만으로는 이 상태를 추적할 수 없어서 백틱
+ * 4개짜리 펜스 안에 설명용으로 중첩된 ```quiz 예시를 실제 퀴즈로 잘못
+ * 뽑아내거나(remark는 절대 렌더링하지 않는데도), 닫히지 않은 펜스 뒤의
+ * 무관한 ``` 까지 삼켜 깨진 YAML을 만든다. 이 스캐너는 remark가 실제로
+ * 인식하는 펜스와 같은 규칙으로 상태를 추적해 "빌드가 센 문항 수"와
+ * "페이지가 렌더한 문항 수"가 어긋나지 않게 한다.
+ */
 export function extractQuizBlocks(markdown: string): string[] {
   const blocks: string[] = [];
-  for (const match of markdown.matchAll(/```quiz\r?\n([\s\S]*?)```/g)) {
-    blocks.push(match[1]);
+  const lines = markdown.split(/\r?\n/);
+
+  let inFence = false;
+  let fenceChar = '';
+  let fenceLength = 0;
+  let isQuiz = false;
+  let quizLines: string[] = [];
+
+  for (const line of lines) {
+    const fenceMatch = line.match(FENCE_LINE_RE);
+
+    if (!inFence) {
+      if (fenceMatch) {
+        const fence = fenceMatch[1];
+        const info = fenceMatch[2].trim();
+        inFence = true;
+        fenceChar = fence[0];
+        fenceLength = fence.length;
+        isQuiz = fenceLength === 3 && fenceChar === '`' && info === 'quiz';
+        quizLines = [];
+      }
+      continue;
+    }
+
+    const isClosing =
+      fenceMatch !== null &&
+      fenceMatch[1][0] === fenceChar &&
+      fenceMatch[1].length >= fenceLength &&
+      ONLY_WHITESPACE_RE.test(fenceMatch[2]);
+
+    if (isClosing) {
+      if (isQuiz) {
+        blocks.push(quizLines.map((l) => `${l}\n`).join(''));
+      }
+      inFence = false;
+      isQuiz = false;
+      continue;
+    }
+
+    if (isQuiz) {
+      quizLines.push(line);
+    }
   }
+  // 문서가 끝날 때까지 닫히지 않은 quiz 펜스는 버린다(뽑지 않는다).
+
   return blocks;
 }

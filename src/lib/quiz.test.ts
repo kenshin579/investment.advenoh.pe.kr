@@ -145,4 +145,37 @@ describe('extractQuizBlocks', () => {
   it('quiz 블록이 없으면 빈 배열이다', () => {
     expect(extractQuizBlocks('# 제목\n\n본문')).toEqual([]);
   });
+
+  it('더 긴 펜스 안에 중첩된 quiz 블록은 뽑지 않는다', () => {
+    const markdown = [
+      '# 제목',
+      '',
+      '```` markdown',
+      '```quiz',
+      '- type: mcq',
+      '  q: "문서용 예시일 뿐"',
+      '```',
+      '````',
+    ].join('\n');
+
+    expect(extractQuizBlocks(markdown)).toEqual([]);
+  });
+
+  it('닫히지 않은 quiz 펜스는 뽑지 않는다', () => {
+    const markdown = [
+      '# 제목',
+      '',
+      '```quiz',
+      '- type: mcq',
+      '  q: "닫히지 않음"',
+    ].join('\n');
+
+    expect(extractQuizBlocks(markdown)).toEqual([]);
+  });
+
+  it('다른 언어 펜스 안의 quiz 는 뽑지 않는다', () => {
+    const markdown = ['```ts', '```quiz', '- type: mcq', '```'].join('\n');
+
+    expect(extractQuizBlocks(markdown)).toEqual([]);
+  });
 });

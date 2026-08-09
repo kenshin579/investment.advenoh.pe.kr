@@ -240,7 +240,7 @@ function BlankInput({ label, done, value, onSubmit }: BlankInputProps) {
         readOnly={done}
         aria-label={label}
         placeholder="답을 입력하세요"
-        className="max-w-64"
+        className={cn('max-w-64', done && 'cursor-default bg-muted text-foreground')}
         onChange={(e) => setInput(e.target.value)}
         onKeyDown={(e) => {
           if (e.key === 'Enter') submit();
